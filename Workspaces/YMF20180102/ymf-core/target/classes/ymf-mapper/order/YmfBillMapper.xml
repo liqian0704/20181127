@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yeepay.g3.core.ymf.dao.order.YmfBillMapper">
+    <resultMap id="queryResultParam" type="com.yeepay.g3.core.ymf.entity.billDto.QueryResultParamDTO">
+        <result property="customerOrderId" column="CUSTOMER_ORDER_ID" />
+        <result property="customerNumber" column="CUSTOMER_NUMBER" />
+        <result property="customerName" column="CUSTOMER_NAME" />
+        <result property="yeepayOrderId" column="YEEPAY_ORDER_ID" />
+        <result property="qrId" column="QR_ID" />
+        <result property="trxAmt" column="REAL_AMT" />
+        <result property="payTime" column="PAY_TIME" />
+        <result property="payStatus" column="PAY_STATUS" />
+        <result property="externalId" column="EXTERNAL_ID" />
+        <result property="paySource" column="PAY_SOURCE" />
+        <result property="balanceType" column="BALANCE_TYPE" />
+        <result property="bankType" column="BANK_TYPE" />
+        <result property="shopNumber" column="SHOP_NUMBER" />
+        <result property="shopName" column="SHOP_NAME" />
+        <result property="provinceName" column="PROVINCE_NAME" />
+
+    </resultMap>
+
+    <!---->
+    <select id="getYmfBillInfoByMap" parameterType="map" resultMap="queryResultParam">
+        <![CDATA[
+            SELECT
+            c.CUSTOMER_NUMBER,
+            c.CUSTOMER_NAME,
+            s.SHOP_NUMBER,
+            s.SHOP_NAME,
+            s.PROVINCE_NAME,
+            o.CUSTOMER_ORDER_ID,
+            p.YEEPAY_ORDER_ID,
+            q.QR_ID,
+            o.REAL_AMT,
+            TO_CHAR(TIMESTAMP(p.PAY_TIME),'YYYY-MM-DD HH24:MI:SS') as PAY_TIME,
+            p.PAY_STATUS,
+            o.EXTERNAL_ID,
+            o.BALANCE_TYPE,
+            p.PAY_SOURCE,
+            p.BANK_TYPE
+            from ymf_order o
+            left join ymf_payment p on o.id = p.ORDER_ID
+            left join YMF_CUSTOMER c on o.CUSTOMER_NUMBER = c.CUSTOMER_NUMBER
+            left join YMF_SHOP s on o.SHOP_NUMBER =  s.SHOP_NUMBER
+            left join YMF_QRCODE q on o.SAN_CODE=q.QR_ID
+
+            where
+                o.CUSTOMER_NUMBER = #{COMPANYCODE}
+            and
+              o.COMPLETE_TIME >= #{PAYTIMESTART}
+            and
+              o.COMPLETE_TIME <= #{PAYTIMEEND}
+            AND
+              q.QR_ID <> ''
+            WITH UR
+        ]]>
+    </select>
+
+    <!-- 获取交易总金额 -->
+    <select id="getTotalAmountByMap" parameterType="map" resultType="java.math.BigDecimal">
+        <![CDATA[
+            SELECT
+            sum(o.REAL_AMT) as amount
+            from ymf_order o
+            left join ymf_payment p on o.id = p.ORDER_ID
+            left join YMF_CUSTOMER c on o.CUSTOMER_NUMBER = c.CUSTOMER_NUMBER
+            left join YMF_SHOP s on o.SHOP_NUMBER =  s.SHOP_NUMBER
+            left join YMF_QRCODE q on o.SAN_CODE=q.QR_ID
+
+            where
+                o.CUSTOMER_NUMBER = #{COMPANYCODE}
+            and
+                o.COMPLETE_TIME >= #{PAYTIMESTART}
+            and
+                o.COMPLETE_TIME <= #{PAYTIMEEND}
+                AND
+              q.QR_ID <> ''
+            WITH UR
+         ]]>
+    </select>
+
+
+
+    <select id="getTotalCountByMap" parameterType="map" resultType="java.lang.Integer">
+        <![CDATA[
+            SELECT
+            count(1) as count
+            from ymf_order o
+            left join ymf_payment p on o.id = p.ORDER_ID
+            left join YMF_CUSTOMER c on o.CUSTOMER_NUMBER = c.CUSTOMER_NUMBER
+            left join YMF_SHOP s on o.SHOP_NUMBER =  s.SHOP_NUMBER
+            left join YMF_QRCODE q on o.SAN_CODE=q.QR_ID
+
+            where
+                o.CUSTOMER_NUMBER = #{COMPANYCODE}
+            and
+                o.COMPLETE_TIME >= #{PAYTIMESTART}
+            and
+                o.COMPLETE_TIME <= #{PAYTIMEEND}
+                AND
+              q.QR_ID <> ''
+            WITH UR
+        ]]>
+    </select>
+
+</mapper>

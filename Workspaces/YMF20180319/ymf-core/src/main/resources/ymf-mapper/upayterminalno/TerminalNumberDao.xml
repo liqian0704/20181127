@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.ymf.dao.upayterminalno.TerminalNumberDao">
+    <resultMap id="terminalNO" type="com.yeepay.g3.core.ymf.entity.upayterminalno.TerminalNumber">
+        <id column="ID" jdbcType="BIGINT" property="id" />
+        <result column="OPTIMISITC" jdbcType="BIGINT" property="optimisitc" />
+        <result column="CUSTOMER_NUMBER" jdbcType="VARCHAR" property="customerNumber" />
+        <result column="TERMINAL_NUMBER" jdbcType="VARCHAR" property="terminalNumber" />
+        <result column="STATUS" jdbcType="VARCHAR" property="status" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="LASTMODIFY_TIME" jdbcType="TIMESTAMP" property="lastmodifyTime" />
+        <result column="OPERATOR_NAME" jdbcType="VARCHAR" property="operatorName" />
+    </resultMap>
+
+    <sql id="TerminalNumberColumns">
+        ID, OPTIMISITC, CUSTOMER_NUMBER, TERMINAL_NUMBER, STATUS, CREATE_TIME, LASTMODIFY_TIME,
+        OPERATOR_NAME
+    </sql>
+
+    <select id="findByCusNOAndTerNO" resultMap="terminalNO">
+        select
+        <include refid="TerminalNumberColumns" />
+        from
+        YMF_TERMINALNO
+        <where>
+            <if test="customerNumber != null">
+                CUSTOMER_NUMBER = #{customerNumber}
+            </if>
+            <if test="terminalNumber != null">
+                and  TERMINAL_NUMBER= #{terminalNumber}
+            </if>
+        </where>
+        with ur
+    </select>
+    <select id="selectByCustomerNumber" resultMap="terminalNO">
+        select
+        <include refid="TerminalNumberColumns" />
+        from
+        YMF_TERMINALNO
+        <where>
+            <if test="customerNumber != null">
+                CUSTOMER_NUMBER = #{customerNumber}
+            </if>
+            <if test="status != null">
+                and  STATUS= #{status}
+            </if>
+        </where>
+        with ur
+    </select>
+
+</mapper>

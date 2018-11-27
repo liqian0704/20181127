@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html>
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <title>产品介绍</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,user-scalable=0"/>
+    <meta name="format-detection" content="telephone=no">
+    <style>
+        body {
+            background-color: #FFF;
+            color: darkgray;
+        }
+        body, div {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        b {
+            color: darkslategray;
+        }
+
+        p > span {
+            color: #EDB66A;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+        .s0-middle-top, .s0-middle-bottom, .s0-bottom{
+            text-align: center;
+            padding-top: 15px;
+        }
+
+        .s0-middle-top{
+            font-size: 18px;
+            padding-bottom: 15px;
+            border-bottom: #b1b1b1 solid 1px;
+        }
+
+        .s0-middle-bottom{
+            /*padding-top: 30px;*/
+            font-size: 14px;
+            margin:auto 10px;
+            padding-bottom: 15px;
+        }
+
+        #openS0Btn{
+            display: inline-block;
+            width: 90%;
+            height: 40px;
+            background-color: #FCB718;/*F2AB41*/
+            border: none;
+            border-radius: 4px;
+            color: #FFF;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<div class="s0-top-img"><img src="../images/s0/s0_open.png" width="100%"></div>
+<div class="s0-middle">
+    <div class="s0-middle-top" id="yb">
+        <p>交易逐笔结算,&nbsp<span><span class="bold">刷卡秒到</span><br>
+            代理商已开通</span>,&nbsp<b>即可申请</b>
+        </p>
+    </div>
+
+    <div class="s0-middle-bottom">
+        <p><b>支持银行:</b>
+            农行、招行、中信、中国、建设、平安、工商、兴业、广发、北京、华夏、民生、光大、邮储、交通、深发展、浦发
+        </p>
+    </div>
+</div>
+<div class="s0-bottom">
+    <button id="openS0Btn" onclick="window.location.href='../h5/s0_protocol.html'">马上开通</button>
+</div>
+<script>
+    var browser = {
+        versions: function () {
+            var u = navigator.userAgent;
+            return {
+                trident: u.indexOf('Trident') > -1, //IE内核
+                presto: u.indexOf('Presto') > -1, //opera内核
+                webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,//火狐内核
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+                android: u.indexOf('Android') > -1 || u.indexOf('Adr') > -1, //android终端
+                iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
+                iPad: u.indexOf('iPad') > -1, //是否iPad
+                webApp: u.indexOf('Safari') == -1, //是否web应该程序，没有头部与底部
+                weixin: u.indexOf('MicroMessenger') > -1, //是否微信
+                qq: u.match(/\sQQ/i) == " qq" //是否QQ
+            };
+        }()
+    };
+</script>
+</body>
+</html>

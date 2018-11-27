@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.ymf.dao.order.OrderDao">
+
+    <!-- 订单 -->
+    <resultMap id="BaseResultMap" type="com.yeepay.g3.core.ymf.entity.order.Order">
+        <id column="ID" jdbcType="BIGINT" property="id" />
+        <result column="VERSION" jdbcType="BIGINT" property="version" />
+        <result column="CUSTOMER_NUMBER" jdbcType="VARCHAR" property="customerNumber" />
+        <result column="CUSTOMER_ORDER_ID" jdbcType="VARCHAR" property="customerOrderId" />
+        <result column="EXTERNAL_ID" jdbcType="VARCHAR" property="externalId" />
+        <result column="OUT_ORDER_ID" jdbcType="VARCHAR" property="outOrderId" />
+        <result column="SAN_CODE" jdbcType="VARCHAR" property="sanCode" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="COMPLETE_TIME" jdbcType="TIMESTAMP" property="completeTime" />
+        <result column="ORDER_STATUS" jdbcType="VARCHAR" property="orderStatus" />
+        <result column="TRX_AMT" jdbcType="DECIMAL" property="trxAmt" />
+        <result column="REAL_AMT" jdbcType="DECIMAL" property="realAmt" />
+        <result column="REFUND_AMT" jdbcType="DECIMAL" property="refundAmt" />
+        <result column="FEE" jdbcType="DECIMAL" property="fee" />
+        <result column="RECEIVER_NAME" jdbcType="VARCHAR" property="receiverName" />
+        <result column="RECEIVER_TEL" jdbcType="VARCHAR" property="receiverTel" />
+        <result column="BUSINESS_TYPE" jdbcType="VARCHAR" property="businessType" />
+        <result column="QUERY_COUNT" jdbcType="INTEGER" property="queryCount" />
+        <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+        <result column="PAY_CONFIRM" jdbcType="VARCHAR" property="payConfirm" />
+        <result column="TRADE_SYSTEM" jdbcType="VARCHAR" property="tradeSystem" />
+    </resultMap>
+
+    <!-- 订单DTO type alias -->
+    <resultMap id="OrderDTO" type="com.yeepay.g3.facade.ymf.dto.order.OrderDTO">
+
+    </resultMap>
+
+    <!-- 订单详情DTO type alias -->
+    <resultMap id="OrderDetailDTO" type="com.yeepay.g3.facade.ymf.dto.order.OrderDetailDTO">
+
+    </resultMap>
+
+    <!-- 电子凭证DTO type alias -->
+    <resultMap id="OrderProofDTO" type="com.yeepay.g3.facade.ymf.dto.order.OrderProofDTO">
+    </resultMap>
+
+    <!-- 汇总返回 -->
+    <resultMap id="CountResponse" type="com.yeepay.g3.facade.ymf.dto.common.CountResponse">
+        <result column="COUNT" jdbcType="BIGINT" property="count" />
+        <result column="AMOUNT" jdbcType="DECIMAL" property="amount" />
+    </resultMap>
+
+    <sql id="OrderColumns">
+        ID, VERSION, CUSTOMER_NUMBER, CUSTOMER_ORDER_ID, EXTERNAL_ID, OUT_ORDER_ID, SAN_CODE,
+        TRX_AMT, REAL_AMT, REFUND_AMT, FEE, RECEIVER_NAME, RECEIVER_TEL, BUSINESS_TYPE, QUERY_COUNT,
+        REMARK, CREATE_TIME, COMPLETE_TIME, ORDER_STATUS, PAY_CONFIRM
+    </sql>
+
+
+    <select id="queryById" resultMap="OrderDTO">
+        select
+        <include refid="OrderColumns" />
+        from
+        YMF_ORDER
+        where
+        ID = #{id,jdbcType=BIGINT}
+    </select>
+
+    <!-- 根据参数查询订单 -->
+    <select id="queryOrderDTOByArgs" resultMap="OrderDTO">
+        select * from
+        (
+        select ROW_NUMBER() OVER(ORDER BY p.ID DESC) AS rowNum,
+            p.id as id,
+            o.CUSTOMER_NUMBER as customerNumber,
+            o.CUSTOMER_ORDER_ID as customerOrderId,
+            o.EXTERNAL_ID as externalId,
+            p.YEEPAY_ORDER_ID as yeepayOrderId,
+            o.OUT_ORDER_ID as outOrderId,
+            p.TRX_AMT as amount,
+            p.CREATE_TIME as createTime,
+            p.PAY_TIME as payTime,
+            p.FEE as fee,
+            p.PAY_STATUS as payStatus,
+            d.NAME as paySource,
+            o.PAY_CONFIRM as payConfirm,
+            o.BUSINESS_TYPE as businessType,
+            q.shop_Name as shopName
+        from
+        YMF_ORDER o
+        LEFT JOIN YMF_PAYMENT p on o.ID = p.order_id and p.TRX_TYPE = 'PURCHASE'
+        LEFT JOIN YMF_DICTIONARY d on p.PAY_SOURCE = d.CODE and d.TYPE = 'PaySource'
+        LEFT JOIN YMF_QRCODE q on o.SAN_CODE=q.QR_ID
+        <where>
+            <if test="customerNumber != null">
+                o.CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="payConfirm != null">
+                and o.PAY_CONFIRM = #{payConfirm,jdbcType=VARCHAR}
+            </if>
+            <if test="customerOrderId != null">
+                and o.CUSTOMER_ORDER_ID = #{customerOrderId,jdbcType=VARCHAR}
+            </if>
+            <if test="externalId != null">
+                and o.EXTERNAL_ID = #{externalId,jdbcType=VARCHAR}
+            </if>
+            <if test="payStatus != null">
+                and p.PAY_STATUS = #{payStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="createTimeStart != null">
+                <![CDATA[ and p.CREATE_TIME >= #{createTimeStart,jdbcType=TIMESTAMP} ]]>
+            </if>
+            <if test="createTimeEnd != null">
+                <![CDATA[ and p.CREATE_TIME <= #{createTimeEnd,jdbcType=TIMESTAMP} ]]>
+            </if>
+            <if test="payTimeStart != null">
+                <![CDATA[ and p.PAY_TIME >= #{payTimeStart,jdbcType=TIMESTAMP} ]]>
+            </if>
+            <if test="payTimeEnd != null">
+                <![CDATA[ and p.PAY_TIME <= #{payTimeEnd,jdbcType=TIMESTAMP} ]]>
+            </if>
+            <if test="outOrderId != null">
+                and o.OUT_ORDER_ID = #{outOrderId,jdbcType=VARCHAR}
+            </if>
+            <if test="businessType != null">
+                and o.BUSINESS_TYPE = #{businessType,jdbcType=VARCHAR}
+            </if>
+            <if test="shopName != null">
+                and q.shop_Name like '%'||#{shopName,jdbcType=VARCHAR}||'%'
+            </if>
+        </where>
+        )
+        where ROWNUM BETWEEN #{start} and #{end}
+        <if test="orderBy != null">
+            order by #{orderBy} desc
+        </if>
+    </select>
+
+    <!-- 根据参数汇总订单 -->
+    <select id="countOrderByArgs" resultMap="CountResponse">
+        select count(1) as count, nvl(sum(p.trx_amt), 0) as amount from
+        YMF_ORDER o
+        LEFT JOIN YMF_PAYMENT p on o.ID = p.order_id and p.TRX_TYPE = 'PURCHASE'
+        LEFT JOIN YMF_QRCODE q on o.SAN_CODE=q.QR_ID
+        <where>
+            <if test="customerNumber != null">
+                o.CUSTOMER_NUMBER= #{customerNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="payConfirm != null">
+                and o.PAY_CONFIRM= #{payConfirm,jdbcType=VARCHAR}
+            </if>
+            <if test="customerOrderId != null">
+                and o.CUSTOMER_ORDER_ID= #{customerOrderId,jdbcType=VARCHAR}
+            </if>
+            <if test="externalId != null">
+                and o.EXTERNAL_ID = #{externalId,jdbcType=VARCHAR}
+            </if>
+            <if test="payStatus != null">
+                and p.PAY_STATUS= #{payStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="createTimeStart != null">
+                <![CDATA[ and p.CREATE_TIME >= #{createTimeStart,jdbcType=TIMESTAMP} ]]>
+            </if>
+            <if test="createTimeEnd != null">
+                <![CDATA[ and p.CREATE_TIME <= #{createTimeEnd,jdbcType=TIMESTAMP} ]]>
+            </if>
+            <if test="payTimeStart != null">
+                <![CDATA[ and p.PAY_TIME >= #{payTimeStart,jdbcType=TIMESTAMP} ]]>
+            </if>
+            <if test="payTimeEnd != null">
+                <![CDATA[ and p.PAY_TIME <= #{payTimeEnd,jdbcType=TIMESTAMP} ]]>
+            </if>
+            <if test="outOrderId != null">
+                and o.OUT_ORDER_ID= #{outOrderId,jdbcType=VARCHAR}
+            </if>
+            <if test="businessType != null">
+                and o.BUSINESS_TYPE = #{businessType,jdbcType=VARCHAR}
+            </if>
+            <if test="shopName != null">
+                and q.shop_Name like '%'||#{shopName,jdbcType=VARCHAR}||'%'
+            </if>
+        </where>
+    </select>
+
+    <select id="findByQueryArgs" resultMap="OrderDetailDTO">
+        select
+            p.id as id,
+            o.CUSTOMER_NUMBER as customerNumber,
+            c.CUSTOMER_NAME as customerName,
+            o.CUSTOMER_ORDER_ID as customerOrderId,
+            o.EXTERNAL_ID as externalId,
+            p.YEEPAY_ORDER_ID as yeepayOrderId,
+            o.OUT_ORDER_ID as outOrderId,
+            p.TRX_AMT as amount,
+            p.CREATE_TIME as createTime,
+            p.PAY_TIME as payTime,
+            p.FEE as fee,
+            p.PAY_STATUS as payStatus,
+            d.NAME as paySource,
+            nvl(p.refund_amt, 0) as refundAmount,
+            (p.TRX_AMT - nvl(p.refund_amt, 0)) as remain,
+            o.PAY_CONFIRM as payConfirm,
+            o.BUSINESS_TYPE as businessType
+        from
+        YMF_ORDER o
+        LEFT JOIN YMF_PAYMENT p on o.ID = p.order_id and p.TRX_TYPE = 'PURCHASE'
+        LEFT JOIN YMF_CUSTOMER c on o.CUSTOMER_NUMBER = c.CUSTOMER_NUMBER
+        LEFT JOIN YMF_DICTIONARY d on p.PAY_SOURCE = d.CODE and d.TYPE = 'PaySource'
+        WHERE o.CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR}
+          AND o.CUSTOMER_ORDER_ID = #{customerOrderId,jdbcType=VARCHAR}
+          AND p.YEEPAY_ORDER_ID = #{yeepayOrderId,jdbcType=VARCHAR}
+          AND o.EXTERNAL_ID = #{externalId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findProofByQueryArgs" resultMap="OrderProofDTO">
+        select
+        p.PAY_TIME as payTime,
+        p.CUSTOMER_ORDER_ID as customerOrderId,
+        p.PAY_STATUS as payStatus,
+        p.OUT_ORDER_ID as outOrderId,
+        c.CUSTOMER_NUMBER as customerNumber,
+        c.CUSTOMER_NAME as customerName,
+        o.RECEIVER_NAME as receiverName,
+        p.TRX_AMT as trxAmt,
+        p.ID as id
+        from YMF_PAYMENT p
+        left join YMF_ORDER o on o.ID=p.ORDER_ID
+        left join YMF_CUSTOMER c on c.CUSTOMER_NUMBER=p.CUSTOMER_NUMBER
+        where p.PAY_STATUS='SUCCESS'
+        AND o.BUSINESS_TYPE IN
+        <foreach item="item" index="index" collection="businessType"
+                 open="(" separator="," close=")">
+            #{item}
+         </foreach>
+        AND p.CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR}
+        AND p.PAY_TIME BETWEEN  #{startdate,jdbcType=VARCHAR} AND #{enddate,jdbcType=VARCHAR}
+        with ur
+    </select>
+
+	<!-- 根据ID更新参考号 -->
+	<update id="updateExtendIdById">
+		update YMF_ORDER set 
+		<trim suffixOverrides=",">
+			<if test="externalId != null">
+				EXTERNAL_ID=#{externalId}
+			</if>
+			<if test="customerOrderId != null">
+				,CUSTOMER_ORDER_ID=#{customerOrderId}
+			</if>
+			<if test="payConfirm != null">
+				,PAY_CONFIRM=#{payConfirm}
+			</if>
+		</trim>
+		<where> ID = #{id}</where>
+	</update>
+	
+	<!-- 根据ID更新支付状态 -->
+	<update id="updateOrderStatusById">
+		update YMF_ORDER set 
+		<trim suffixOverrides=",">
+			<if test="orderStatus != null">
+				ORDER_STATUS=#{orderStatus},
+			</if>
+			<if test="tradeSystem != null">
+                TRADE_SYSTEM=#{tradeSystem}
+			</if>
+		</trim>
+		<where> ID = #{id}</where>
+	</update>
+	
+</mapper>

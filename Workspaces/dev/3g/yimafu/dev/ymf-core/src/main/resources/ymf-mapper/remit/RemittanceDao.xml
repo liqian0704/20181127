@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yeepay.g3.core.ymf.dao.remit.RemittanceMapper" >
+
+    <resultMap id="RemittanceDaoBaseResultMap" extends="RemittanceBaseResultMap" type="com.yeepay.g3.core.ymf.entity.remit.Remittance" >
+    </resultMap>
+
+    <select id="findByCustomerNumberAndCustomerOrderId"  resultMap="RemittanceDaoBaseResultMap">
+       select
+        YR.*
+        from
+        YMF_REMITTANCE YR
+        where 1=1
+        <if test="customerNumber != null" >
+           AND CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR}
+        </if>
+        <if test="customerOrderID != null" >
+           AND CUSTOMER_ORDER_ID = #{customerOrderID,jdbcType=VARCHAR}
+        </if>
+        with ur
+    </select>
+    <select id="findByYeepayOrderId"  resultMap="RemittanceDaoBaseResultMap">
+       select
+        YR.*
+        from
+        YMF_REMITTANCE YR
+        where 1=1
+        <if test="yeepayOrderId != null" >
+           AND YEEPAY_ORDER_ID = #{yeepayOrderId,jdbcType=VARCHAR}
+        </if>
+        with ur
+    </select>
+
+    <select id="findByRemitStatus"  resultMap="RemittanceDaoBaseResultMap">
+       select
+        YR.* from (SELECT RE.*,rownumber() over(order by id desc)as rn from YMF_REMITTANCE RE  )
+        as YR
+        where 1=1
+        <if test="remitStatus != null" >
+            AND  YR.REMIT_STATUS = #{remitStatus,jdbcType=VARCHAR}
+        </if>
+        <if test="begin != null" >
+            <![CDATA[  AND YR.CREATE_TIME >= #{begin,jdbcType=TIMESTAMP} ]]>
+        </if>
+        <if test="end != null" >
+            <![CDATA[  AND YR.CREATE_TIME <= #{end,jdbcType=TIMESTAMP} ]]>
+        </if>
+        AND YR.rn BETWEEN #{startRow,jdbcType=INTEGER} AND #{endRow,jdbcType=INTEGER}
+        order by yr.id desc
+        with ur
+    </select>
+    <select id="findByRemitStatusCount" resultType="java.lang.Integer">
+       select
+         count(1) from YMF_REMITTANCE YR
+        where 1=1
+        <if test="remitStatus != null" >
+            AND  YR.REMIT_STATUS = #{remitStatus,jdbcType=VARCHAR}
+        </if>
+        <if test="begin != null" >
+            <![CDATA[  AND YR.CREATE_TIME >= #{begin,jdbcType=TIMESTAMP} ]]>
+        </if>
+        <if test="end != null" >
+            <![CDATA[  AND YR.CREATE_TIME <= #{end,jdbcType=TIMESTAMP} ]]>
+        </if>
+        with ur
+    </select>
+
+</mapper>

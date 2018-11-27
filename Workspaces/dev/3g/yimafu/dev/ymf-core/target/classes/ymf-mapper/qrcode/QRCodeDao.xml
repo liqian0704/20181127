@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.ymf.dao.qrcode.QRCodeDao">
+    <resultMap id="QRCodeDaoResultMap" type="com.yeepay.g3.core.ymf.entity.qrcode.QRCode" >
+        <id column="ID" property="id" jdbcType="BIGINT" />
+        <result column="OPTIMISITC" property="optimisitc" jdbcType="BIGINT" />
+        <result column="CUSTOMER_NUMBER" property="customerNumber" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="QR_ID" property="qrId" jdbcType="VARCHAR" />
+        <result column="FTP_URL" property="ftpUrl" jdbcType="VARCHAR" />
+        <result column="STATUS" property="status" jdbcType="VARCHAR" />
+        <result column="CLOSE_TIME" property="closeTime" jdbcType="TIMESTAMP" />
+        <result column="SHOP_NAME" property="shopname" jdbcType="VARCHAR" />
+        <result column="BUSINESS_TYPE" property="businessType" jdbcType="VARCHAR" />
+        <result column="RELATION_ID" property="relationId" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+        ID, OPTIMISITC, CUSTOMER_NUMBER, CREATE_TIME, UPDATE_TIME, QR_ID, FTP_URL, STATUS,
+        CLOSE_TIME,SHOP_NAME,BUSINESS_TYPE,RELATION_ID
+    </sql>
+    <select id="getByAgentNumberAndRelationID" resultMap="QRCodeDaoResultMap">
+        select
+        QR.*
+        from
+        YMF_QRCODE QR LEFT JOIN YMF_QR_RELATION RE ON QR.RELATION_ID = RE.REQUEST_ID
+        where
+        QR.RELATION_ID=#{relationID,jdbcType=VARCHAR}
+        AND RE.AGENT_NUMBER=#{agentNumber,jdbcType=VARCHAR}
+    </select>
+    <insert id="insertSignedPaperQrcode" parameterType="com.yeepay.g3.core.ymf.entity.qrcode.QRCode" >
+        <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+            VALUES NEXTVAL FOR SEQ_QRCODE_ID
+        </selectKey>
+        insert into YMF_QRCODE (ID,OPTIMISITC, CUSTOMER_NUMBER,
+        CREATE_TIME, UPDATE_TIME, QR_ID,
+        FTP_URL, STATUS, CLOSE_TIME,SHOP_NAME,BUSINESS_TYPE,RELATION_ID)
+        values (#{id,jdbcType=BIGINT},0, #{customerNumber,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+        #{qrId,jdbcType=VARCHAR},
+        #{ftpUrl,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
+        #{closeTime,jdbcType=TIMESTAMP},
+        #{shopname,jdbcType=VARCHAR},
+        #{businessType,jdbcType=VARCHAR},
+        #{relationId,jdbcType=VARCHAR})
+    </insert>
+</mapper>

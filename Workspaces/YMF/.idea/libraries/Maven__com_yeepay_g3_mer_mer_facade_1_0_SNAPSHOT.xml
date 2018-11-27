@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.yeepay.g3.mer:mer-facade:1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/mer/mer-facade/1.0-SNAPSHOT/mer-facade-1.0-20170911.033028-876.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/mer/mer-facade/1.0-SNAPSHOT/mer-facade-1.0-20170911.033028-876-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/mer/mer-facade/1.0-SNAPSHOT/mer-facade-1.0-20170911.033028-876-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

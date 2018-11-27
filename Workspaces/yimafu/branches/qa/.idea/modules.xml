@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/ymf-boss/ymf-boss.iml" filepath="$PROJECT_DIR$/ymf-boss/ymf-boss.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ymf-core/ymf-core.iml" filepath="$PROJECT_DIR$/ymf-core/ymf-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ymf-facade/ymf-facade.iml" filepath="$PROJECT_DIR$/ymf-facade/ymf-facade.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ymf-hessian/ymf-hessian.iml" filepath="$PROJECT_DIR$/ymf-hessian/ymf-hessian.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ymf-mbg/ymf-mbg.iml" filepath="$PROJECT_DIR$/ymf-mbg/ymf-mbg.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ymf-parent.iml" filepath="$PROJECT_DIR$/ymf-parent.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ymf-pay/ymf-pay.iml" filepath="$PROJECT_DIR$/ymf-pay/ymf-pay.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ymf-portal/ymf-portal.iml" filepath="$PROJECT_DIR$/ymf-portal/ymf-portal.iml" />
+    </modules>
+  </component>
+</project>

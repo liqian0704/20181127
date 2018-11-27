@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>ymf-parent</artifactId>
+        <groupId>com.yeepay.g3.ymf</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>ymf-facade</artifactId>
+    <name>ymf-facade</name>
+    <packaging>jar</packaging>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.yeepay.g3.common</groupId>
+            <artifactId>yeepay-common</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotation</artifactId>
+        </dependency>
+
+        <!-- ncapi依赖 -->
+        <dependency>
+            <groupId>com.yeepay.g3.ncapi</groupId>
+            <artifactId>nc-api-facade</artifactId>
+            <!-- Facade中不依赖其他接口比较好 干净发布 -->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-core</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-expression</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-beans</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-aop</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-tx</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-orm</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-web</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-webmvc</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context-support</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-jdbc</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.caucho</groupId>
+                    <artifactId>hessian</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.yeepay.g3.utils</groupId>
+                    <artifactId>yeepay-rmi</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.yeepay.g3.utils</groupId>
+                    <artifactId>yeepay-web</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>com.yeepay.g3.utils</groupId>
+                    <artifactId>yeepay-async</artifactId>
+                </exclusion>
+                <exclusion>
+                    <artifactId>fee-facade</artifactId>
+                    <groupId>com.yeepay.g3.facade.fee</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+</project>

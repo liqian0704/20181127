@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: yibaoopen.yibao-utils:yibao-utils:1.0.31">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/yibaoopen/yibao-utils/yibao-utils/1.0.31/yibao-utils-1.0.31.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/yibaoopen/yibao-utils/yibao-utils/1.0.31/yibao-utils-1.0.31-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/yibaoopen/yibao-utils/yibao-utils/1.0.31/yibao-utils-1.0.31-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

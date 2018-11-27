@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.yeepay.g3.hermes:hermes-facade:1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/hermes/hermes-facade/1.0-SNAPSHOT/hermes-facade-1.0-20171227.194716-908.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/hermes/hermes-facade/1.0-SNAPSHOT/hermes-facade-1.0-20171227.194716-908-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/hermes/hermes-facade/1.0-SNAPSHOT/hermes-facade-1.0-20171227.194716-908-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

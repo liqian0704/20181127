@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fileFormat>
+    <format>
+        <field>snserial</field>
+        <fieldName>SN号</fieldName>
+    </format>
+    <format>
+        <field>termtype</field>
+        <fieldType>dict</fieldType>
+        <fieldName>终端类型</fieldName>
+        <format>TermType</format>
+    </format>
+    <format>
+        <field>manufact</field>
+        <fieldType>dict</fieldType>
+        <fieldName>厂商</fieldName>
+        <format>TermManufacture</format>
+    </format>
+    <format>
+        <field>customernumber</field>
+        <fieldName>商户编号</fieldName>
+    </format>
+    <format>
+        <field>customername</field>
+        <fieldName>商户名称</fieldName>
+    </format>
+    <format>
+        <field>shopid</field>
+        <fieldName>网点编号</fieldName>
+    </format>
+    <format>
+        <field>shopid</field>
+        <fieldName>网点名称</fieldName>
+    </format>
+    <format>
+        <field>bindtime</field>
+        <fieldType>date</fieldType>
+        <fieldName>绑定时间</fieldName>
+        <format>yyyy-MM-dd HH:mm:ss</format>
+    </format>
+    <format>
+        <field>termstatus</field>
+        <fieldType>dict</fieldType>
+        <fieldName>终端状态</fieldName>
+        <format>TermStatus</format>
+    </format>
+    <format>
+        <field>stockstatus</field>
+        <fieldType>dict</fieldType>
+        <fieldName>库存状态</fieldName>
+        <format>StockStatus</format>
+    </format>
+</fileFormat>

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="ymf-pay:war">
+    <output-path>$PROJECT_DIR$/ymf-pay/target</output-path>
+    <root id="archive" name="ymf-pay.war">
+      <element id="artifact" artifact-name="ymf-pay:war exploded" />
+    </root>
+  </artifact>
+</component>

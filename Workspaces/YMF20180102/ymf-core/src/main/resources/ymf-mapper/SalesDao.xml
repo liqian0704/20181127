@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.ymf.dao.SalesDao">
+    <resultMap id="salesMap" type="com.yeepay.g3.core.ymf.entity.Sales" >
+        <id column="ID" property="id" jdbcType="BIGINT" />
+        <result column="GROUP_ID" property="groupId" jdbcType="BIGINT" />
+        <result column="CUSTOMER_ID" property="customerId" jdbcType="BIGINT" />
+        <result column="CUSTOMER_NUMBER" property="customerNumber" jdbcType="VARCHAR" />
+        <result column="USER_NAME" property="userName" jdbcType="VARCHAR" />
+        <result column="MOBILE" property="mobile" jdbcType="VARCHAR" />
+        <result column="WX_NAME" property="wxName" jdbcType="VARCHAR" />
+        <result column="BANK_NO" property="bankNo" jdbcType="VARCHAR" />
+        <result column="USER_NO" property="userNo" jdbcType="VARCHAR" />
+        <result column="EMAIL" property="email" jdbcType="VARCHAR" />
+        <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
+        <result column="STATUS" property="status" jdbcType="VARCHAR" />
+        <result column="QR_ID" property="qrId" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+    <select id="getSalesPage" resultMap="salesMap">
+        select * from ymf_sales where status='ACTIVE'  
+    </select>
+    <select id="getSalesById" resultMap="salesMap" parameterType="java.lang.Long">
+        select * from ymf_sales where ID= #{id,jdbcType=BIGINT}
+    </select>
+    <select id="getSalesByQrId" resultMap="salesMap" parameterType="java.lang.String">
+        select * from ymf_sales where QR_ID= #{qrId,jdbcType=VARCHAR}
+    </select>
+    <select id="getSalesByMobile" resultMap="salesMap" parameterType="java.lang.String">
+        select * from ymf_sales where status='ACTIVE' and MOBILE= #{mobile,jdbcType=VARCHAR}
+    </select>
+    <insert id="insert" parameterType="com.yeepay.g3.core.ymf.entity.Sales"  useGeneratedKeys="true" keyProperty="id">
+        insert into YMF_SALES (GROUP_ID,CUSTOMER_ID,CUSTOMER_NUMBER,USER_NAME,MOBILE,WX_NAME,USER_NO,EMAIL,BANK_NO,BANK_NAME,STATUS,QR_ID)
+        values (#{groupId,jdbcType=BIGINT}, 
+        #{customerId,jdbcType=BIGINT},
+        #{customerNumber,jdbcType=VARCHAR},
+        #{userName,jdbcType=VARCHAR},
+        #{mobile,jdbcType=VARCHAR},
+        #{wxName,jdbcType=VARCHAR},
+        #{userNo,jdbcType=VARCHAR},
+        #{email,jdbcType=VARCHAR},
+        #{bankNo,jdbcType=VARCHAR},
+        #{bankName,jdbcType=VARCHAR},
+        'ACTIVE',
+        #{qrId,jdbcType=VARCHAR})
+    </insert>
+    
+     <update id="updateBankInfo">
+         update YMF_SALES
+		    <set >
+		      <if test="bankNo != null" >
+		        BANK_NO = #{bankNo,jdbcType=VARCHAR},
+		      </if>
+		      <if test="bankName != null" >
+		        BANK_NAME = #{bankName,jdbcType=VARCHAR},
+		      </if>
+		       UPDATE_TIME = CURRENT_TIMESTAMP
+		    </set>
+		    where ID = #{id,jdbcType=BIGINT}
+    </update>
+    
+     <update id="frozenSales">
+         update YMF_SALES set status='DELETE',UPDATE_TIME = CURRENT_TIMESTAMP 
+		    where ID = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

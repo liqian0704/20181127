@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.ymf.dao.qrcode.QRCodeDao">
+    <resultMap id="QRCodeDaoResultMap" type="com.yeepay.g3.core.ymf.entity.qrcode.QRCode">
+        <id column="ID" jdbcType="BIGINT" property="id" />
+        <result column="OPTIMISITC" jdbcType="BIGINT" property="optimisitc" />
+        <result column="CUSTOMER_NUMBER" jdbcType="VARCHAR" property="customerNumber" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="QR_ID" jdbcType="VARCHAR" property="qrId" />
+        <result column="FTP_URL" jdbcType="VARCHAR" property="ftpUrl" />
+        <result column="STATUS" jdbcType="VARCHAR" property="status" />
+        <result column="CLOSE_TIME" jdbcType="TIMESTAMP" property="closeTime" />
+        <result column="SHOP_NAME" jdbcType="VARCHAR" property="shopName" />
+        <result column="BUSINESS_TYPE" jdbcType="VARCHAR" property="businessType" />
+        <result column="RELATION_ID" jdbcType="VARCHAR" property="relationId" />
+        <result column="SHOP_NUMBER" jdbcType="VARCHAR" property="shopNumber" />
+        <result column="QR_CONTENT" property="qrContent" jdbcType="VARCHAR" />
+    </resultMap>
+    <sql id="Base_Column_List">
+        ID, OPTIMISITC, CUSTOMER_NUMBER, CREATE_TIME, UPDATE_TIME, QR_ID, FTP_URL, STATUS,
+        CLOSE_TIME,SHOP_NAME,BUSINESS_TYPE,RELATION_ID, SHOP_NUMBER, QR_CONTENT
+    </sql>
+    <select id="getByAgentNumberAndRelationID" resultMap="QRCodeDaoResultMap">
+        select
+        QR.*
+        from
+        YMF_QRCODE QR LEFT JOIN YMF_QR_RELATION RE ON QR.RELATION_ID = RE.REQUEST_ID
+        where
+        QR.RELATION_ID=#{relationID,jdbcType=VARCHAR}
+        AND RE.AGENT_NUMBER=#{agentNumber,jdbcType=VARCHAR}
+    </select>
+    <insert id="insertSignedPaperQrcode" parameterType="com.yeepay.g3.core.ymf.entity.qrcode.QRCode">
+        <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Long">
+            VALUES NEXTVAL FOR SEQ_QRCODE_ID
+        </selectKey>
+        insert into YMF_QRCODE (ID,OPTIMISITC, CUSTOMER_NUMBER,
+        CREATE_TIME, UPDATE_TIME, QR_ID,
+        FTP_URL, STATUS, CLOSE_TIME,SHOP_NAME,BUSINESS_TYPE,RELATION_ID,SHOP_NUMBER,QR_CONTENT)
+        values (#{id,jdbcType=BIGINT},0, #{customerNumber,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+        #{qrId,jdbcType=VARCHAR},
+        #{ftpUrl,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
+        #{closeTime,jdbcType=TIMESTAMP},
+        #{shopName,jdbcType=VARCHAR},
+        #{businessType,jdbcType=VARCHAR},
+        #{relationId,jdbcType=VARCHAR},
+        #{shopNumber,jdbcType=VARCHAR},
+        #{qrContent,jdbcType=VARCHAR})
+    </insert>
+
+    <select id="getBusinessCodeByQrID" resultType="java.lang.String">
+        SELECT b.BIZ_CODE FROM YMF_QRCODE q
+        LEFT JOIN ymf_customer c ON q.CUSTOMER_NUMBER = c.CUSTOMER_NUMBER
+        LEFT JOIN YMF_BUSINESS b ON b.id = c.BUSINESS_ID
+        WHERE q.QR_ID= #{qrID,jdbcType=VARCHAR}
+        with ur
+    </select>
+
+    <!--查询所有qrContent为空且BUSINESS_TYPE不为空的数据-->
+    <select id="queryQrContentEmpty" resultMap="QRCodeDaoResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from YMF_QRCODE Q
+        where Q.QR_CONTENT is NULL
+        AND Q.BUSINESS_TYPE is NOT NULL
+        <![CDATA[
+        AND Q.BUSINESS_TYPE <> ''
+        FETCH FIRST 1000 ROWS ONLY
+        with ur
+        ]]>
+    </select>
+
+    <!--查询所有未绑定网点的二维码-->
+    <select id="queryShopNumberEmpty" resultMap="QRCodeDaoResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from YMF_QRCODE Q
+        WHERE Q.SHOP_NUMBER IS NULL
+        AND Q.CUSTOMER_NUMBER IS NOT NULL
+        <![CDATA[
+        AND Q.BUSINESS_TYPE <> ''
+        ]]>
+        FETCH FIRST 1000 ROWS ONLY
+        with ur
+    </select>
+
+    <!--查询所有未绑定网点的二维码-->
+    <select id="queryOldFtpUrl" resultMap="QRCodeDaoResultMap" parameterType="java.lang.String">
+        select
+        <include refid="Base_Column_List" />
+        from YMF_QRCODE Q
+        WHERE  Q.FTP_URL  like #{prefix,jdbcType=VARCHAR}
+        FETCH FIRST 1000 ROWS ONLY
+        with ur
+    </select>
+</mapper>

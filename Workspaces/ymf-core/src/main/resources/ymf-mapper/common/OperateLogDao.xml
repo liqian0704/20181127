@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.ymf.dao.common.OperateLogDao">
+  
+    <select id="findAllEntityName" resultType="String">
+        select DISTINCT entity_name
+        from ymf_operat_log
+        with ur
+    </select>
+</mapper>

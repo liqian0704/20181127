@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <properties resource="dbConf/MT_ACCOUNTING_VERIFY_WRITE01.properties"></properties>
+    <!--<environments default="development">-->
+        <!--<environment id="YMF">-->
+            <!--<transactionManager type="JDBC"></transactionManager>-->
+            <!--<dataSource type="POOLED">-->
+                <!--<property name="driver" value="${LAIKE.driverClass}"></property>-->
+                <!--<property name="url" value="${LAIKE.jdbcUrl}"></property>-->
+                <!--<property name="username" value="${LAIKE.user}"></property>-->
+                <!--<property name="password" value="${LAIKE.password}"></property>-->
+            <!--</dataSource>-->
+        <!--</environment>-->
+    <!--</environments>-->
+
+    <!--<settings>-->
+        <!--&lt;!&ndash;这个配置使全局的映射器启用或者禁用缓存,各个Mapper.xml 在默认情况下不加缓存 &ndash;&gt;-->
+        <!--<setting name="cacheEnabled" value="false"/>-->
+        <!--&lt;!&ndash; 这个配置设定全局是否启动或者禁用延迟加载（默认true） &ndash;&gt;-->
+        <!--<setting name="lazyLoadingEnabled" value="true"/>-->
+        <!--&lt;!&ndash; 当启用延迟加载时，默认为true启动即加载，false是当使用时才加载&ndash;&gt;-->
+        <!--<setting name="aggressiveLazyLoading" value="false"/>-->
+        <!--&lt;!&ndash; 是否允许多个结果集从一个单独的语句返回 默认true &ndash;&gt;-->
+        <!--<setting name="multipleResultSetsEnabled" value="true"/>-->
+        <!--&lt;!&ndash; 使用列标签代替列名 默认为true &ndash;&gt;-->
+        <!--<setting name="useColumnLabel" value="true"/>-->
+        <!--&lt;!&ndash; 允许jdbc生成主键  默认为false&ndash;&gt;-->
+        <!--<setting name="useGeneratedKeys" value="true"/>-->
+        <!--&lt;!&ndash; 指定MyBatis如何自动映射列到字段/属性。-->
+            <!--PARTIAL只会自动映射简单，没有嵌套的结果。-->
+            <!--FULL会自动映射任意复杂的结果（嵌套的或其他情况）。 &ndash;&gt;-->
+        <!--<setting name="autoMappingBehavior" value="PARTIAL"/>-->
+        <!--&lt;!&ndash; MyBatis 默认的执行器 SIMPLE 简单映射 、REUSE重用预处理语句、BATCH 重用预处理语句和批量更新&ndash;&gt;-->
+        <!--<setting name="defaultExecutorType" value="SIMPLE"/>-->
+        <!--&lt;!&ndash; 设置超时时间，它决定驱动等待一个数据库响应的时间。 &ndash;&gt;-->
+        <!--<setting name="defaultStatementTimeout" value="25000"/>-->
+    <!--</settings>-->
+
+    <!--<typeAliases>-->
+        <!--<typeAlias alias="Config" type="com.yeepay.g3.utils.config.entity.Config"/>-->
+        <!--<typeAlias alias="ConfigVersion" type="com.yeepay.g3.utils.config.entity.ConfigVersion"/>-->
+        <!--<typeAlias alias="ConfigNamespace" type="com.yeepay.g3.utils.config.entity.ConfigNamespace"/>-->
+        <!--<typeAlias alias="ConfigType" type="com.yeepay.g3.utils.config.entity.ConfigType"/>-->
+    <!--</typeAliases>-->
+    <!--<environments default="development">-->
+        <!--<environment id="SmsCode">-->
+            <!--<transactionManager type="JDBC"></transactionManager>-->
+            <!--<dataSource type="POOLED">-->
+                <!--<property name="driver" value="${db.driver}"/>-->
+                <!--<property name="url" value="${db.url}"/>-->
+                <!--<property name="username" value="${db.username}"/>-->
+                <!--<property name="password" value="${db.password}"/>-->
+            <!--</dataSource>-->
+        <!--</environment>-->
+    <!--</environments>-->
+    <!--<mappers>-->
+        <!--<mapper resource="com/yeepay/g3/utils/config/entity/Config.xml"/>-->
+        <!--<mapper resource="com/yeepay/g3/utils/config/entity/ConfigVersion.xml"/>-->
+        <!--<mapper resource="com/yeepay/g3/utils/config/entity/ConfigNamespace.xml"/>-->
+        <!--<mapper resource="com/yeepay/g3/utils/config/entity/ConfigType.xml"/>-->
+    <!--</mappers>-->
+    <!--<typeAliases>-->
+
+        <!--<typeAlias type="handler.SensitiveL2StringHandler"/>-->
+
+    <!--</typeAliases>-->
+    <!--<typeHandlers>-->
+        <!--<typeHandler handler="handler.SensitiveL2StringHandler" javaType="handler.SensitiveString" jdbcType="VARCHAR"/>-->
+    <!--</typeHandlers>-->
+
+    <!--<environments default="development">-->
+        <!--<environment id="development">-->
+            <!--<transactionManager type="JDBC">-->
+                <!--<property name="closeConnection" value="false"/>-->
+            <!--</transactionManager>-->
+            <!--<dataSource type="POOLED">-->
+                <!--<property name="driver" value="${driverClass}"/>-->
+                <!--<property name="url" value="${jdbcUrl}"/>-->
+                <!--<property name="username" value="${user}"/>-->
+                <!--<property name="password" value="${password}"/>-->
+            <!--</dataSource>-->
+        <!--</environment>-->
+    <!--</environments>-->
+
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC">
+            <property name="closeConnection" value="false"/>
+            </transactionManager>
+            <dataSource type="UNPOOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"/>
+                <property name="url" value="jdbc:mysql://10.151.11.3:3306/mt_accounting_verify"/>
+                <property name="username" value="mt"/>
+                <property name="password" value="mt123qwe"/>
+            </dataSource>
+        </environment>
+    </environments>
+
+
+    <mappers>
+        <mapper resource="Accounting_core_mapper/AccountInfoMapper.xml"></mapper>
+        <mapper resource="Accounting_core_mapper/MtBillMapper.xml"></mapper>
+        <mapper resource="Accounting_core_mapper/MtFeeFormulaMapper.xml"></mapper>
+        <mapper resource="Accounting_core_mapper/MtOrderFeeRecordMapper.xml"></mapper>
+        <mapper resource="Accounting_core_mapper/OrderInfoMapper.xml"></mapper>
+        <mapper resource="Accounting_core_mapper/ParentMerchantPeriodRuleMapper.xml"></mapper>
+        <mapper resource="Accounting_core_mapper/PayCompanyBillMapper.xml"></mapper>
+        <mapper resource="Accounting_core_mapper/PayCompanyFeeFormulaMapper.xml"></mapper>
+        <mapper resource="Accounting_core_mapper/PayCompanyOrderFeeRecordMapper.xml"></mapper>
+        <mapper resource="Accounting_core_mapper/PayCompanyOtherFeeRecordMapper.xml"></mapper>
+        <mapper resource="Accounting_core_mapper/PayRecordMapper.xml"></mapper>
+        <mapper resource="Accounting_core_mapper/PromoterPayRecordMapper.xml"></mapper>
+        <mapper resource="Accounting_core_mapper/TotalBillMapper.xml"></mapper>
+        <mapper resource="Accounting_core_mapper/TotalBillNoMapper.xml"></mapper>
+    </mappers>
+</configuration>

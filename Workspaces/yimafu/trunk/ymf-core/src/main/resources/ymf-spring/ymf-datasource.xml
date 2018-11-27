@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd"
+	default-lazy-init="true">
+
+	<!-- ymf write -->
+	<bean id="ymfWrite" class="com.yeepay.g3.utils.common.datasource.DataSourceFactoryBean">
+		<property name="name" value="YMF_WRITE" />
+	</bean>
+
+	<!-- ymf read -->
+	<bean id="ymfRead" class="com.yeepay.g3.utils.common.datasource.DataSourceFactoryBean">
+		<property name="name" value="YMF_READ" />
+	</bean>
+
+	<!-- dal wiki http://wiki.yeepay.com/pages/viewpage.action?pageId=20972159 -->
+	<!-- dal ds -->
+	<bean id="dataSource" class="com.yeepay.utils.jdbc.dal.DALDataSource" init-method="afterPropertiesSet">
+		<property name="appId" value="ymf-core" />
+		<property name="openShardsPlug" value="false" />
+		<property name="defaultDs" value="ds01" />
+		<property name="separatePlug" value="true" /> <!-- 开启读写分离 -->
+		<property name="dataSourceMap">
+			<map>
+				<entry key="ds01" value-ref="ymfWrite" />
+				<entry key="ds02" value-ref="ymfRead" />
+			</map>
+		</property>
+	</bean>
+</beans>

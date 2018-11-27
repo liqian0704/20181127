@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv = "pragma" content = "no-cache">
+    <link rel="stylesheet" href="../css/uikit/uikit.min.css"/>
+    <link rel="stylesheet" href="../css/uikit/dotnav.min.css"/>
+    <link rel="stylesheet" href="../css/uikit/slideshow.min.css"/>
+    <link rel="stylesheet" href="../css/uikit/slidenav.min.css"/>
+
+    <script type="text/javascript" src="../js/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" src="../js/uikit.min.js"></script>
+    <!--<script type="text/javascript" src="js/components/slideshow.js"></script>-->
+    <!--<script type="text/javascript" src="js/components/slideshow-fx.min.js"></script>-->
+    <title>首页广告</title>
+
+    <style type="text/css">
+        .uk-dotnav > * > *{
+            width: 10px;
+            height: 10px;
+        }
+        .uk-dotnav > * {
+            /*padding-left: 10px;*/
+            padding: 0px;
+            margin-top: 10px;
+            margin-right: 10px;
+        }
+        .lk-full-screen,
+        .lk-full-screen > li {
+            height: 100vh;
+        }
+    </style>
+</head>
+<body>
+<div class="uk-slidenav-position" data-uk-slideshow ="{autoplay:true,autoplayInterval:3000,animation:'scroll'}">
+    <ul class="uk-slideshow lk-full-screen">
+        <!--<li lk-link-url = "http://www.baidu.com"><img src="static/images/ad1.png" alt=""></li>-->
+    </ul>
+    <ul class="uk-dotnav uk-dotnav-contrast uk-position-bottom uk-flex-right">
+        <!--<li data-uk-slideshow-item="0"><a href="#">Item 1</a></li>-->
+    </ul>
+
+    <script>
+
+        var browser = {
+            versions: function () {
+                var u = navigator.userAgent;
+                return {
+                    trident: u.indexOf('Trident') > -1, //IE内核
+                    presto: u.indexOf('Presto') > -1, //opera内核
+                    webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+                    gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,//火狐内核
+                    mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+                    ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+                    android: u.indexOf('Android') > -1 || u.indexOf('Adr') > -1, //android终端
+                    iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
+                    iPad: u.indexOf('iPad') > -1, //是否iPad
+                    webApp: u.indexOf('Safari') == -1, //是否web应该程序，没有头部与底部
+                    weixin: u.indexOf('MicroMessenger') > -1, //是否微信
+                    qq: u.match(/\sQQ/i) == " qq" //是否QQ
+                };
+            }()
+        };
+
+        function init(){
+            $.getJSON("../json/adlist.json", function(listData) {
+                create(listData);
+            });
+        }
+
+        function create (listData) {
+
+            var sul = "";
+            var sulDot = "";
+
+            var aLists = Array.prototype.slice.call(listData);
+            aLists.forEach(function (data, index) {
+                if (!data) {
+                    return;
+                }
+                sul += "<li lk-link-url = \"" +  data["homoAdLink"] + "\">"
+                        + "<img src= \"" + data["homeAdImg"] + "\" alt=\"\">"
+                        + "</li>";
+
+                sulDot += "<li data-uk-slideshow-item=" + index + ">"
+                        + "<a href=\"#\">Item" + (index +1) + "</a>"
+                        + "</li>";
+
+            });
+            $('.uk-slideshow').html(sul);
+            $('.uk-dotnav').html(sulDot);
+
+            $('.uk-slideshow').find('li').on({
+                click: function(){
+                    var data = listData[$(this).index()];
+
+                    var urlStr =  data["homoAdLink"].length > 1 ? data["homoAdLink"] : "http://10.151.30.152:8081/ymf-pay/static/h5/home_ad_detail.html?jsonStr="+encodeURIComponent(JSON.stringify(listData[$(this).index()]));
+                    if (browser.versions.ios) {
+                        window.webkit.messageHandlers.homeAddetLink.postMessage(urlStr);
+                    } else if (browser.versions.android) {
+                        window.LikerJsbridge.homeAddetLink(urlStr);
+                    } else{
+                        window.location.href = urlStr;
+                    }
+                },
+            });
+            $.getScript("../js/uikitComponents/slideshow.min.js");
+        }
+        init();
+    </script>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+2017-02-09 14:02:26,911-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 14:02:26,916-[SeleniumAutoFile] INFO [main] cases.testBase.beforeClass(76) - Start to run test class cases.loginTest on driverType1
+2017-02-09 14:02:35,590-[SeleniumAutoFile] INFO [main] config.DriverManage.getWebDriver(33) - this is FireFoxDriver
+2017-02-09 14:02:35,992-[SeleniumAutoFile] INFO [main] cases.loginTest.login(23) - loginis running
+2017-02-09 14:02:40,848-[SeleniumAutoFile] ERROR [main] util.DBservice.closeDBDriver(57) - java.lang.NullPointerException
+2017-02-09 14:02:40,855-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 14:02:40,856-[SeleniumAutoFile] INFO [main] cases.testBase.beforeClass(76) - Start to run test class cases.SearchTest on driverType1
+2017-02-09 14:02:46,900-[SeleniumAutoFile] INFO [main] config.DriverManage.getWebDriver(33) - this is FireFoxDriver
+2017-02-09 18:02:16,802-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 18:02:16,805-[SeleniumAutoFile] INFO [main] cases.testBase.beforeClass(76) - Start to run test class cases.loginTest on driverType1
+2017-02-09 18:10:24,750-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 18:10:24,755-[SeleniumAutoFile] INFO [main] cases.testBase.beforeClass(76) - Start to run test class cases.loginTest on driverType1
+2017-02-09 18:11:06,069-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 18:11:06,072-[SeleniumAutoFile] INFO [main] cases.testBase.beforeClass(76) - Start to run test class cases.loginTest on driverType1
+2017-02-09 18:18:45,766-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 18:18:45,770-[SeleniumAutoFile] INFO [main] cases.testBase.beforeClass(76) - Start to run test class cases.loginTest on driverType1
+2017-02-09 18:19:33,772-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 18:19:33,782-[SeleniumAutoFile] INFO [main] cases.testBase.beforeClass(77) - Start to run test class cases.loginTest on driverType
+2017-02-09 18:22:24,693-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 18:22:24,706-[SeleniumAutoFile] INFO [main] cases.testBase.beforeClass(77) - Start to run test class cases.loginTest on driverType1
+2017-02-09 18:25:09,879-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 18:25:09,884-[SeleniumAutoFile] INFO [main] cases.testBase.beforeClass(77) - Start to run test class cases.loginTest on driverType1
+2017-02-09 18:48:39,117-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 18:48:39,121-[SeleniumAutoFile] INFO [main] cases.testBase.beforeClass(77) - Start to run test class cases.loginTest on driverType1
+2017-02-09 18:54:06,321-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 18:54:06,327-[SeleniumAutoFile] INFO [main] cases.testBase.beforeClass(77) - Start to run test class cases.loginTest on driverType1
+2017-02-09 18:56:35,489-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 18:56:35,492-[SeleniumAutoFile] INFO [main] cases.testBase.beforeClass(77) - Start to run test class cases.loginTest on driverType1
+2017-02-09 19:15:42,063-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 19:15:42,069-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(45) - Start to run test class cases.loginTest on driverType1
+2017-02-09 19:16:26,133-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 19:16:26,165-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(45) - Start to run test class cases.SearchTest on driverType1
+2017-02-09 19:17:20,366-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 19:17:20,370-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(45) - Start to run test class cases.SearchTest on driverType1
+2017-02-09 19:18:47,921-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 19:18:47,925-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(44) - Start to run test class cases.SearchTest on driverType1
+2017-02-09 19:20:08,552-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 19:20:08,555-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(45) - Start to run test class cases.loginTest on driverType1
+2017-02-09 19:20:36,575-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 19:20:36,582-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(45) - Start to run test class cases.SearchTest on driverType1
+2017-02-09 19:20:51,006-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 19:20:51,009-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(45) - Start to run test class cases.SearchTest on driverType1
+2017-02-09 19:22:23,791-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 19:22:23,796-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(45) - Start to run test class cases.SearchTest on driverType1
+2017-02-09 19:22:47,422-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 19:22:47,425-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(45) - Start to run test class cases.SearchTest on driverType3
+2017-02-09 19:24:00,974-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 19:24:00,979-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(45) - Start to run test class cases.SearchTest on driverType3
+2017-02-09 19:24:43,979-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 19:24:43,983-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(45) - Start to run test class cases.loginTest on driverType3
+2017-02-09 19:25:32,352-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 19:25:32,357-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(45) - Start to run test class cases.SearchTest on driverType3
+2017-02-09 19:27:37,386-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 19:27:37,392-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(45) - Start to run test class cases.SearchTest on driverType3
+2017-02-09 19:30:58,631-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 19:30:58,638-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(45) - Start to run test class cases.SearchTest on driverType1
+2017-02-09 19:31:48,084-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 19:31:48,088-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(45) - Start to run test class cases.loginTest on driverType1
+2017-02-09 19:31:58,262-[SeleniumAutoFile] INFO [main] config.DriverManage.getWebDriver(33) - this is FireFoxDriver
+2017-02-09 19:31:58,672-[SeleniumAutoFile] INFO [main] cases.loginTest.login(23) - loginis running
+2017-02-09 19:32:03,377-[SeleniumAutoFile] ERROR [main] util.DBservice.closeDBDriver(57) - java.lang.NullPointerException
+2017-02-09 19:32:19,607-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-09 19:32:19,611-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(45) - Start to run test class cases.SearchTest on driverType1
+2017-02-09 19:32:28,659-[SeleniumAutoFile] INFO [main] config.DriverManage.getWebDriver(33) - this is FireFoxDriver

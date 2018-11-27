@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.ymf.dao.customer.CustomerSettleMapper">
+  <resultMap id="BaseResultMap" type="com.yeepay.g3.core.ymf.entity.customer.CustomerSettle">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="VERSION" jdbcType="BIGINT" property="version" />
+    <result column="CUSTOMER_NUMBER" jdbcType="VARCHAR" property="customerNumber" />
+    <result column="TRX_DATE" jdbcType="DATE" property="trxDate" />
+    <result column="TRX_FEE" jdbcType="DECIMAL" property="trxFee" />
+    <result column="SETTLE_FEE" jdbcType="DECIMAL" property="settleFee" />
+    <result column="REAL_AMOUNT" jdbcType="DECIMAL" property="realAmount" />
+    <result column="SETTLE_TIMES" jdbcType="INTEGER" property="settleTimes" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, VERSION, CUSTOMER_NUMBER, TRX_DATE, TRX_FEE,SETTLE_FEE,REAL_AMOUNT, SETTLE_TIMES,
+    CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByFilter" parameterType="com.yeepay.g3.core.ymf.entity.customer.CustomerSettleParam" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from YMF_CUSTOMERSETTLE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from YMF_CUSTOMERSETTLE
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from YMF_CUSTOMERSETTLE
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByFilter" parameterType="com.yeepay.g3.core.ymf.entity.customer.CustomerSettleParam">
+    delete from YMF_CUSTOMERSETTLE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yeepay.g3.core.ymf.entity.customer.CustomerSettle">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Long">
+      VALUES NEXTVAL FOR YMF_CUSTOMERSETTLE_SEQ
+    </selectKey>
+    insert into YMF_CUSTOMERSETTLE (ID, CUSTOMER_NUMBER, TRX_DATE, REAL_AMOUNT,
+      SETTLE_TIMES, CREATE_TIME, UPDATE_TIME,SETTLE_FEE,TRX_FEE
+      )
+    values (#{id,jdbcType=BIGINT}, #{customerNumber,jdbcType=VARCHAR},
+      #{trxDate,jdbcType=DATE}, #{realAmount,jdbcType=DECIMAL},
+      #{settleTimes,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{settleFee,jdbcType=DECIMAL},#{trxFee,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yeepay.g3.core.ymf.entity.customer.CustomerSettle">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Long">
+      VALUES NEXTVAL FOR YMF_CUSTOMERSETTLE_SEQ
+    </selectKey>
+    insert into YMF_CUSTOMERSETTLE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      ID,
+      <if test="customerNumber != null">
+        CUSTOMER_NUMBER,
+      </if>
+      <if test="trxDate != null">
+        TRX_DATE,
+      </if>
+      <if test="realAmount != null">
+        REAL_AMOUNT,
+      </if>
+      <if test="settleFee != null">
+        SETTLE_FEE,
+      </if>
+      <if test="trxFee != null">
+        TRX_FEE,
+      </if>
+      <if test="settleTimes != null">
+        SETTLE_TIMES,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      #{id,jdbcType=BIGINT},
+      <if test="customerNumber != null">
+        #{customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="trxDate != null">
+        #{trxDate,jdbcType=DATE},
+      </if>
+      <if test="realAmount != null">
+        #{realAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="settleFee != null">
+        #{settleFee,jdbcType=DECIMAL},
+      </if>
+      <if test="trxFee != null">
+        #{trxFee,jdbcType=DECIMAL},
+      </if>
+      <if test="settleTimes != null">
+        #{settleTimes,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByFilter" parameterType="com.yeepay.g3.core.ymf.entity.customer.CustomerSettleParam" resultType="java.lang.Integer">
+    select count(*) from YMF_CUSTOMERSETTLE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByFilterSelective" parameterType="map">
+    update YMF_CUSTOMERSETTLE
+    <set>
+      <if test="record.id != null">
+
+      </if>
+        VERSION = VERSION + 1,
+      <if test="record.customerNumber != null">
+        CUSTOMER_NUMBER = #{record.customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trxDate != null">
+        TRX_DATE = #{record.trxDate,jdbcType=DATE},
+      </if>
+      <if test="record.realAmount != null">
+        REAL_AMOUNT = #{record.realAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.settleFee != null">
+        SETTLE_FEE = #{record.settleFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.trxFee != null">
+        TRX_FEE = #{record.trxFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.settleTimes != null">
+        SETTLE_TIMES = #{record.settleTimes,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByFilter" parameterType="map">
+    update YMF_CUSTOMERSETTLE
+    set
+      VERSION = VERSION + 1,
+      CUSTOMER_NUMBER = #{record.customerNumber,jdbcType=VARCHAR},
+      TRX_DATE = #{record.trxDate,jdbcType=DATE},
+      REAL_AMOUNT = #{record.realAmount,jdbcType=DECIMAL},
+      SETTLE_FEE = #{record.settleFee,jdbcType=DECIMAL},
+      TRX_FEE = #{record.trxFee,jdbcType=DECIMAL},
+      SETTLE_TIMES = #{record.settleTimes,jdbcType=INTEGER},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yeepay.g3.core.ymf.entity.customer.CustomerSettle">
+    update YMF_CUSTOMERSETTLE
+    <set>
+        VERSION = VERSION + 1,
+      <if test="customerNumber != null">
+        CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="trxDate != null">
+        TRX_DATE = #{trxDate,jdbcType=DATE},
+      </if>
+      <if test="realAmount != null">
+        REAL_AMOUNT = #{realAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="settleFee != null">
+        SETTLE_FEE = #{settleFee,jdbcType=DECIMAL},
+      </if>
+      <if test="trxFee != null">
+        TRX_FEE = #{trxFee,jdbcType=DECIMAL},
+      </if>
+      <if test="settleTimes != null">
+        SETTLE_TIMES = #{settleTimes,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yeepay.g3.core.ymf.entity.customer.CustomerSettle">
+    update YMF_CUSTOMERSETTLE
+    set VERSION = VERSION + 1,
+      CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR},
+      TRX_DATE = #{trxDate,jdbcType=DATE},
+      REAL_AMOUNT = #{realAmount,jdbcType=DECIMAL},
+      SETTLE_FEE = #{settleFee,jdbcType=DECIMAL},
+      TRX_FEE = #{trxFee,jdbcType=DECIMAL},
+      SETTLE_TIMES = #{settleTimes,jdbcType=INTEGER},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yeepay.g3.core.ymf.dao.gratuity.GratuityDao" >
+    <resultMap id="GratuityDaoMapResultMap" type="com.yeepay.g3.core.ymf.entity.gratuity.Gratuity" >
+        <id column="ID" property="id" jdbcType="BIGINT" />
+        <result column="CUSTOMER_NUMBER" property="customerNumber" jdbcType="VARCHAR" />
+        <result column="GRATUITY_TEMPLATE" property="gratuityTemplate" jdbcType="VARCHAR" />
+        <result column="STATUS" property="status" jdbcType="VARCHAR" />
+        <result column="GRATUITY_REMARK" property="gratuityRemark" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="findByCustomerNumber" resultMap="GratuityDaoMapResultMap">
+        select *
+        from YMF_GRATUITY p
+        <where>
+        <if test="customerNumber != null" >
+        p.CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR}
+        </if>
+        </where>
+        with ur
+    </select>
+
+</mapper>

@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yeepay.g3.core.ymf.dao.common.OperateLogMapper" >
+  <resultMap id="BaseResultMap" type="com.yeepay.g3.core.ymf.entity.common.OperateLog" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="ENTITY_NAME" property="entityName" jdbcType="VARCHAR" />
+    <result column="OPT_TYPE" property="optType" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_NUMBER" property="customerNumber" jdbcType="VARCHAR" />
+    <result column="OPERATOR_NAME" property="operatorName" jdbcType="VARCHAR" />
+    <result column="DESCRIPTION" property="description" jdbcType="VARCHAR" />
+    <result column="PROCEED_TIME" property="proceedTime" jdbcType="BIGINT" />
+    <result column="BIZ_TYPE" property="bizType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, CREATE_TIME, ENTITY_NAME, OPT_TYPE, CUSTOMER_NUMBER, OPERATOR_NAME, DESCRIPTION, 
+    PROCEED_TIME, BIZ_TYPE
+  </sql>
+  <select id="selectByFilter" resultMap="BaseResultMap" parameterType="com.yeepay.g3.core.ymf.entity.common.OperateLogParam" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from YMF_OPERAT_LOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from YMF_OPERAT_LOG
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from YMF_OPERAT_LOG
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByFilter" parameterType="com.yeepay.g3.core.ymf.entity.common.OperateLogParam" >
+    delete from YMF_OPERAT_LOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yeepay.g3.core.ymf.entity.common.OperateLog" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      VALUES NEXTVAL FOR SEQ_OPERATLOG_ID
+    </selectKey>
+    insert into YMF_OPERAT_LOG (ID, CREATE_TIME, ENTITY_NAME, 
+      OPT_TYPE, CUSTOMER_NUMBER, OPERATOR_NAME, 
+      DESCRIPTION, PROCEED_TIME, BIZ_TYPE
+      )
+    values (#{id,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{entityName,jdbcType=VARCHAR}, 
+      #{optType,jdbcType=VARCHAR}, #{customerNumber,jdbcType=VARCHAR}, #{operatorName,jdbcType=VARCHAR}, 
+      #{description,jdbcType=VARCHAR}, #{proceedTime,jdbcType=BIGINT}, #{bizType,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yeepay.g3.core.ymf.entity.common.OperateLog" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      VALUES NEXTVAL FOR SEQ_OPERATLOG_ID
+    </selectKey>
+    insert into YMF_OPERAT_LOG
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="entityName != null" >
+        ENTITY_NAME,
+      </if>
+      <if test="optType != null" >
+        OPT_TYPE,
+      </if>
+      <if test="customerNumber != null" >
+        CUSTOMER_NUMBER,
+      </if>
+      <if test="operatorName != null" >
+        OPERATOR_NAME,
+      </if>
+      <if test="description != null" >
+        DESCRIPTION,
+      </if>
+      <if test="proceedTime != null" >
+        PROCEED_TIME,
+      </if>
+      <if test="bizType != null" >
+        BIZ_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="entityName != null" >
+        #{entityName,jdbcType=VARCHAR},
+      </if>
+      <if test="optType != null" >
+        #{optType,jdbcType=VARCHAR},
+      </if>
+      <if test="customerNumber != null" >
+        #{customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null" >
+        #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="proceedTime != null" >
+        #{proceedTime,jdbcType=BIGINT},
+      </if>
+      <if test="bizType != null" >
+        #{bizType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByFilter" parameterType="com.yeepay.g3.core.ymf.entity.common.OperateLogParam" resultType="java.lang.Integer" >
+    select count(*) from YMF_OPERAT_LOG
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByFilterSelective" parameterType="map" >
+    update YMF_OPERAT_LOG
+    <set >
+      <if test="record.id != null" >
+        
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.entityName != null" >
+        ENTITY_NAME = #{record.entityName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.optType != null" >
+        OPT_TYPE = #{record.optType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerNumber != null" >
+        CUSTOMER_NUMBER = #{record.customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.operatorName != null" >
+        OPERATOR_NAME = #{record.operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.description != null" >
+        DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.proceedTime != null" >
+        PROCEED_TIME = #{record.proceedTime,jdbcType=BIGINT},
+      </if>
+      <if test="record.bizType != null" >
+        BIZ_TYPE = #{record.bizType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByFilter" parameterType="map" >
+    update YMF_OPERAT_LOG
+    set 
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      ENTITY_NAME = #{record.entityName,jdbcType=VARCHAR},
+      OPT_TYPE = #{record.optType,jdbcType=VARCHAR},
+      CUSTOMER_NUMBER = #{record.customerNumber,jdbcType=VARCHAR},
+      OPERATOR_NAME = #{record.operatorName,jdbcType=VARCHAR},
+      DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      PROCEED_TIME = #{record.proceedTime,jdbcType=BIGINT},
+      BIZ_TYPE = #{record.bizType,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yeepay.g3.core.ymf.entity.common.OperateLog" >
+    update YMF_OPERAT_LOG
+    <set >
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="entityName != null" >
+        ENTITY_NAME = #{entityName,jdbcType=VARCHAR},
+      </if>
+      <if test="optType != null" >
+        OPT_TYPE = #{optType,jdbcType=VARCHAR},
+      </if>
+      <if test="customerNumber != null" >
+        CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="operatorName != null" >
+        OPERATOR_NAME = #{operatorName,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="proceedTime != null" >
+        PROCEED_TIME = #{proceedTime,jdbcType=BIGINT},
+      </if>
+      <if test="bizType != null" >
+        BIZ_TYPE = #{bizType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yeepay.g3.core.ymf.entity.common.OperateLog" >
+    update YMF_OPERAT_LOG
+    set CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      ENTITY_NAME = #{entityName,jdbcType=VARCHAR},
+      OPT_TYPE = #{optType,jdbcType=VARCHAR},
+      CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR},
+      OPERATOR_NAME = #{operatorName,jdbcType=VARCHAR},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      PROCEED_TIME = #{proceedTime,jdbcType=BIGINT},
+      BIZ_TYPE = #{bizType,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

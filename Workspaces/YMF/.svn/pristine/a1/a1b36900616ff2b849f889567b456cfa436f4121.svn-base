@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fileFormat>
+    <format>
+        <field>customernumber</field>
+        <fieldName>商户编号</fieldName>
+    </format>
+    <format>
+        <field>customerName</field>
+        <fieldName>商户名称</fieldName>
+    </format>
+    <format>
+        <field>industrytype</field>
+        <fieldName>所属行业</fieldName>
+    </format>
+    <format>
+        <field>createtime</field>
+        <fieldType>date</fieldType>
+        <fieldName>创建时间</fieldName>
+        <format>yyyy-MM-dd HH:mm:ss</format>
+    </format>
+    <format>
+        <field>updatetime</field>
+        <fieldType>date</fieldType>
+        <fieldName>修改时间</fieldName>
+        <format>yyyy-MM-dd HH:mm:ss</format>
+    </format>
+
+    <format>
+        <field>status</field>
+        <fieldName>产品权限</fieldName>
+    </format>
+    <format>
+        <field>bizcode</field>
+        <fieldName>业务方</fieldName>
+    </format>
+    <format>
+        <field>tradesystem</field>
+        <fieldName>下单通道</fieldName>
+    </format>
+</fileFormat>

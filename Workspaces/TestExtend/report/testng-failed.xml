@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [Suite]">
+  <parameter name="driverType" value="2"/>
+  <test name="Test(failed)">
+    <parameter name="driverType" value="2"/>
+    <classes>
+      <class name="com.cases.KfglTest_New">
+        <methods>
+          <include name="kfgl_0001_LoginSucc" invocation-numbers="0"/>
+          <include name="beforeMethod"/>
+          <include name="afterMethod"/>
+          <include name="afterClass"/>
+          <include name="beforeTest"/>
+          <include name="beforeClass"/>
+        </methods>
+      </class> <!-- com.cases.KfglTest_New -->
+    </classes>
+  </test> <!-- Test(failed) -->
+</suite> <!-- Failed suite [Suite] -->

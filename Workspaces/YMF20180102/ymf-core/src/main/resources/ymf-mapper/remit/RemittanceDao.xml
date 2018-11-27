@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yeepay.g3.core.ymf.dao.remit.RemittanceMapper" >
+
+    <resultMap id="RemittanceDaoBaseResultMap" extends="RemittanceBaseResultMap" type="com.yeepay.g3.core.ymf.entity.remit.Remittance" >
+    </resultMap>
+
+    <select id="findByCustomerNumberAndCustomerOrderId"  resultMap="RemittanceDaoBaseResultMap">
+       select
+        YR.*
+        from
+        YMF_REMITTANCE YR
+        where 1=1
+        <if test="customerNumber != null" >
+           AND CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR}
+        </if>
+        <if test="customerOrderID != null" >
+           AND CUSTOMER_ORDER_ID = #{customerOrderID,jdbcType=VARCHAR}
+        </if>
+        with ur
+    </select>
+    <select id="findByYeepayOrderId"  resultMap="RemittanceDaoBaseResultMap">
+       select
+        YR.*
+        from
+        YMF_REMITTANCE YR
+        where 1=1
+        <if test="yeepayOrderId != null" >
+           AND YEEPAY_ORDER_ID = #{yeepayOrderId,jdbcType=VARCHAR}
+        </if>
+        with ur
+    </select>
+
+    <select id="findByRemitStatus"  resultMap="RemittanceDaoBaseResultMap">
+       select
+        YR.* from (SELECT RE.*,rownumber() over(order by id desc)as rn from YMF_REMITTANCE RE  )
+        as YR
+        where 1=1
+        <if test="remitStatus != null" >
+            AND  YR.REMIT_STATUS = #{remitStatus,jdbcType=VARCHAR}
+        </if>
+        <if test="begin != null" >
+            <![CDATA[  AND YR.CREATE_TIME >= #{begin,jdbcType=TIMESTAMP} ]]>
+        </if>
+        <if test="end != null" >
+            <![CDATA[  AND YR.CREATE_TIME <= #{end,jdbcType=TIMESTAMP} ]]>
+        </if>
+        AND YR.rn BETWEEN #{startRow,jdbcType=INTEGER} AND #{endRow,jdbcType=INTEGER}
+        order by yr.id desc
+        with ur
+    </select>
+    <select id="findByRemitStatusCount" resultType="java.lang.Integer">
+       select
+         count(1) from YMF_REMITTANCE YR
+        where 1=1
+        <if test="remitStatus != null" >
+            AND  YR.REMIT_STATUS = #{remitStatus,jdbcType=VARCHAR}
+        </if>
+        <if test="begin != null" >
+            <![CDATA[  AND YR.CREATE_TIME >= #{begin,jdbcType=TIMESTAMP} ]]>
+        </if>
+        <if test="end != null" >
+            <![CDATA[  AND YR.CREATE_TIME <= #{end,jdbcType=TIMESTAMP} ]]>
+        </if>
+        with ur
+    </select>
+
+    <!--打款定时查询数据-->
+    <select id="findRemiteDatas" resultMap="RemittanceDaoBaseResultMap">
+        select
+        * from YMF_REMITTANCE R
+        where 1=1
+        <if test="status != null">
+            AND  R.STATUS = #{status,jdbcType=VARCHAR}
+        </if>
+        <if test="begin != null">
+            <![CDATA[  AND R.CREATE_TIME >= #{begin,jdbcType=TIMESTAMP} ]]>
+        </if>
+        <if test="end != null">
+            <![CDATA[  AND R.CREATE_TIME <= #{end,jdbcType=TIMESTAMP} ]]>
+        </if>
+        <if test="remitCount != null">
+            <![CDATA[
+          AND  (R.REMIT_COUNT < #{remitCount,jdbcType=INTEGER}
+                OR R.REMIT_COUNT IS NULL
+          )
+            ]]>
+        </if>
+        <if test="remitRequestTime != null">
+            <![CDATA[
+            AND (R.REMIT_REQUEST_TIME <= #{remitRequestTime,jdbcType=TIMESTAMP}
+                OR R.REMIT_REQUEST_TIME IS NULL )
+            ]]>
+        </if>
+        <if test="rowCount != null">
+            <![CDATA[ fetch first ${rowCount} rows only ]]>
+        </if>
+         with ur
+    </select>
+
+    <!--打款定时批更新-->
+    <update id="updateRemitTime" parameterType="com.yeepay.g3.core.ymf.entity.remit.Remittance">
+        UPDATE YMF_REMITTANCE R
+        SET R.REMIT_COUNT      = coalesce(REMIT_COUNT,0) + 1,
+            R.REMIT_REQUEST_TIME = #{curTime,jdbcType=TIMESTAMP}
+        WHERE R.ID IN
+        <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+    </update>
+
+</mapper>

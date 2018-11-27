@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.yeepay.g3.auth:auth-facade:1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/auth/auth-facade/1.0-SNAPSHOT/auth-facade-1.0-20151217.015243-219.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/auth/auth-facade/1.0-SNAPSHOT/auth-facade-1.0-20151217.015243-219-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/auth/auth-facade/1.0-SNAPSHOT/auth-facade-1.0-20151217.015243-219-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

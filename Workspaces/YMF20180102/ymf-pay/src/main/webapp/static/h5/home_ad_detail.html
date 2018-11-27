@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,user-scalable=no"/>
+<meta http-equiv = "pragma" content = "no-cache">
+<head>
+    <meta charset="UTF-8">
+    <title>详情介绍</title>
+    <!--<link rel="stylesheet" href="css/uikit.min.css"/>-->
+    <!--<link rel="stylesheet" href="css/iconfont.css"/>-->
+    <script type="text/javascript" src="../js/jquery-1.10.1.min.js"></script>
+
+    <style type="text/css">
+
+        body{
+            margin: 10px 10px;
+            margin-top: 0px;
+            font-size: 0.75em;
+            /*color: darkgray;*/
+        }
+
+        .lk-div-top > p,.lk-div-bottom > p{
+            text-indent: 25px;
+        }
+
+        .lk-div-image img{
+            display:block;
+            margin:0 auto;
+        }
+
+        .lk-div-bottom > p{
+
+        }
+
+    </style>
+</head>
+<body>
+<div class="lk-div-top">
+    <p></p>
+</div>
+<div class="lk-div-image">
+    <span style="text-align: center"><img src=""></span>
+</div>
+<div class="lk-div-bottom">
+    <p></p>
+</div>
+
+<script type="text/javascript">
+    function init(){
+        var url = window.location.href;
+        var params = url.substring(url.lastIndexOf("?")+1,url.length);
+
+        var jsondata = (params.split('=')[0] == "jsonStr" ? decodeURIComponent(params.substring(params.indexOf("?jsonStr=")+"?jsonStr=".length, params.length)) : "");
+
+        jsondata = JSON.parse(jsondata);
+        var sepStr = "012345543210";
+        var sepindex = jsondata["detailDesp"].lastIndexOf(sepStr);
+
+        jsondata["detailImgl"] ? function(){
+            var eImg =  $('.lk-div-image').find('img');
+            eImg.attr('src', jsondata["detailImgl"]);
+            eImg.attr('height', 'auto');
+            eImg.attr('width', '100%');
+        }() : " ";
+
+        if(jsondata["detailDesp"] && sepindex != -1) {
+            $('.lk-div-top').find('p').html(jsondata["detailDesp"].substring(0,sepindex).replace(/\n/g, '<br>'));
+            $('.lk-div-bottom').find('p').html(jsondata["detailDesp"].substring(sepindex+sepStr.length,jsondata["detailDesp"].length).replace(/\n/g, '<br>'));
+        }else if(jsondata["detailDesp"].length > 0){
+            $('.lk-div-top').find('p').html(jsondata["detailDesp"].substring(0,jsondata["detailDesp"].length).replace(/\n/g, '<br>'));
+        }
+    }
+    init();
+</script>
+</body>
+</html>

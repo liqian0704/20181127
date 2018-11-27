@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!--YMF 数据库-->
+	<bean id="likerQueryService" class="com.yeepay.g3.utils.query.impl.QueryServiceImpl">
+		<property name="dataSource" ref="dataSourceRead"/>
+		<property name="querys">
+			<map>
+				<!-- 消息列表查询 -->
+				<entry key="QUERY_PUSH_MSG_LIST">
+					<bean class="com.yeepay.g3.utils.query.Query">
+						<property name="sql">
+							<value>
+								<![CDATA[
+									SELECT
+									  MESSAGE_NO as msgNo,
+									  JPUSH_ID as jpushID,
+									  TYPE as type,
+									  TITLE as title,
+									  CONTENT as content,
+									  PUSH_TIME as pushTime,
+									  LIFE_START as lifeStart,
+									  LIFE_END as lifeEnd,
+									  URL1 as url1,
+									  URL2 as url2
+									FROM YMF.TBL_PUSH_MSG
+									WHERE PUSH_STATUS = 'SENDED'
+										 /~type: AND TYPE = {type}~/
+										 /~memberNo: AND PHONE_NUMBERS LIKE '%'||{memberNo}||'%'~/
+										 /~versionId: AND APP_VERSION_ID LIKE '%'||{versionId}||'%'~/
+										 /~startDate: AND PUSH_TIME > {startDate,mintimestamp} ~/
+									  	 /~endDate: AND PUSH_TIME <= {endDate,maxtimestamp} ~/
+									ORDER BY CREATE_TIME DESC
+									WITH UR
+                                ]]>
+							</value>
+						</property>
+					</bean>
+				</entry>
+				<!--订单查询-->
+				<entry key="QUERY_ORDER_LIST">
+					<bean class="com.yeepay.g3.utils.query.Query">
+						<property name="sql">
+							<value>
+								<![CDATA[
+									SELECT
+									  o.CUSTOMER_NUMBER merchantNo,
+									  CASE WHEN p.PAY_SOURCE = 'SCAN_CODE'
+										THEN null
+									  ELSE p.PAY_SOURCE END   paySource,
+									  o.SAN_CODE qrCode,
+									  o.ORDER_STATUS orderStatus,
+									  o.EXTERNAL_ID payReceipt,
+									  o.TRX_AMT trxAmount,
+									  p.TRX_TYPE orderType,
+									  p.PAY_URL payUrl,
+									  o.CUSTOMER_ORDER_ID externalId,
+									  p.BANK_NAME bankName,
+									  p.BANK_TYPE bankType,
+									  p.CARD_TYPE cardType,
+									  p.REAL_AMT realAmount,
+									  CASE WHEN s.SHOP_NAME = '默认网点'
+										THEN null
+									  ELSE s.SHOP_NAME END   shopName,
+									  p.BANK_ORDER_ID platformOrderId,
+									  p.OUT_ORDER_ID platformTradeId,
+									  o.BALANCE_TYPE balanceType,
+									  CASE WHEN d.SETTLE_STATUS = 'INIT'
+										THEN 'PROCESS'
+									  ELSE d.SETTLE_STATUS END settleStatus,
+									  d.SETTLE_REAL_AMOUNT settleAmount,
+									  CASE WHEN (COALESCE(d.SETTLE_FEE_AMOUNT, 0) + COALESCE(d.BANK_FEE_AMOUNT, 0) + COALESCE(d.TRADE_FEE_AMOUNT, 0)) = '0'
+									  THEN null
+									  ELSE (COALESCE(d.SETTLE_FEE_AMOUNT, 0) + COALESCE(d.BANK_FEE_AMOUNT, 0) + COALESCE(d.TRADE_FEE_AMOUNT, 0)) END fee,
+									  d.CREATE_TIME settleTime,
+									  o.CREATE_TIME createTime,
+									  o.COMPLETE_TIME completeTime
+									FROM YMF.YMF_ORDER o LEFT JOIN YMF.YMF_PAYMENT p ON o.ID = p.ORDER_ID
+									  LEFT JOIN YMF.YMF_SHOP s ON o.SHOP_NUMBER = s.SHOP_NUMBER
+									  LEFT JOIN YMF.YMF_SETTLE_DETAIL d ON p.YEEPAY_ORDER_ID = d.YEEPAY_ORDER_ID
+									WHERE
+										 1=1
+										 AND o.ORDER_STATUS <>'FAIL' AND o.ORDER_STATUS <>'INIT'
+									  	 /~merchantNo: AND o.CUSTOMER_NUMBER = {merchantNo}~/
+									  	 /~paySource: AND p.PAY_SOURCE = {paySource}~/
+									  	 /~orderStatus: AND o.ORDER_STATUS = {orderStatus}~/
+									  	 /~orderType: AND p.TRX_TYPE = {orderType}~/
+									  	 /~balanceType: AND o.BALANCE_TYPE = {balanceType}~/
+									  	 /~yeepayOrderId: AND p.YEEPAY_ORDER_ID = {yeepayOrderId}~/
+									  	 /~externalId: AND o.EXTERNAL_ID = {externalId}~/
+									  	 /~shopNumber: AND s.SHOP_NUMBER = {shopNumber}~/
+									  	 /~startDate: AND o.CREATE_TIME > {startDate,mintimestamp} ~/
+									  	 /~endDate: AND o.CREATE_TIME <= {endDate,maxtimestamp} ~/
+									ORDER BY o.CREATE_TIME DESC
+									WITH UR
+								]]>
+							</value>
+						</property>
+					</bean>
+				</entry>
+				<!-- 订单汇总查询 -->
+				<entry key="QUERY_ORDER_SUM">
+					<bean class="com.yeepay.g3.utils.query.Query">
+						<property name="sql">
+							<value>
+								<![CDATA[
+									SELECT
+										COALESCE(sum(o.TRX_AMT),0)
+									FROM YMF.YMF_ORDER o LEFT JOIN YMF.YMF_PAYMENT p
+										    ON o.ID = p.ORDER_ID
+									  LEFT JOIN YMF.YMF_SHOP s ON o.SHOP_NUMBER = s.SHOP_NUMBER
+									WHERE
+										 1=1
+										 AND o.ORDER_STATUS <>'FAIL' AND o.ORDER_STATUS <>'INIT'
+									  	 /~merchantNo: AND o.CUSTOMER_NUMBER = {merchantNo}~/
+									  	 /~paySource: AND p.PAY_SOURCE = {paySource}~/
+									  	 /~orderStatus: AND o.ORDER_STATUS = {orderStatus}~/
+									  	 /~orderType: AND p.TRX_TYPE = {orderType}~/
+									  	 /~balanceType: AND o.BALANCE_TYPE = {balanceType}~/
+									  	 /~externalId: AND o.EXTERNAL_ID = {externalId}~/
+									  	 /~shopNumber: AND s.SHOP_NUMBER = {shopNumber}~/
+									  	 /~startDate: AND o.CREATE_TIME > {startDate,mintimestamp} ~/
+									  	 /~endDate: AND o.CREATE_TIME <= {endDate,maxtimestamp} ~/
+									WITH UR
+								]]>
+							</value>
+						</property>
+					</bean>
+				</entry>
+				<!--到账查询-->
+				<entry key="QUERY_SETTLE_LIST">
+					<bean class="com.yeepay.g3.utils.query.Query">
+						<property name="sql">
+							<value>
+								<![CDATA[
+									SELECT
+									  o.REAL_AMOUNT realAmount,
+									  COALESCE(o.SETTLE_FEE,0) + COALESCE(o.TRX_FEE,0) commissionFee,
+									  o.TRX_DATE completeTime
+									FROM YMF.YMF_CUSTOMERSETTLE o
+									WHERE
+										 1=1
+									  	 /~merchantNo: AND o.CUSTOMER_NUMBER = {merchantNo}~/
+									  	 /~startDate: AND o.TRX_DATE >= {startDate,date} ~/
+									  	 /~endDate: AND o.TRX_DATE <= {endDate,date} ~/
+									ORDER BY o.TRX_DATE DESC
+									WITH UR
+								]]>
+							</value>
+						</property>
+					</bean>
+				</entry>
+				<!--YMF商户表-->
+				<entry key="QUERY_YMF_CUSTOMER">
+					<bean class="com.yeepay.g3.utils.query.Query">
+						<property name="sql">
+							<value>
+								<![CDATA[
+									SELECT
+									  o.CUSTOMER_NUMBER customerNo,
+									  o.CUSTOMER_NAME customerName
+									FROM YMF.YMF_CUSTOMER o
+									WHERE
+										 1=1
+									  	 AND o.CUSTOMER_NUMBER = {merchantNo}
+									  	 AND o.STATUS = 'ACTIVE'
+									  	 AND o.BUSINESS_ID = {bizNo}
+									WITH UR
+								]]>
+							</value>
+						</property>
+					</bean>
+				</entry>
+
+				<!--T1三月内结算大于1000-->
+				<entry key="QUERY_SETTLE_T1_SUM">
+					<bean class="com.yeepay.g3.utils.query.Query">
+						<property name="sql">
+							<value>
+								<![CDATA[
+									SELECT count(1)
+									FROM YMF.YMF_CUSTOMERSETTLE
+									WHERE
+									1=1
+									AND REAL_AMOUNT > 1000
+									/~merchantNo: AND CUSTOMER_NUMBER = {merchantNo}~/
+									/~startDate: AND CREATE_TIME > {startDate,mintimestamp} ~/
+									/~endDate: AND CREATE_TIME <= {endDate,maxtimestamp} ~/
+									WITH UR
+								]]>
+							</value>
+						</property>
+					</bean>
+				</entry>
+				<!--查询所有T1和S0结算实际出款总金额-->
+				<entry key="QUERY_ALL_SETTLE_SUM">
+					<bean class="com.yeepay.g3.utils.query.Query">
+						<property name="sql">
+							<value>
+								<![CDATA[
+									SELECT
+										sum(REAL_AMOUNT)
+									FROM YMF.YMF_CUSTOMERSETTLE
+									WHERE 1 = 1
+									/~merchantNo: AND CUSTOMER_NUMBER = {merchantNo}~/
+									/~startDate: AND CREATE_TIME > {startDate,mintimestamp} ~/
+									/~endDate: AND CREATE_TIME <= {endDate,maxtimestamp} ~/
+									UNION
+									SELECT
+										sum(SETTLE_REAL_AMOUNT)
+									FROM YMF.YMF_SETTLE_DETAIL
+									WHERE 1 = 1
+									AND SETTLE_TYPE='S0'
+									AND SETTLE_STATUS = 'SUCCESS'
+									/~merchantNo: AND CUSTOMER_NUMBER = {merchantNo}~/
+									/~startDate: AND CREATE_TIME > {startDate,mintimestamp} ~/
+									/~endDate: AND CREATE_TIME <= {endDate,maxtimestamp} ~/
+									WITH UR
+								]]>
+							</value>
+						</property>
+					</bean>
+				</entry>
+				<!--查询所有T1和S0结算明细-->
+				<entry key="QUERY_ALL_SETTLE">
+					<bean class="com.yeepay.g3.utils.query.Query">
+						<property name="sql">
+							<value>
+								<![CDATA[
+									SELECT
+										CUSTOMER_NUMBER,
+										SETTLE_REAL_AMOUNT AS REAL_AMOUNT,
+										COALESCE(SETTLE_FEE_AMOUNT, 0) + COALESCE(BANK_FEE_AMOUNT, 0)
+										+ COALESCE(TRADE_FEE_AMOUNT, 0) as FEE,
+										'S0' AS TYPE,
+										CREATE_TIME AS TIME,
+										CASE WHEN SETTLE_STATUS = 'INIT'
+										THEN 'PROCESS'
+									  	ELSE SETTLE_STATUS END STATUS,
+										EXTERNAL_ID as externalId,
+										YEEPAY_ORDER_ID as yeepayOrderId
+									FROM YMF.YMF_SETTLE_DETAIL
+									WHERE 1 = 1
+									/~merchantNo: AND CUSTOMER_NUMBER = {merchantNo}~/
+									/~startDate: AND CREATE_TIME > {startDate,mintimestamp} ~/
+									/~endDate: AND CREATE_TIME <= {endDate,maxtimestamp} ~/
+									UNION
+									SELECT
+										CUSTOMER_NUMBER,
+										REAL_AMOUNT AS REAL_AMOUNT,
+										COALESCE(SETTLE_FEE, 0) + COALESCE(TRX_FEE, 0) as FEE,
+										'T1' AS TYPE,
+										CREATE_TIME AS TIME,
+										'SUCCESS' as STATUS,
+										null as externalId,
+										null as yeepayOrderId
+									FROM YMF.YMF_CUSTOMERSETTLE
+									WHERE 1 = 1
+									AND REAL_AMOUNT <> 0
+									/~merchantNo: AND CUSTOMER_NUMBER = {merchantNo}~/
+									/~startDate: AND CREATE_TIME > {startDate,mintimestamp} ~/
+									/~endDate: AND CREATE_TIME <= {endDate,maxtimestamp} ~/
+									ORDER BY TIME DESC
+									WITH UR
+								]]>
+							</value>
+						</property>
+					</bean>
+				</entry>
+                <!--当日收款-->
+                <entry key="QUERY_ORDER_TODAY">
+                    <bean class="com.yeepay.g3.utils.query.Query">
+                        <property name="sql">
+                            <value>
+                                <![CDATA[
+									SELECT
+									  COALESCE(sum(TRX_AMT), 0) totalAmount,
+									  count(*) totalCount
+									FROM YMF.YMF_ORDER
+									WHERE
+										 1=1
+										 AND ORDER_STATUS = 'SUCCESS'
+										 /~merchantNo: AND CUSTOMER_NUMBER = {merchantNo}~/
+									  	 /~startDate: AND CREATE_TIME > {startDate,mintimestamp} ~/
+									  	 /~endDate: AND CREATE_TIME <= {endDate,maxtimestamp} ~/
+									WITH UR
+								]]>
+                            </value>
+                        </property>
+                    </bean>
+                </entry>
+				<!-- 盟友子商户、子商户和盟友数量统计 -->
+				<entry key="ALLIANCE_STATISTICS_COUNT">
+					<bean class="com.yeepay.g3.utils.query.Query">
+						<property name="sql">
+							<value>
+								<![CDATA[
+									SELECT count(1) count
+									FROM ALC_MEMBER
+									WHERE
+									  MER_TYPE = 'CHILD'
+									  AND PARENT_CODE IN (SELECT CUSTOMER_NUMBER
+									   					  FROM ALC_MEMBER
+									    				  WHERE
+									    				  	MER_TYPE = 'ALLY'
+									   						/~merchantNo: AND PARENT_CODE = {merchantNo}~/)
+									UNION ALL
+									SELECT
+									  count(1) count
+									FROM TBL_USER
+									WHERE 1=1
+									  /~merchantNo: AND AGENT_NO = {merchantNo}~/
+									AND APP_SOURCE = 'LIKER'
+									UNION ALL
+									SELECT
+									  count(1) count
+									FROM TBL_USER
+									WHERE 1=1
+									   /~merchantNo: AND AGENT_NO = {merchantNo}~/
+									AND APP_SOURCE = 'ALLIANCE'
+								]]>
+							</value>
+						</property>
+					</bean>
+				</entry>
+				<!-- 查询盟主 -->
+				<entry key="ALLIANCE_LORD">
+					<bean class="com.yeepay.g3.utils.query.Query">
+						<property name="sql">
+							<value>
+								<![CDATA[
+									SELECT
+									  a.CUSTOMER_NAME lord
+									FROM ALC_MEMBER a LEFT JOIN ALC_MEMBER b
+										ON a.CUSTOMER_NUMBER = b.LORD_CODE
+									WHERE 1 = 1
+										  /~merchantNo: AND b.CUSTOMER_NUMBER= {merchantNo}~/
+									WITH UR
+								]]>
+							</value>
+						</property>
+					</bean>
+				</entry>
+				<!-- 查询商户当日汇总 -->
+				<entry key="MERCHANT_STATISTICS_DAY">
+					<bean class="com.yeepay.g3.utils.query.Query">
+						<property name="sql">
+							<value>
+								<![CDATA[
+									SELECT
+										MER_TYPE, count(1), sum(AMOUNT) sum
+									FROM ALC_ORDER_DAY
+									WHERE
+									1=1
+									/~merchantNo: AND PARENT_CODE = {merchantNo}~/
+									/~startDate: AND TRX_DATE >= {startDate} ~/
+				 				    /~type: AND MER_TYPE = {type}~/
+									/~endDate: AND TRX_DATE <= {endDate} ~/
+									GROUP BY MER_TYPE
+									WITH UR
+								]]>
+							</value>
+						</property>
+					</bean>
+				</entry>
+				<!-- 查询商户当月汇总 -->
+				<entry key="ALLIANCE_STATISTICS_MONTH">
+					<bean class="com.yeepay.g3.utils.query.Query">
+						<property name="sql">
+							<value>
+								<![CDATA[
+									SELECT
+										MER_TYPE type, count(1) count, sum(AMOUNT) amt
+									FROM ALC_ORDER_DAY
+									WHERE
+									1=1
+									/~merchantNo: AND PARENT_CODE = {merchantNo}~/
+									/~startDate: AND TRX_DATE >= {startDate} ~/
+									/~endDate: AND TRX_DATE <= {endDate} ~/
+									GROUP BY MER_TYPE
+									WITH UR
+								]]>
+							</value>
+						</property>
+					</bean>
+				</entry>
+				<!-- 查询盟友和子商户明细 -->
+				<entry key="ALLIANCE_MEMBER_DETAIL">
+					<bean class="com.yeepay.g3.utils.query.Query">
+						<property name="sql">
+							<value>
+								<![CDATA[
+									SELECT
+									  CASE WHEN u.APP_SOURCE = 'ALLIANCE'
+										THEN '盟友'
+									  ELSE '商户' END         type,
+									  CASE WHEN o.LEGAL_NAME IS NULL OR o.LEGAL_NAME = ''
+										THEN '未实名认证'
+									  ELSE o.LEGAL_NAME END name,
+									  u.PHONE_NO            phone,
+									  CASE WHEN o.OPEN_STATUS = 'SUCCESS' OR o.LOL_OPEN_STATUS = 'SUCCESS'
+										THEN '已开通'
+									  ELSE '未开通' END        status,
+									  u.CREATE_TIME         time
+									FROM YMF.TBL_USER u
+									  LEFT JOIN YMF.TBL_ACCOUNT_OPEN o ON u.ACCOUNT_ID = o.ID
+									WHERE 1 = 1
+										  /~agentNo:AND u.AGENT_NO = {agentNo}~/
+										  /~inviteCode:AND u.INVITE_CODE = {inviteCode}~/
+										  /~statusOpen:AND [statusOpen,string] ~/
+										  /~appSource: AND u.APP_SOURCE = {appSource}~/
+										  /~startDate: AND u.CREATE_TIME > {startDate,mintimestamp} ~/
+										  /~endDate: AND u.CREATE_TIME <= {endDate,maxtimestamp} ~/
+									WITH UR
+								]]>
+							</value>
+						</property>
+					</bean>
+				</entry>
+				<!-- 查询（盟友维度）子商户日交易汇总 -->
+				<entry key="ALLIANCE_TRADE">
+					<bean class="com.yeepay.g3.utils.query.Query">
+						<property name="sql">
+							<value>
+								<![CDATA[
+									SELECT
+									  d.PARENT_CODE     lord,
+									  d.CUSTOMER_NUMBER merchantNo,
+									  d.CUSTOMER_NAME   name,
+									  CASE WHEN d.MER_TYPE = 'ALLY'
+										THEN '盟友子商户'
+									  ELSE '子商户' END     type,
+									  u.PHONE_NO        phone,
+									  count(1)      total,
+									  sum(AMOUNT)       sum
+									FROM ALC_ORDER_DAY d
+									  LEFT JOIN YMF.TBL_USER u ON u.MERCHANT_NO = d.CUSTOMER_NUMBER
+									WHERE 1=1
+									/~ type:AND d.MER_TYPE = {type}~/
+									/~ merchantNo:AND PARENT_CODE = {merchantNo}~/
+									/~startDate: AND d.TRX_DATE >= {startDate,mintimestamp} ~/
+									/~endDate: AND d.TRX_DATE <= {endDate,maxtimestamp} ~/
+									GROUP BY d.PARENT_CODE, d.CUSTOMER_NUMBER, d.CUSTOMER_NAME,d.MER_TYPE,
+									 		u.PHONE_NO
+									WITH UR
+								]]>
+							</value>
+						</property>
+					</bean>
+				</entry>
+				<!-- 查询盟友维度子商户个数汇总 -->
+				<entry key="ALLIANCE_MERCHANT_SUM">
+					<bean class="com.yeepay.g3.utils.query.Query">
+						<property name="sql">
+							<value>
+								<![CDATA[
+									SELECT
+									  mm.CUSTOMER_NUMBER       merchantNo,
+									  mm.CUSTOMER_NAME         name,
+									  u.PHONE_NO               phone,
+									  count(m.CUSTOMER_NUMBER) childnum
+									FROM ALC_MEMBER m
+									  LEFT JOIN ALC_MEMBER mm ON m.PARENT_CODE = mm.CUSTOMER_NUMBER
+									  LEFT JOIN YMF.TBL_USER u ON u.MERCHANT_NO = mm.CUSTOMER_NUMBER
+									  LEFT JOIN ALC_MEMBER mmm ON mm.PARENT_CODE = mmm.CUSTOMER_NUMBER
+									WHERE
+									  1 = 1
+									  AND m.MER_TYPE = 'CHILD'
+									  AND mm.MER_TYPE = 'ALLY'
+									  /~ merchantNo:AND mmm.CUSTOMER_NUMBER = {merchantNo}~/
+									  /~startDate: AND m.CREATE_TIME > {startDate,mintimestamp} ~/
+									  /~endDate: AND m.CREATE_TIME <= {endDate,maxtimestamp} ~/
+									GROUP BY mm.CUSTOMER_NUMBER,mm.CUSTOMER_NAME,u.PHONE_NO
+									WITH UR
+								]]>
+							</value>
+						</property>
+					</bean>
+				</entry>
+				<!-- 推客奖项收益查询 -->
+				<entry key="ALLIANCE_SHARE_SUM">
+					<bean class="com.yeepay.g3.utils.query.Query">
+						<property name="sql">
+							<value>
+								<![CDATA[
+									SELECT NVL(SUM(SHARE), 0) AS share,
+									'NOW' AS TYPE
+									FROM ALC_SHARE
+                                    WHERE
+                                    1=1
+                                    AND SHARE_TYPE = 'ALLIANCE'
+                                    AND SHARE_STATUS = 'PUBLISHED'
+                                    /~ merchantNo:AND CUSTOMER_NUMBER = {merchantNo}~/
+                                    /~ shareDateStart:AND SHARE_DATE > {shareDateStart,mintimestamp}~/
+                                    /~ shareDateEnd:AND SHARE_DATE <= {shareDateEnd,maxtimestamp}~/
+                                    UNION ALL
+                                    SELECT NVL(SUM(SHARE), 0) AS share,
+                                    'ALL' AS type
+                                    FROM ALC_SHARE
+                                    WHERE
+                                    1=1
+                                    AND SHARE_TYPE = 'ALLIANCE'
+                                    AND SHARE_STATUS = 'PUBLISHED'
+                                    /~ merchantNo:AND CUSTOMER_NUMBER = {merchantNo}~/
+                                    UNION ALL
+                                    SELECT NVL(SUM(SHARE), 0) AS share,
+                                    'PRE' AS type
+                                    FROM ALC_SHARE
+                                    WHERE
+                                    1=1
+                                    AND SHARE_TYPE = 'ALLIANCE'
+                                    AND SHARE_STATUS = 'PUBLISHED'
+                                    /~ merchantNo:AND CUSTOMER_NUMBER = {merchantNo}~/
+                                    /~ preShareDateStart:AND SHARE_DATE > {preShareDateStart,mintimestamp}~/
+                                    /~ preShareDateEnd:AND SHARE_DATE <= {preShareDateEnd,maxtimestamp}~/
+                                    UNION ALL
+                                    SELECT sa.SHARE AS share,
+                                    sa.AWARD_TYPE AS type
+                                    FROM ALC_SHARE_AWARD sa
+                                    LEFT JOIN ALC_SHARE s
+                                    ON sa.CUSTOMER_NUMBER = s.CUSTOMER_NUMBER and sa.SHARE_TYPE = s.SHARE_TYPE and sa.SHARE_DATE = s.SHARE_DATE
+                                    WHERE
+                                    1=1
+                                    AND sa.SHARE_TYPE = 'ALLIANCE'
+                                    AND s.SHARE_STATUS = 'PUBLISHED'
+                                    /~ merchantNo:AND sa.CUSTOMER_NUMBER = {merchantNo}~/
+                                    /~ shareDateStart:AND sa.SHARE_DATE > {shareDateStart,mintimestamp}~/
+                                    /~ shareDateEnd:AND sa.SHARE_DATE <= {shareDateEnd,maxtimestamp}~/
+                                    WITH UR
+								]]>
+							</value>
+						</property>
+					</bean>
+				</entry>
+				<!-- 收益记录查询 -->
+				<entry key="ALLIANCE_SHARE_DETAIL">
+					<bean class="com.yeepay.g3.utils.query.Query">
+						<property name="sql">
+							<value>
+								<![CDATA[
+									SELECT SHARE share,
+									SHARE_DATE date
+									FROM ALC_SHARE
+                                    WHERE
+                                    1=1
+                                    AND SHARE_TYPE = 'ALLIANCE'
+                                    AND SHARE_STATUS = 'PUBLISHED'
+                                    /~ merchantNo:AND CUSTOMER_NUMBER = {merchantNo}~/
+                                    ORDER BY SHARE_DATE DESC
+                                    WITH UR
+								]]>
+							</value>
+						</property>
+					</bean>
+				</entry>
+				<!-- 网点查询 -->
+                <entry key="QUERY_SHOP_LIST">
+                    <bean class="com.yeepay.g3.utils.query.Query">
+                        <property name="sql">
+                            <value>
+                                <![CDATA[
+									SELECT s.SHOP_NUMBER shopNumber,
+									s.SHOP_NAME shopName
+                                  FROM YMF.TBL_USER u
+                                    LEFT JOIN YMF.YMF_SHOP s
+				                    ON u.MERCHANT_NO = s.CUSTOMER_NUMBER
+								  WHERE
+									1=1
+								   /~memberNo: AND u.MEMBER_NO = {memberNo}~/
+								   AND s.SHOP_NAME IS NOT NULL
+                                  WITH UR
+								]]>
+                            </value>
+                        </property>
+                    </bean>
+                </entry>
+			</map>
+		</property>
+	</bean>
+</beans>

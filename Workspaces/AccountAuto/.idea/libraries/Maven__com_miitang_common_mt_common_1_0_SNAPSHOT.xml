@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.miitang.common:mt-common:1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/miitang/common/mt-common/1.0-SNAPSHOT/mt-common-1.0-20180925.121516-168.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/miitang/common/mt-common/1.0-SNAPSHOT/mt-common-1.0-20180925.121516-168-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/miitang/common/mt-common/1.0-SNAPSHOT/mt-common-1.0-20180925.121516-168-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

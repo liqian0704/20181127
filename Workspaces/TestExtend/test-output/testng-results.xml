@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results skipped="0" failed="0" total="1" passed="1">
+  <reporter-output>
+  </reporter-output>
+  <suite name="Default suite" duration-ms="69626" started-at="2013-11-25T14:21:16Z" finished-at="2013-11-25T14:22:25Z">
+    <groups>
+    </groups>
+    <test name="Default test" duration-ms="69626" started-at="2013-11-25T14:21:16Z" finished-at="2013-11-25T14:22:25Z">
+      <class name="com.cases.Kfgl_Testserach">
+        <test-method status="PASS" signature="beforeTest()[pri:0, instance:com.cases.Kfgl_Testserach@7b7f35]" name="beforeTest" is-config="true" duration-ms="20" started-at="2013-11-25T22:21:16Z" finished-at="2013-11-25T22:21:16Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeTest -->
+        <test-method status="PASS" signature="beforeClass(java.lang.String)[pri:0, instance:com.cases.Kfgl_Testserach@7b7f35]" name="beforeClass" is-config="true" duration-ms="1772" started-at="2013-11-25T22:21:16Z" finished-at="2013-11-25T22:21:18Z">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[2]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeClass -->
+        <test-method status="PASS" signature="beforeClass()[pri:0, instance:com.cases.Kfgl_Testserach@7b7f35]" name="beforeClass" is-config="true" duration-ms="0" started-at="2013-11-25T22:21:18Z" finished-at="2013-11-25T22:21:18Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeClass -->
+        <test-method status="PASS" signature="beforeMethod()[pri:0, instance:com.cases.Kfgl_Testserach@7b7f35]" name="beforeMethod" is-config="true" duration-ms="17886" started-at="2013-11-25T22:21:18Z" finished-at="2013-11-25T22:21:35Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- beforeMethod -->
+        <test-method status="PASS" signature="testserch()[pri:0, instance:com.cases.Kfgl_Testserach@7b7f35]" name="testserch" duration-ms="41966" started-at="2013-11-25T22:21:35Z" finished-at="2013-11-25T22:22:17Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- testserch -->
+        <test-method status="PASS" signature="afterMethod()[pri:0, instance:com.cases.Kfgl_Testserach@7b7f35]" name="afterMethod" is-config="true" duration-ms="7941" started-at="2013-11-25T22:22:17Z" finished-at="2013-11-25T22:22:25Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterMethod -->
+        <test-method status="PASS" signature="afterClass()[pri:0, instance:com.cases.Kfgl_Testserach@7b7f35]" name="afterClass" is-config="true" duration-ms="0" started-at="2013-11-25T22:22:25Z" finished-at="2013-11-25T22:22:25Z">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- afterClass -->
+      </class> <!-- com.cases.Kfgl_Testserach -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

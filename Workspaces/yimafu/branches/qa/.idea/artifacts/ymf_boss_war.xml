@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="ymf-boss:war">
+    <output-path>$PROJECT_DIR$/ymf-boss/target</output-path>
+    <root id="archive" name="ymf-boss.war">
+      <element id="artifact" artifact-name="ymf-boss:war exploded" />
+    </root>
+  </artifact>
+</component>

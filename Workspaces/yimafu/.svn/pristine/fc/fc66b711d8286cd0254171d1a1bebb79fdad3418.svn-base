@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.ymf.dao.customer.CustomerSettleDao">
+    <resultMap id="BaseResultMap" type="com.yeepay.g3.core.ymf.entity.customer.CustomerSettle">
+        <id column="ID" jdbcType="BIGINT" property="id" />
+        <result column="VERSION" jdbcType="BIGINT" property="version" />
+        <result column="CUSTOMER_NUMBER" jdbcType="VARCHAR" property="customerNumber" />
+        <result column="POST_BALANCE" jdbcType="DECIMAL" property="postBalance" />
+        <result column="TRX_DATE" jdbcType="DATE" property="trxDate" />
+        <result column="REAL_AMOUNT" jdbcType="DECIMAL" property="realAmount" />
+        <result column="SETTLE_TIMES" jdbcType="INTEGER" property="settleTimes" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+    </resultMap>
+
+    <!-- 订单DTO type alias -->
+    <resultMap id="SettleDTO" type="com.yeepay.g3.facade.ymf.dto.laike.SettleDTO">
+    </resultMap>
+
+    <!-- 汇总返回 -->
+    <resultMap id="CountResponse" type="com.yeepay.g3.facade.ymf.dto.common.CountResponse">
+        <result column="COUNT" jdbcType="BIGINT" property="count" />
+        <result column="AMOUNT" jdbcType="DECIMAL" property="amount" />
+    </resultMap>
+
+    <sql id="Base_Column_List">
+        ID, VERSION, CUSTOMER_NUMBER, POST_BALANCE, TRX_DATE, REAL_AMOUNT, SETTLE_TIMES,
+        CREATE_TIME, UPDATE_TIME
+    </sql>
+
+    <select id="querySettle" resultMap="SettleDTO">
+        select * from
+        (
+        select ROW_NUMBER() OVER(ORDER BY s.ID DESC) AS rowNum,
+        s.id as id,
+        c.CUSTOMER_NUMBER as customerNumber,
+        c.CUSTOMER_NAME AS customerName,
+        s.POST_BALANCE AS balance,
+        s.TRX_DATE AS trxDate,
+        s.REAL_AMOUNT AS trxAmount,
+        s.CREATE_TIME as createDate
+        from YMF_CUSTOMERSETTLE s
+        LEFT JOIN YMF_CUSTOMER c on c.CUSTOMER_NUMBER = s.CUSTOMER_NUMBER
+        <where>
+            <if test="customerNumber != null">
+                c.CUSTOMER_NUMBER= #{customerNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="startDate != null">
+                <![CDATA[ and s.TRX_DATE >= #{startDate,jdbcType=DATE} ]]>
+            </if>
+            <if test="endDate != null">
+                <![CDATA[ and s.TRX_DATE <= #{endDate,jdbcType=DATE} ]]>
+            </if>
+        </where>
+        )
+        where ROWNUM BETWEEN #{start} and #{end}
+        <if test="orderBy != null">
+            order by #{orderBy} desc
+        </if>
+    </select>
+
+    <select id="countSettle" resultMap="CountResponse">
+        select count(1) as count, nvl(sum(s.REAL_AMOUNT),0) as amount
+        from YMF_CUSTOMERSETTLE s
+        LEFT JOIN YMF_CUSTOMER c on c.CUSTOMER_NUMBER = s.CUSTOMER_NUMBER
+        <where>
+            <if test="customerNumber != null">
+                c.CUSTOMER_NUMBER= #{customerNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="startDate != null">
+                <![CDATA[ and s.TRX_DATE >= #{startDate,jdbcType=DATE} ]]>
+            </if>
+            <if test="endDate != null">
+                <![CDATA[ and s.TRX_DATE <= #{endDate,jdbcType=DATE} ]]>
+            </if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,58 @@
+2013-11-24 23:09:13,905-[SeleniumAutoFile] INFO [main] com.util.DatabaseService.connectDBDriver(52) - Database connection established
+2013-11-24 23:09:13,905-[SeleniumAutoFile] INFO [main] com.cases.TestBase.beforeClass(83) - Start to run test class com.cases.Kfgl_Testserach on driverType2
+2013-11-24 23:09:18,179-[SeleniumAutoFile] INFO [Forwarding newSession on session null to remote] org.apache.http.impl.client.DefaultRequestDirector.tryExecute(723) - I/O exception (java.net.SocketException) caught when processing request: Software caused connection abort: recv failed
+2013-11-24 23:09:18,179-[SeleniumAutoFile] INFO [Forwarding newSession on session null to remote] org.apache.http.impl.client.DefaultRequestDirector.tryExecute(730) - Retrying request
+2013-11-24 23:09:18,212-[SeleniumAutoFile] INFO [main] com.config.DriverManage.getDriver(33) - runDriver is ie......
+2013-11-24 23:09:44,881-[SeleniumAutoFile] INFO [main] com.util.DatabaseService.closeDBDriver(69) - Database connection terminated
+2013-11-24 23:11:27,307-[SeleniumAutoFile] INFO [main] com.util.DatabaseService.connectDBDriver(52) - Database connection established
+2013-11-24 23:11:27,307-[SeleniumAutoFile] INFO [main] com.cases.TestBase.beforeClass(83) - Start to run test class com.cases.Kfgl_Testserach on driverType2
+2013-11-24 23:11:29,330-[SeleniumAutoFile] INFO [Forwarding newSession on session null to remote] org.apache.http.impl.client.DefaultRequestDirector.tryExecute(723) - I/O exception (java.net.SocketException) caught when processing request: Software caused connection abort: recv failed
+2013-11-24 23:11:29,330-[SeleniumAutoFile] INFO [Forwarding newSession on session null to remote] org.apache.http.impl.client.DefaultRequestDirector.tryExecute(730) - Retrying request
+2013-11-24 23:11:29,360-[SeleniumAutoFile] INFO [main] com.config.DriverManage.getDriver(33) - runDriver is ie......
+2013-11-24 23:11:42,978-[SeleniumAutoFile] INFO [main] com.util.DatabaseService.closeDBDriver(69) - Database connection terminated
+2013-11-24 23:14:55,868-[SeleniumAutoFile] INFO [main] com.util.DatabaseService.connectDBDriver(52) - Database connection established
+2013-11-24 23:14:55,868-[SeleniumAutoFile] INFO [main] com.cases.TestBase.beforeClass(83) - Start to run test class com.cases.Kfgl_Testserach on driverType2
+2013-11-24 23:16:28,112-[SeleniumAutoFile] INFO [main] com.util.DatabaseService.connectDBDriver(52) - Database connection established
+2013-11-24 23:16:28,112-[SeleniumAutoFile] INFO [main] com.cases.TestBase.beforeClass(83) - Start to run test class com.cases.Kfgl_Testserach on driverType2
+2013-11-24 23:16:30,635-[SeleniumAutoFile] INFO [Forwarding newSession on session null to remote] org.apache.http.impl.client.DefaultRequestDirector.tryExecute(723) - I/O exception (java.net.SocketException) caught when processing request: Software caused connection abort: recv failed
+2013-11-24 23:16:30,635-[SeleniumAutoFile] INFO [Forwarding newSession on session null to remote] org.apache.http.impl.client.DefaultRequestDirector.tryExecute(730) - Retrying request
+2013-11-24 23:16:30,665-[SeleniumAutoFile] INFO [main] com.config.DriverManage.getDriver(33) - runDriver is ie......
+2013-11-24 23:16:47,229-[SeleniumAutoFile] INFO [main] com.util.DatabaseService.closeDBDriver(69) - Database connection terminated
+2013-11-24 23:19:50,154-[SeleniumAutoFile] INFO [main] com.util.DatabaseService.connectDBDriver(52) - Database connection established
+2013-11-24 23:19:50,154-[SeleniumAutoFile] INFO [main] com.cases.TestBase.beforeClass(83) - Start to run test class com.cases.Kfgl_Testserach on driverType2
+2013-11-24 23:19:52,388-[SeleniumAutoFile] INFO [Forwarding newSession on session null to remote] org.apache.http.impl.client.DefaultRequestDirector.tryExecute(723) - I/O exception (java.net.SocketException) caught when processing request: Software caused connection abort: recv failed
+2013-11-24 23:19:52,388-[SeleniumAutoFile] INFO [Forwarding newSession on session null to remote] org.apache.http.impl.client.DefaultRequestDirector.tryExecute(730) - Retrying request
+2013-11-24 23:19:52,418-[SeleniumAutoFile] INFO [main] com.config.DriverManage.getDriver(33) - runDriver is ie......
+2013-11-24 23:20:12,947-[SeleniumAutoFile] INFO [main] com.util.DatabaseService.closeDBDriver(69) - Database connection terminated
+2013-11-24 23:26:24,956-[SeleniumAutoFile] INFO [main] com.util.DatabaseService.connectDBDriver(52) - Database connection established
+2013-11-24 23:26:24,956-[SeleniumAutoFile] INFO [main] com.cases.TestBase.beforeClass(83) - Start to run test class com.cases.Kfgl_Testserach on driverType2
+2013-11-24 23:26:26,989-[SeleniumAutoFile] INFO [Forwarding newSession on session null to remote] org.apache.http.impl.client.DefaultRequestDirector.tryExecute(723) - I/O exception (java.net.SocketException) caught when processing request: Software caused connection abort: recv failed
+2013-11-24 23:26:26,999-[SeleniumAutoFile] INFO [Forwarding newSession on session null to remote] org.apache.http.impl.client.DefaultRequestDirector.tryExecute(730) - Retrying request
+2013-11-24 23:26:27,029-[SeleniumAutoFile] INFO [main] com.config.DriverManage.getDriver(33) - runDriver is ie......
+2013-11-24 23:26:43,721-[SeleniumAutoFile] INFO [main] com.util.DatabaseService.closeDBDriver(69) - Database connection terminated
+2013-11-24 23:28:29,495-[SeleniumAutoFile] INFO [main] com.util.DatabaseService.connectDBDriver(52) - Database connection established
+2013-11-24 23:28:29,505-[SeleniumAutoFile] INFO [main] com.cases.TestBase.beforeClass(83) - Start to run test class com.cases.KfglTest_New on driverType2
+2013-11-24 23:28:31,389-[SeleniumAutoFile] INFO [Forwarding newSession on session null to remote] org.apache.http.impl.client.DefaultRequestDirector.tryExecute(723) - I/O exception (org.apache.http.NoHttpResponseException) caught when processing request: The target server failed to respond
+2013-11-24 23:28:31,389-[SeleniumAutoFile] INFO [Forwarding newSession on session null to remote] org.apache.http.impl.client.DefaultRequestDirector.tryExecute(730) - Retrying request
+2013-11-24 23:28:31,409-[SeleniumAutoFile] INFO [main] com.config.DriverManage.getDriver(33) - runDriver is ie......
+2013-11-24 23:28:31,449-[SeleniumAutoFile] INFO [main] com.cases.KfglTest_New.kfgl_0001_LoginSucc(19) - kfgl_0001_LoginSucc is running !
+2013-11-24 23:28:41,602-[SeleniumAutoFile] INFO [main] com.util.DatabaseService.closeDBDriver(69) - Database connection terminated
+2013-11-24 23:33:02,965-[SeleniumAutoFile] INFO [main] com.util.DatabaseService.connectDBDriver(52) - Database connection established
+2013-11-24 23:33:02,965-[SeleniumAutoFile] INFO [main] com.cases.TestBase.beforeClass(83) - Start to run test class com.cases.Kfgl_Testserach on driverType2
+2013-11-24 23:33:05,048-[SeleniumAutoFile] INFO [Forwarding newSession on session null to remote] org.apache.http.impl.client.DefaultRequestDirector.tryExecute(723) - I/O exception (java.net.SocketException) caught when processing request: Software caused connection abort: recv failed
+2013-11-24 23:33:05,048-[SeleniumAutoFile] INFO [Forwarding newSession on session null to remote] org.apache.http.impl.client.DefaultRequestDirector.tryExecute(730) - Retrying request
+2013-11-24 23:33:05,078-[SeleniumAutoFile] INFO [main] com.config.DriverManage.getDriver(33) - runDriver is ie......
+2013-11-24 23:33:20,119-[SeleniumAutoFile] INFO [main] com.util.DatabaseService.closeDBDriver(69) - Database connection terminated
+2013-11-24 23:33:39,797-[SeleniumAutoFile] INFO [main] com.util.DatabaseService.connectDBDriver(52) - Database connection established
+2013-11-24 23:33:39,797-[SeleniumAutoFile] INFO [main] com.cases.TestBase.beforeClass(83) - Start to run test class com.cases.KfglTest_New on driverType2
+2013-11-24 23:33:41,563-[SeleniumAutoFile] INFO [Forwarding newSession on session null to remote] org.apache.http.impl.client.DefaultRequestDirector.tryExecute(723) - I/O exception (java.net.SocketException) caught when processing request: Software caused connection abort: recv failed
+2013-11-24 23:33:41,563-[SeleniumAutoFile] INFO [Forwarding newSession on session null to remote] org.apache.http.impl.client.DefaultRequestDirector.tryExecute(730) - Retrying request
+2013-11-24 23:33:41,590-[SeleniumAutoFile] INFO [main] com.config.DriverManage.getDriver(33) - runDriver is ie......
+2013-11-24 23:33:41,626-[SeleniumAutoFile] INFO [main] com.cases.KfglTest_New.kfgl_0001_LoginSucc(19) - kfgl_0001_LoginSucc is running !
+2013-11-24 23:33:52,310-[SeleniumAutoFile] INFO [main] com.util.DatabaseService.closeDBDriver(69) - Database connection terminated
+2013-11-24 23:33:52,369-[SeleniumAutoFile] INFO [main] com.util.DatabaseService.connectDBDriver(52) - Database connection established
+2013-11-24 23:33:52,369-[SeleniumAutoFile] INFO [main] com.cases.TestBase.beforeClass(83) - Start to run test class com.cases.Kfgl_Testserach on driverType2
+2013-11-24 23:33:53,459-[SeleniumAutoFile] INFO [Forwarding newSession on session null to remote] org.apache.http.impl.client.DefaultRequestDirector.tryExecute(723) - I/O exception (org.apache.http.NoHttpResponseException) caught when processing request: The target server failed to respond
+2013-11-24 23:33:53,459-[SeleniumAutoFile] INFO [Forwarding newSession on session null to remote] org.apache.http.impl.client.DefaultRequestDirector.tryExecute(730) - Retrying request
+2013-11-24 23:33:53,459-[SeleniumAutoFile] INFO [main] com.config.DriverManage.getDriver(33) - runDriver is ie......
+2013-11-24 23:34:08,640-[SeleniumAutoFile] INFO [main] com.util.DatabaseService.closeDBDriver(69) - Database connection terminated

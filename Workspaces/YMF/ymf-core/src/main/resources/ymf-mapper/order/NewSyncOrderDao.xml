@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.ymf.dao.order.NewSyncOrderDao">
+
+    <!-- 同步订单 alias -->
+    <resultMap id="SyncOrderDTO" type="com.yeepay.g3.facade.ymf.dto.agent.SyncOrderDTO" />
+    <resultMap id="SyncS0OrderDTO" type="com.yeepay.g3.facade.ymf.dto.agent.SyncS0OrderDTO" />
+
+    <!-- 汇总返回 -->
+    <resultMap id="CountResponse" type="com.yeepay.g3.facade.ymf.dto.common.CountResponse">
+        <result column="COUNT" jdbcType="BIGINT" property="count" />
+        <result column="AMOUNT" jdbcType="DECIMAL" property="amount" />
+    </resultMap>
+
+    <select id="countS0Remit" parameterType="com.yeepay.g3.facade.ymf.dto.agent.SyncOrderParam" resultMap="CountResponse">
+        SELECT count(1) as count, nvl(sum(o.AMOUNT), 0) as amount
+        FROM YMF_REMITTANCE o
+        WHERE o.STATUS = 'SUCCESS'
+        <![CDATA[
+          AND o.CREATE_TIME >= #{from,jdbcType=TIMESTAMP}
+          AND o.CREATE_TIME < #{to,jdbcType=TIMESTAMP}
+        ]]>
+        <if test="appType != null">
+            AND o.REMARK = #{appType,jdbcType=VARCHAR}
+        </if>
+        <if test="list != null">
+            AND o.CUSTOMER_NUMBER IN
+            <foreach item="item" index="index" collection="list"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        WITH UR
+    </select>
+
+    <select id="querySyncRemit" parameterType="com.yeepay.g3.facade.ymf.dto.agent.SyncOrderParam" resultMap="SyncS0OrderDTO">
+        select * from (
+            SELECT ROW_NUMBER() OVER(ORDER BY o.ID DESC) AS rowNum,
+            o.CUSTOMER_NUMBER as customerNumber,o.CUSTOMER_ORDER_ID as trxCode,o.YEEPAY_ORDER_ID as yeepayOrderId,
+            o.BATCH_NO as batchNo,o.CREATE_TIME as trxTime,o.CALLBACK_TIME as callBackTime,
+            o.REMIT_REQUEST_TIME as remitRequestTime,
+            o.AMOUNT as amount,o.SRC_FEE as srcFee,nvl(o.TARGET_FEE,0) as targetFee,nvl(o.FEE, 0) as fee,
+            c.CUSTOMER_NAME as customerName
+            FROM YMF_REMITTANCE o
+            LEFT JOIN YMF_CUSTOMER c ON o.CUSTOMER_NUMBER = c.CUSTOMER_NUMBER
+            WHERE o.STATUS = 'SUCCESS'
+            <![CDATA[
+              AND o.CREATE_TIME >= #{from,jdbcType=TIMESTAMP}
+              AND o.CREATE_TIME < #{to,jdbcType=TIMESTAMP}
+            ]]>
+            <if test="appType != null">
+                AND o.REMARK = #{appType,jdbcType=VARCHAR}
+            </if>
+            <if test="list != null">
+                AND o.CUSTOMER_NUMBER IN
+                <foreach item="item" index="index" collection="list"
+                         open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+        )
+        <if test="pagination">
+          where rowNum BETWEEN #{start,jdbcType=INTEGER} and #{end,jdbcType=INTEGER}
+        </if>
+        WITH UR
+    </select>
+
+    <select id="countSyncOrder" parameterType="com.yeepay.g3.facade.ymf.dto.agent.SyncOrderParam" resultMap="CountResponse">
+        SELECT count(1) as count, nvl(sum(o.TRX_AMT), 0) as amount
+        FROM YMF_ORDER o
+        LEFT JOIN YMF_PAYMENT p ON p.ORDER_ID = o.ID
+        WHERE o.ORDER_STATUS = 'SUCCESS'
+        <![CDATA[
+          AND o.COMPLETE_TIME >= #{from,jdbcType=TIMESTAMP}
+          AND o.COMPLETE_TIME < #{to,jdbcType=TIMESTAMP}
+        ]]>
+        <if test="appType != null">
+          AND o.PAY_CONFIRM = #{appType,jdbcType=VARCHAR}
+        </if>
+        <if test="list != null">
+            AND o.CUSTOMER_NUMBER IN
+            <foreach item="item" index="index" collection="list"
+                     open="(" separator="," close=")">
+                #{item}
+            </foreach>
+        </if>
+        WITH UR
+    </select>
+
+    <select id="querySyncOrder" parameterType="com.yeepay.g3.facade.ymf.dto.agent.SyncOrderParam" resultMap="SyncOrderDTO">
+        select * from (
+            SELECT ROW_NUMBER() OVER(ORDER BY o.ID DESC) AS rowNum,
+            o.EXTERNAL_ID AS trxCode, o.TRX_AMT AS orderAmount, nvl(p.FEE, 0) AS fee,
+            o.CUSTOMER_NUMBER AS customerNumber, o.COMPLETE_TIME AS trxTime,
+            p.CARD_TYPE AS cardType, p.PAY_SOURCE as paySource,
+            c.CUSTOMER_NAME as customerName, o.CUSTOMER_ORDER_ID as customerOrderId,
+            o.PAY_CONFIRM as payConfirm,o.BALANCE_TYPE AS settleType
+            FROM YMF_ORDER o
+            LEFT JOIN YMF_PAYMENT p ON p.ORDER_ID = o.ID
+            LEFT JOIN YMF_CUSTOMER c ON o.CUSTOMER_NUMBER = c.CUSTOMER_NUMBER
+            WHERE o.ORDER_STATUS = 'SUCCESS'
+            <![CDATA[
+              AND o.COMPLETE_TIME >= #{from,jdbcType=TIMESTAMP}
+              AND o.COMPLETE_TIME < #{to,jdbcType=TIMESTAMP}
+            ]]>
+            <if test="appType != null">
+                AND o.PAY_CONFIRM = #{appType,jdbcType=VARCHAR}
+            </if>
+            <if test="list != null">
+                AND o.CUSTOMER_NUMBER IN
+                <foreach item="item" index="index" collection="list"
+                         open="(" separator="," close=")">
+                    #{item}
+                </foreach>
+            </if>
+            )
+        <if test="pagination">
+            where rowNum BETWEEN #{start,jdbcType=INTEGER} and #{end,jdbcType=INTEGER}
+        </if>
+        WITH UR
+    </select>
+
+</mapper>

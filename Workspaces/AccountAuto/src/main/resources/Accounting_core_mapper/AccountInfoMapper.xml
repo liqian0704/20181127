@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Accounting_core_mapper.AccountInfoMapper">
+
+    <resultMap id="AccountInfoEntity" type="Accounting_entity.AccountInfoEntity">
+        <id property="uniqueAccountNo" column="unique_account_no"/>
+        <result property="optimistic" column="optimistic" />
+        <result property="bizSystemNo" column="biz_system_no"/>
+        <result property="customerNo" column="customer_no"/>
+        <result property="customerName" column="customer_name"/>
+        <result property="accountType" column="account_type"/>
+        <result property="payCompany" column="pay_company"/>
+        <result property="payCompanyCustomerNo" column="pay_company_customer_no" />
+        <result property="hmac" column="hmac"/>
+        <result property="privateKey" column="private_key"/>
+        <result property="createDate" column="create_date" />
+        <result property="updateDate" column="update_date"/>
+        <result property="errorCode" column="error_code"/>
+        <result property="errorMessage" column="error_message"/>
+    </resultMap>
+
+    <!--<insert id="save" parameterType="com.yeepay.g3.core.laike.entity.SmsCodeEntity" keyProperty="id"-->
+    <!--useGeneratedKeys="true">-->
+    <!--INSERT INTO YMF.TBL_SMS_CODE-->
+    <!--(PHONE_NO,SMS_CODE,TYPE,AVAILABLE,CREATE_TIME,EFFECT_TIME)-->
+    <!--VALUES-->
+    <!--(#{phoneNo,typeHandler=SensitiveL2StringHandler},#{smsCode},#{smsType},1,#{createTime},#{effectTime})-->
+    <!--</insert>-->
+
+    <!--<select id="findOne" parameterType="map" resultMap="smsCodeMap">-->
+    <!--SELECT *-->
+    <!--FROM YMF.TBL_SMS_CODE a-->
+    <!--WHERE a.PHONE_NO = #{phoneNo,typeHandler=SensitiveL2StringHandler} AND a.TYPE = #{smsType} AND a.AVAILABLE = 1-->
+    <!--AND a.EFFECT_TIME > CURRENT_TIMESTAMP-->
+    <!--AND NOT EXISTS(SELECT 1-->
+    <!--FROM TBL_SMS_CODE b-->
+    <!--WHERE b.PHONE_NO = a.PHONE_NO-->
+    <!--AND AVAILABLE = b.AVAILABLE-->
+    <!--AND b.TYPE = a.TYPE-->
+    <!--AND b.EFFECT_TIME > a.EFFECT_TIME)-->
+    <!--</select>-->
+
+    <!--<update id="setUnAvaliable" parameterType="com.yeepay.g3.core.laike.entity.SmsCodeEntity">-->
+    <!--update YMF.TBL_SMS_CODE-->
+    <!--set AVAILABLE = 0-->
+    <!--WHERE ID = #{id}-->
+    <!--</update>-->
+    <!--<select id="symCode" resultMap="smsCodeEntity">-->
+	   <!--SELECT  * FROM YMF.TBL_SMS_CODE order by id desc fetch FIRST  1 rows ONLY-->
+	<!--</select>-->
+    <select id="accountInfo" resultMap="AccountInfoEntity">
+        SELECT * FROM mt_accounting_verify.tbl_account_info_0 WHERE customer_no = #{customerNo}
+    </select>
+</mapper>

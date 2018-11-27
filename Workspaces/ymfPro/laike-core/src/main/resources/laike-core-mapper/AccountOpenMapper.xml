@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.laike.repository.AccountOpenRepository">
+	<resultMap id="BaseResultMap" type="com.yeepay.g3.core.laike.entity.AccountOpenEntity">
+		<id column="ID" jdbcType="VARCHAR" property="id"/>
+		<result column="MEMBER_NO" jdbcType="VARCHAR" property="memberNo"/>
+		<result column="PHONE_NO" property="phoneNo" typeHandler="SensitiveL2StringHandler"/>
+		<result column="INVITE_TYPE" jdbcType="VARCHAR" property="inviteType"/>
+		<result column="INVITE_CODE" jdbcType="VARCHAR" property="inviteCode"/>
+		<result column="MERCHANT_NAME" jdbcType="VARCHAR" property="merchantName"/>
+		<result column="MERCHANT_NO" jdbcType="VARCHAR" property="merchantNo"/>
+		<result column="AGENT_NO" property="agentNo" jdbcType="VARCHAR"/>
+		<result column="BUSINESS_MAN" property="businessMan" jdbcType="VARCHAR"/>
+		<result column="OP_REG_NO" jdbcType="VARCHAR" property="opRegNo"/>
+		<result column="OPEN_STATUS" jdbcType="VARCHAR" property="openStatus"/>
+		<result column="BIZ_NO" typeHandler="SensitiveL2StringHandler" property="bizNo"/>
+		<result column="BIZ_NO_START" jdbcType="VARCHAR" property="bizNoStart"/>
+		<result column="BIZ_NO_END" jdbcType="VARCHAR" property="bizNoEnd"/>
+		<result column="TAX_NO" typeHandler="SensitiveL2StringHandler" property="taxNo"/>
+		<result column="ORG_NO" typeHandler="SensitiveL2StringHandler" property="orgNo"/>
+		<result column="ACCOUNT_LICENSE" jdbcType="VARCHAR" property="accountLicense"/>
+		<result column="ORG_NO_START" jdbcType="VARCHAR" property="orgNoStart"/>
+		<result column="ORG_NO_END" jdbcType="VARCHAR" property="orgNoEnd"/>
+		<result column="COMPANY_TYPE" jdbcType="VARCHAR" property="companyType"/>
+		<result column="PRODUCTS" jdbcType="VARCHAR" property="products"/>
+		<result column="LEGAL_NAME" typeHandler="SensitiveL2StringHandler" property="legalName"/>
+		<result column="LEGAL_ID_CARD" typeHandler="SensitiveL2StringHandler" property="legalIdCard"/>
+		<result column="LEGAL_ID_START" jdbcType="VARCHAR" property="legalIdStart"/>
+		<result column="LEGAL_ID_END" jdbcType="VARCHAR" property="legalIdEnd"/>
+		<result column="MER_LEVEL1" jdbcType="VARCHAR" property="merLevel1No"/>
+		<result column="MER_LEVEL2" jdbcType="VARCHAR" property="merLevel2No"/>
+		<result column="MER_LEVEL1_NAME" jdbcType="VARCHAR" property="merLevel1NoName"/>
+		<result column="MER_LEVEL2_NAME" jdbcType="VARCHAR" property="merLevel2NoName"/>
+		<result column="PROVINCE" jdbcType="VARCHAR" property="merProvince"/>
+		<result column="PROVINCE_NAME" jdbcType="VARCHAR" property="merProvinceName"/>
+		<result column="CITY" jdbcType="VARCHAR" property="merCity"/>
+		<result column="CITY_NAME" jdbcType="VARCHAR" property="merCityName"/>
+		<result column="DISTRICT" jdbcType="VARCHAR" property="merDistrict"/>
+		<result column="DISTRICT_NAME" jdbcType="VARCHAR" property="merDistrictName"/>
+		<result column="ADDRESS" jdbcType="VARCHAR" property="merAddress"/>
+		<result column="SETTLE_CARD_NO" typeHandler="SensitiveL2StringHandler" property="settleCardNo"/>
+		<result column="SETTLE_CARD_NAME" jdbcType="VARCHAR" property="settleCardName"/>
+		<result column="SETTLE_BANK_CODE" jdbcType="VARCHAR" property="settleBankCode"/>
+		<result column="SETTLE_BANK_NAME" jdbcType="VARCHAR" property="settleBankName"/>
+		<result column="BRANCH_BANK_CODE" jdbcType="VARCHAR" property="branchBankCode"/>
+		<result column="BRANCH_BANK_NAME" jdbcType="VARCHAR" property="branchBankName"/>
+		<result column="BANK_PROVINCE_CODE" jdbcType="VARCHAR" property="bankProvinceCode"/>
+		<result column="BANK_PROVINCE_NAME" jdbcType="VARCHAR" property="bankProvinceName"/>
+		<result column="BANK_CITY_CODE" jdbcType="VARCHAR" property="bankCityCode"/>
+		<result column="BANK_CITY_NAME" jdbcType="VARCHAR" property="bankCityName"/>
+		<result column="OPEN_LBS" jdbcType="VARCHAR" property="openLbs"/>
+		<result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+		<result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime"/>
+		<result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+        <result column="ACCOUNT_TYPE" jdbcType="VARCHAR" property="accountType"/>
+        <result column="LOL_OPEN_STATUS" jdbcType="VARCHAR" property="lolOpenStatus"/>
+        <result column="OCR_LEGAL_ID_CARD" typeHandler="SensitiveL2StringHandler" property="ocrLegalIdCard"/>
+        <result column="OCR_SETTLE_CARD_NO" typeHandler="SensitiveL2StringHandler" property="ocrSettleCardNo"/>
+	</resultMap>
+
+	<select id="findById" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select *
+		from TBL_ACCOUNT_OPEN
+		where ID = #{id,jdbcType=VARCHAR}
+  	</select>
+
+	<select id="findByQRCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select *
+		from TBL_ACCOUNT_OPEN
+		where INVITE_CODE = #{qrCode,jdbcType=VARCHAR} AND
+		INVITE_TYPE IN ('SIGNEDPAPER','SELLER_DIRECT_SALE')
+  	</select>
+
+	<select id="nextSequence" resultType="long">
+    	VALUES NEXTVAL FOR SEQ_YMF_ACCOUNT_ID
+  	</select>
+
+	<insert id="save" parameterType="com.yeepay.g3.core.laike.entity.AccountOpenEntity">
+		INSERT INTO TBL_ACCOUNT_OPEN (ID, MEMBER_NO,PHONE_NO,INVITE_TYPE,INVITE_CODE,
+		ACCOUNT_LICENSE,MERCHANT_NO,AGENT_NO,BUSINESS_MAN,MERCHANT_NAME,OP_REG_NO,
+		OPEN_STATUS, BIZ_NO,BIZ_NO_START,BIZ_NO_END,TAX_NO,ORG_NO,ORG_NO_START,ORG_NO_END,
+		COMPANY_TYPE, PRODUCTS, LEGAL_NAME, LEGAL_ID_CARD, LEGAL_ID_START, LEGAL_ID_END,
+		MER_LEVEL1,MER_LEVEL2,MER_LEVEL1_NAME,MER_LEVEL2_NAME,PROVINCE,CITY,DISTRICT,ADDRESS,SETTLE_CARD_NO,SETTLE_CARD_NAME,
+		SETTLE_BANK_CODE, SETTLE_BANK_NAME,BRANCH_BANK_CODE,BRANCH_BANK_NAME, BANK_PROVINCE_CODE,
+        BANK_PROVINCE_NAME,BANK_CITY_CODE,BANK_CITY_NAME,OPEN_LBS, CREATE_TIME, UPDATE_TIME, REMARK, ACCOUNT_TYPE,
+		LOL_OPEN_STATUS, OCR_LEGAL_ID_CARD, OCR_SETTLE_CARD_NO)
+		VALUES (#{id,jdbcType=VARCHAR},#{memberNo,jdbcType=VARCHAR},#{phoneNo,typeHandler=SensitiveL2StringHandler},
+		#{inviteType,jdbcType=VARCHAR},#{inviteCode,jdbcType=VARCHAR},#{accountLicense,jdbcType=VARCHAR},
+		#{merchantNo,jdbcType=VARCHAR},#{agentNo,jdbcType=VARCHAR},#{businessMan,jdbcType=VARCHAR},
+		#{merchantName,jdbcType=VARCHAR},
+		#{opRegNo,jdbcType=VARCHAR},#{openStatus,jdbcType=VARCHAR},#{bizNo,typeHandler=SensitiveL2StringHandler},
+		#{bizNoStart,jdbcType=VARCHAR}, #{bizNoEnd,jdbcType=VARCHAR},#{taxNo,typeHandler=SensitiveL2StringHandler},
+		#{orgNo,typeHandler=SensitiveL2StringHandler},#{orgNoStart,jdbcType=VARCHAR}, #{orgNoEnd,jdbcType=VARCHAR},
+		#{companyType,jdbcType=VARCHAR}, #{products,jdbcType=VARCHAR},
+		#{legalName,typeHandler=SensitiveL2StringHandler},
+		#{legalIdCard,typeHandler=SensitiveL2StringHandler}, #{legalIdStart,jdbcType=VARCHAR},
+        #{legalIdEnd,jdbcType=VARCHAR},
+		#{merLevel1No, jdbcType=VARCHAR},#{merLevel2No, jdbcType=VARCHAR},
+		#{merLevel1NoName, jdbcType=VARCHAR},#{merLevel2NoName, jdbcType=VARCHAR},
+		#{merProvince, jdbcType=VARCHAR},
+		#{merCity, jdbcType=VARCHAR},#{merDistrict, jdbcType=VARCHAR},#{merAddress, jdbcType=VARCHAR},
+		#{settleCardNo,typeHandler=SensitiveL2StringHandler}, #{settleCardName,jdbcType=VARCHAR},
+        #{settleBankCode,jdbcType=VARCHAR},
+		#{branchBankCode,jdbcType=VARCHAR}, #{branchBankName,jdbcType=VARCHAR},
+		#{settleBankName,jdbcType=VARCHAR}, #{bankProvinceCode,jdbcType=VARCHAR},#{bankProvinceName,jdbcType=VARCHAR},
+		#{bankCityCode,jdbcType=VARCHAR},#{bankCityName,jdbcType=VARCHAR}, #{openLbs,jdbcType=VARCHAR},
+        CURRENT_TIMESTAMP,CURRENT_TIMESTAMP, #{remark,jdbcType=VARCHAR}, #{accountType,jdbcType=VARCHAR},
+		#{lolOpenStatus,jdbcType=VARCHAR}, #{ocrLegalIdCard,typeHandler=SensitiveL2StringHandler},
+        #{ocrSettleCardNo,typeHandler=SensitiveL2StringHandler})
+	</insert>
+
+	<select id="findByMemberNo" parameterType="map" resultMap="BaseResultMap">
+		SELECT * FROM YMF.TBL_ACCOUNT_OPEN WHERE MEMBER_NO = #{memberNo}
+	</select>
+
+	<select id="findByMerchantNo" parameterType="map" resultMap="BaseResultMap">
+		SELECT * FROM YMF.TBL_ACCOUNT_OPEN WHERE MERCHANT_NO = #{merchantNo}
+	</select>
+
+    <select id="findByLolStatus" parameterType="map" resultMap="BaseResultMap">
+		SELECT * FROM YMF.TBL_ACCOUNT_OPEN WHERE LOL_OPEN_STATUS = #{lolOpenStatus}
+	</select>
+
+    <update id="update" parameterType="com.yeepay.g3.core.laike.entity.AccountOpenEntity">
+		update TBL_ACCOUNT_OPEN
+		<set>
+			<if test="merLevel1NoName != null and merLevel1NoName.trim() != ''">
+				MER_LEVEL1_NAME = #{merLevel1NoName,jdbcType=VARCHAR},
+			</if>
+			<if test="merLevel2NoName != null and merLevel2NoName.trim() != ''">
+				MER_LEVEL2_NAME = #{merLevel2NoName,jdbcType=VARCHAR},
+			</if>
+			<if test="merLevel1No != null and merLevel1No.trim() != ''">
+				MER_LEVEL1 = #{merLevel1No,jdbcType=VARCHAR},
+			</if>
+			<if test="merLevel2No != null and merLevel2No.trim() != ''">
+				MER_LEVEL2 = #{merLevel2No,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantName != null and merchantName.trim() != ''">
+				MERCHANT_NAME = #{merchantName,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantNo != null and merchantNo.trim() != ''">
+				MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+			</if>
+			<if test="inviteType != null">
+				INVITE_TYPE = #{inviteType,jdbcType=VARCHAR},
+			</if>
+			<if test="inviteCode != null and inviteCode.trim() != ''">
+				INVITE_CODE = #{inviteCode,jdbcType=VARCHAR},
+			</if>
+			<if test="agentNo != null and agentNo.trim() != ''">
+				AGENT_NO = #{agentNo,jdbcType=VARCHAR},
+			</if>
+			<if test="businessMan != null and businessMan.trim() != ''">
+				BUSINESS_MAN = #{businessMan,jdbcType=VARCHAR},
+			</if>
+			<if test="opRegNo != null and opRegNo.trim() != ''">
+				OP_REG_NO = #{opRegNo,jdbcType=VARCHAR},
+			</if>
+			<if test="openStatus != null">
+				OPEN_STATUS = #{openStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="bizNo != null and bizNo.trim() != ''">
+				BIZ_NO = #{bizNo,typeHandler=SensitiveL2StringHandler},
+			</if>
+			<if test="bizNoStart != null and bizNoStart.trim() != ''">
+				BIZ_NO_START = #{bizNoStart,jdbcType=VARCHAR},
+			</if>
+			<if test="bizNoEnd != null and bizNoEnd.trim() != ''">
+				BIZ_NO_END = #{bizNoEnd,jdbcType=VARCHAR},
+			</if>
+			<if test="taxNo != null and taxNo.trim() != ''">
+				TAX_NO = #{taxNo,typeHandler=SensitiveL2StringHandler},
+			</if>
+			<if test="orgNo != null and orgNo.trim() != ''">
+				ORG_NO = #{orgNo,typeHandler=SensitiveL2StringHandler},
+			</if>
+			<if test="accountLicense != null and accountLicense.trim() != ''">
+				ACCOUNT_LICENSE = #{accountLicense,jdbcType=VARCHAR},
+			</if>
+			<if test="orgNoStart != null and orgNoStart.trim() != ''">
+				ORG_NO_START = #{orgNoStart,jdbcType=VARCHAR},
+			</if>
+			<if test="orgNoEnd != null and orgNoEnd.trim() != ''">
+				ORG_NO_END = #{orgNoEnd,jdbcType=VARCHAR},
+			</if>
+			<if test="companyType != null">
+				COMPANY_TYPE = #{companyType,jdbcType=VARCHAR},
+			</if>
+			<if test="products != null and products.trim() != ''">
+				PRODUCTS = #{products,jdbcType=VARCHAR},
+			</if>
+			<if test="legalName != null and legalName.trim() != ''">
+				LEGAL_NAME = #{legalName,typeHandler=SensitiveL2StringHandler},
+			</if>
+			<if test="legalIdCard != null and legalIdCard.trim() != ''">
+				LEGAL_ID_CARD = #{legalIdCard,typeHandler=SensitiveL2StringHandler},
+			</if>
+			<if test="legalIdStart != null and legalIdStart.trim() != ''">
+				LEGAL_ID_START = #{legalIdStart,jdbcType=VARCHAR},
+			</if>
+			<if test="legalIdEnd != null and legalIdEnd.trim() != ''">
+				LEGAL_ID_END = #{legalIdEnd,jdbcType=VARCHAR},
+			</if>
+			<if test="settleCardNo != null and settleCardNo.trim() != ''">
+				SETTLE_CARD_NO = #{settleCardNo,typeHandler=SensitiveL2StringHandler},
+			</if>
+			<if test="settleCardName != null and settleCardName.trim() != ''">
+				SETTLE_CARD_NAME = #{settleCardName,jdbcType=VARCHAR},
+			</if>
+			<if test="settleBankCode != null and settleBankCode.trim() != ''">
+				SETTLE_BANK_CODE = #{settleBankCode,jdbcType=VARCHAR},
+			</if>
+			<if test="settleBankName != null and settleBankName.trim() != ''">
+				SETTLE_BANK_NAME = #{settleBankName,jdbcType=VARCHAR},
+			</if>
+			<if test="branchBankCode != null and branchBankCode.trim() != ''">
+				BRANCH_BANK_CODE = #{branchBankCode,jdbcType=VARCHAR},
+			</if>
+			<if test="branchBankName != null and branchBankName.trim() != ''">
+				BRANCH_BANK_NAME = #{branchBankName,jdbcType=VARCHAR},
+			</if>
+			<if test="bankProvinceCode != null and bankProvinceCode.trim() != ''">
+				BANK_PROVINCE_CODE = #{bankProvinceCode,jdbcType=VARCHAR},
+			</if>
+			<if test="bankProvinceName != null and bankProvinceName.trim() != ''">
+				BANK_PROVINCE_NAME = #{bankProvinceName,jdbcType=VARCHAR},
+			</if>
+			<if test="bankCityCode != null and bankCityCode.trim() != ''">
+				BANK_CITY_CODE = #{bankCityCode,jdbcType=VARCHAR},
+			</if>
+			<if test="bankCityName != null and bankCityName.trim() != ''">
+				BANK_CITY_NAME = #{bankCityName,jdbcType=VARCHAR},
+			</if>
+			<if test="merProvince != null and merProvince.trim() != ''">
+				PROVINCE = #{merProvince,jdbcType=VARCHAR},
+			</if>
+			<if test="merProvinceName != null and merProvinceName.trim() != ''">
+				PROVINCE_NAME = #{merProvinceName,jdbcType=VARCHAR},
+			</if>
+			<if test="merCity != null and merCity.trim() != ''">
+				CITY = #{merCity,jdbcType=VARCHAR},
+			</if>
+			<if test="merCityName != null and merCityName.trim() != ''">
+				CITY_NAME = #{merCityName,jdbcType=VARCHAR},
+			</if>
+			<if test="merDistrict != null and merDistrict.trim() != ''">
+				DISTRICT = #{merDistrict,jdbcType=VARCHAR},
+			</if>
+			<if test="merDistrictName != null and merDistrictName.trim() != ''">
+				DISTRICT_NAME = #{merDistrictName,jdbcType=VARCHAR},
+			</if>
+			<if test="openLbs != null and openLbs.trim() != ''">
+				OPEN_LBS = #{openLbs,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null and remark.trim() != ''">
+				REMARK = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="merAddress != null and merAddress.trim() != ''">
+				ADDRESS = #{merAddress,jdbcType=VARCHAR},
+			</if>
+            <if test="lolOpenStatus != null">
+                LOL_OPEN_STATUS = #{lolOpenStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="ocrLegalIdCard != null and ocrLegalIdCard.trim() != ''">
+				OCR_LEGAL_ID_CARD = #{ocrLegalIdCard,typeHandler=SensitiveL2StringHandler},
+            </if>
+            <if test="ocrSettleCardNo != null and ocrSettleCardNo.trim() != ''">
+				OCR_SETTLE_CARD_NO = #{ocrSettleCardNo,typeHandler=SensitiveL2StringHandler},
+            </if>
+			UPDATE_TIME = CURRENT_TIMESTAMP
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<update id="updateStatus" parameterType="com.yeepay.g3.core.laike.entity.AccountOpenEntity">
+		update TBL_ACCOUNT_OPEN
+		<set>
+			<if test="merchantNo != null and merchantNo.trim() != ''">
+				MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+			</if>
+			<if test="opRegNo != null and opRegNo.trim() != ''">
+				OP_REG_NO = #{opRegNo,jdbcType=VARCHAR},
+			</if>
+			<if test="openStatus != null">
+				OPEN_STATUS = #{openStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null and remark.trim() != ''">
+				REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="lolOpenStatus != null">
+                LOL_OPEN_STATUS = #{lolOpenStatus,jdbcType=VARCHAR},
+			</if>
+			UPDATE_TIME = CURRENT_TIMESTAMP
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+
+</mapper>

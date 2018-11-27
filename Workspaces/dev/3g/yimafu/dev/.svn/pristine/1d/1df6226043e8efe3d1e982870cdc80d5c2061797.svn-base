@@ -1,0 +1,324 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yeepay.g3.core.ymf.dao.qrcode.QrRelationMapper" >
+  <resultMap id="BaseResultMap" type="com.yeepay.g3.core.ymf.entity.qrcode.QrRelation" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="VERSION" property="version" jdbcType="BIGINT" />
+    <result column="AGENT_NUMBER" property="agentNumber" jdbcType="VARCHAR" />
+    <result column="REQUEST_ID" property="requestId" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="COMPLETE_TIME" property="completeTime" jdbcType="TIMESTAMP" />
+    <result column="QRCOUNT" property="qrcount" jdbcType="SMALLINT" />
+    <result column="SELLER_ID" property="sellerId" jdbcType="BIGINT" />
+    <result column="INVOICE" property="invoice" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="SALES_NO" property="salesNo" jdbcType="VARCHAR" />
+    <result column="SALES_NAME" property="salesName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, VERSION, AGENT_NUMBER, REQUEST_ID, CREATE_TIME, COMPLETE_TIME, QRCOUNT, SELLER_ID, 
+    INVOICE, STATUS,SALES_NO,SALES_NAME
+  </sql>
+  <select id="selectByFilter" resultMap="BaseResultMap" parameterType="com.yeepay.g3.core.ymf.entity.qrcode.QrRelationParam" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from YMF_QR_RELATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from YMF_QR_RELATION
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from YMF_QR_RELATION
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByFilter" parameterType="com.yeepay.g3.core.ymf.entity.qrcode.QrRelationParam" >
+    delete from YMF_QR_RELATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yeepay.g3.core.ymf.entity.qrcode.QrRelation" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      VALUES NEXTVAL FOR YMF_QR_relation_SEQ
+    </selectKey>
+    insert into YMF_QR_RELATION (ID, VERSION, AGENT_NUMBER, 
+      REQUEST_ID, CREATE_TIME, COMPLETE_TIME, 
+      QRCOUNT, SELLER_ID, INVOICE,SALES_NO,SALES_NAME,
+      STATUS)
+    values (#{id,jdbcType=BIGINT}, #{version,jdbcType=BIGINT}, #{agentNumber,jdbcType=VARCHAR}, 
+      #{requestId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{completeTime,jdbcType=TIMESTAMP}, 
+      #{qrcount,jdbcType=SMALLINT}, #{sellerId,jdbcType=BIGINT}, #{invoice,jdbcType=VARCHAR},
+      #{salesNo,jdbcType=VARCHAR},#{salesName,jdbcType=VARCHAR},
+      #{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yeepay.g3.core.ymf.entity.qrcode.QrRelation" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      VALUES NEXTVAL FOR YMF_QR_relation_SEQ
+    </selectKey>
+    insert into YMF_QR_RELATION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="version != null" >
+        VERSION,
+      </if>
+      <if test="agentNumber != null" >
+        AGENT_NUMBER,
+      </if>
+      <if test="requestId != null" >
+        REQUEST_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="completeTime != null" >
+        COMPLETE_TIME,
+      </if>
+      <if test="qrcount != null" >
+        QRCOUNT,
+      </if>
+      <if test="sellerId != null" >
+        SELLER_ID,
+      </if>
+      <if test="invoice != null" >
+        INVOICE,
+      </if>
+      <if test="salesNo != null" >
+        SALES_NO,
+      </if>
+      <if test="saleName != null" >
+        SALES_NAME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="version != null" >
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="agentNumber != null" >
+        #{agentNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="requestId != null" >
+        #{requestId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completeTime != null" >
+        #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qrcount != null" >
+        #{qrcount,jdbcType=SMALLINT},
+      </if>
+      <if test="sellerId != null" >
+        #{sellerId,jdbcType=BIGINT},
+      </if>
+      <if test="invoice != null" >
+        #{invoice,jdbcType=VARCHAR},
+      </if>
+      <if test="saleNo != null" >
+        #{salesNo,jdbcType=VARCHAR},
+      </if>
+      <if test="salesName != null" >
+        #{salesName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByFilter" parameterType="com.yeepay.g3.core.ymf.entity.qrcode.QrRelationParam" resultType="java.lang.Integer" >
+    select count(*) from YMF_QR_RELATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByFilterSelective" parameterType="map" >
+    update YMF_QR_RELATION
+    <set >
+      <if test="record.id != null" >
+        
+      </if>
+      <if test="record.version != null" >
+        VERSION = #{record.version,jdbcType=BIGINT},
+      </if>
+      <if test="record.agentNumber != null" >
+        AGENT_NUMBER = #{record.agentNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestId != null" >
+        REQUEST_ID = #{record.requestId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.completeTime != null" >
+        COMPLETE_TIME = #{record.completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.qrcount != null" >
+        QRCOUNT = #{record.qrcount,jdbcType=SMALLINT},
+      </if>
+      <if test="record.sellerId != null" >
+        SELLER_ID = #{record.sellerId,jdbcType=BIGINT},
+      </if>
+      <if test="record.invoice != null" >
+        INVOICE = #{record.invoice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesNo != null" >
+        SALES_NO = #{record.salesNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salesName != null" >
+        SALES_NAME = #{record.salesName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByFilter" parameterType="map" >
+    update YMF_QR_RELATION
+    set 
+      VERSION = #{record.version,jdbcType=BIGINT},
+      AGENT_NUMBER = #{record.agentNumber,jdbcType=VARCHAR},
+      REQUEST_ID = #{record.requestId,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      COMPLETE_TIME = #{record.completeTime,jdbcType=TIMESTAMP},
+      QRCOUNT = #{record.qrcount,jdbcType=SMALLINT},
+      SELLER_ID = #{record.sellerId,jdbcType=BIGINT},
+      INVOICE = #{record.invoice,jdbcType=VARCHAR},
+      SALES_NO = #{record.salesNo,jdbcType=VARCHAR},
+      SALES_NAME = #{record.salesName,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yeepay.g3.core.ymf.entity.qrcode.QrRelation" >
+    update YMF_QR_RELATION
+    <set >
+      <if test="version != null" >
+        VERSION = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="agentNumber != null" >
+        AGENT_NUMBER = #{agentNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="requestId != null" >
+        REQUEST_ID = #{requestId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completeTime != null" >
+        COMPLETE_TIME = #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qrcount != null" >
+        QRCOUNT = #{qrcount,jdbcType=SMALLINT},
+      </if>
+      <if test="sellerId != null" >
+        SELLER_ID = #{sellerId,jdbcType=BIGINT},
+      </if>
+      <if test="invoice != null" >
+        INVOICE = #{invoice,jdbcType=VARCHAR},
+      </if>
+      <if test="salesNo != null" >
+        SALES_NO = #{salesNo,jdbcType=VARCHAR},
+      </if>
+      <if test="salesName != null" >
+        SALES_NAME = #{salesName,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yeepay.g3.core.ymf.entity.qrcode.QrRelation" >
+    update YMF_QR_RELATION
+    set VERSION = #{version,jdbcType=BIGINT},
+      AGENT_NUMBER = #{agentNumber,jdbcType=VARCHAR},
+      REQUEST_ID = #{requestId,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      COMPLETE_TIME = #{completeTime,jdbcType=TIMESTAMP},
+      QRCOUNT = #{qrcount,jdbcType=SMALLINT},
+      SELLER_ID = #{sellerId,jdbcType=BIGINT},
+      INVOICE = #{invoice,jdbcType=VARCHAR},
+       SALES_NO = #{salesNo,jdbcType=VARCHAR},
+      SALES_NAME = #{salesName,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

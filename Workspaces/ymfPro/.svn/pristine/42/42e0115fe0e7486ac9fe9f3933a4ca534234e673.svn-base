@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.laike.repository.AppVersionRepository">
+
+	<resultMap id="BaseResultMap" type="com.yeepay.g3.core.laike.entity.AppVersionEntity">
+		<id column="ID" jdbcType="VARCHAR" property="id"/>
+		<result column="ROLE_TYPE" jdbcType="VARCHAR" property="roleType"/>
+		<result column="PLATFORM" jdbcType="VARCHAR" property="platform"/>
+		<result column="VERSION_CODE" jdbcType="VARCHAR" property="versionCode"/>
+		<result column="FORCE_UPDATE" jdbcType="SMALLINT" property="forceUpdate"/>
+		<result column="FILE_URL" jdbcType="VARCHAR" property="fileUrl"/>
+		<result column="DESCRIPTION" jdbcType="VARCHAR" property="description"/>
+		<result column="OPERATOR" jdbcType="VARCHAR" property="operator"/>
+		<result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+		<result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime"/>
+	</resultMap>
+
+	<select id="findById" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select *
+		from TBL_APP_VERSION
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+
+	<select id="findNewByRoleAndPlatform" parameterType="map" resultMap="BaseResultMap">
+		<![CDATA[
+		SELECT *
+		FROM TBL_APP_VERSION a
+		WHERE a.PLATFORM = #{platform,jdbcType=VARCHAR}
+		AND a.ROLE_TYPE = #{roleType,jdbcType=VARCHAR}
+		AND FILE_URL IS NOT NULL AND FILE_URL <> ''
+		AND NOT EXISTS (SELECT 1
+		FROM TBL_APP_VERSION b
+		WHERE b.PLATFORM = a.PLATFORM
+		AND b.ROLE_TYPE = a.ROLE_TYPE
+		AND b.CREATE_TIME > a.CREATE_TIME
+		AND FILE_URL IS NOT NULL AND FILE_URL <> ''
+		)
+		]]>
+	</select>
+
+	<select id="nextSequence" resultType="long">
+		VALUES NEXTVAL FOR SEQ_YMF_VERSION_ID
+	</select>
+
+	<insert id="save" parameterType="com.yeepay.g3.core.laike.entity.AppVersionEntity">
+		insert into TBL_APP_VERSION (ID, ROLE_TYPE, PLATFORM,VERSION_CODE, FORCE_UPDATE,
+				FILE_URL, DESCRIPTION,OPERATOR, CREATE_TIME, UPDATE_TIME)
+		values (#{id,jdbcType=VARCHAR}, #{roleType,jdbcType=VARCHAR}, #{platform,jdbcType=VARCHAR},
+		#{versionCode,jdbcType=VARCHAR}, 0, #{fileUrl,jdbcType=VARCHAR},
+			#{description,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, CURRENT_TIMESTAMP , CURRENT_TIMESTAMP)
+  	</insert>
+
+	<update id="update" parameterType="com.yeepay.g3.core.laike.entity.AppVersionEntity">
+		update TBL_APP_VERSION
+		<set>
+			<if test="forceUpdate != null">
+				FORCE_UPDATE = #{forceUpdate,jdbcType=SMALLINT},
+			</if>
+			<if test="description != null and description.trim() != ''">
+				DESCRIPTION = #{description,jdbcType=VARCHAR},
+			</if>
+			<if test="operator != null and operator.trim() != ''">
+				OPERATOR = #{operator,jdbcType=VARCHAR},
+			</if>
+			<if test="fileUrl != null and fileUrl.trim() != ''">
+				FILE_URL = #{fileUrl,jdbcType=VARCHAR},
+			</if>
+			UPDATE_TIME = CURRENT_TIMESTAMP
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+
+</mapper>

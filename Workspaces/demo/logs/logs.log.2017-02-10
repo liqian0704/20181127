@@ -1,0 +1,2 @@
+2017-02-10 16:49:47,773-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-02-10 16:49:47,778-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(45) - Start to run test class cases.loginTest on driverType3

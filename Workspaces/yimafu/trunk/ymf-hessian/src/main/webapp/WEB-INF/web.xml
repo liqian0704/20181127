@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+
+    <display-name>ymf-hessian</display-name>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath:/ymf-spring/ymf-application.xml,
+            classpath:/ymf-spring/ymf-soa-provider.xml
+        </param-value>
+    </context-param>
+
+    <listener>
+        <listener-class>com.yeepay.g3.utils.soa.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <servlet>
+        <servlet-name>hessian</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <servlet-name>soa</servlet-name>
+        <servlet-class>com.yeepay.g3.utils.soa.remoting.http.servlet.DispatcherServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>hessian</servlet-name>
+        <url-pattern>/hessian/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>soa</servlet-name>
+        <url-pattern>/soa/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- 对接2代商户后台 -->
+    <servlet>
+        <servlet-name>g2Servlet</servlet-name>
+        <servlet-class>com.yeepay.g3.core.ymf.servlet.G2Servlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>g2Servlet</servlet-name>
+        <url-pattern>/g2Servlet/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- 补单定时 降级配置 -->
+    <servlet>
+        <servlet-name>supplyServlet</servlet-name>
+        <servlet-class>com.yeepay.g3.core.ymf.servlet.SupplyServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>supplyServlet</servlet-name>
+        <url-pattern>/supplyServlet/*</url-pattern>
+    </servlet-mapping>
+
+
+    <!-- session timeout -->
+    <session-config>
+        <session-timeout>30</session-timeout>
+    </session-config>
+</web-app>

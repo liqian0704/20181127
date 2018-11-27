@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fileFormat>
+    <format>
+        <field>customernumber</field>
+        <fieldName>商户编号</fieldName>
+    </format>
+    <format>
+        <field>shop_name</field>
+        <fieldName>网点名称</fieldName>
+    </format>
+    <format>
+        <field>link_man</field>
+        <fieldName>网点联系人姓名</fieldName>
+    </format>
+    <format>
+        <field>link_phone</field>
+        <fieldName>电话号码</fieldName>
+    </format>
+
+    <format>
+        <field>qrid</field>
+        <fieldName>二维码ID</fieldName>
+    </format>
+    <format>
+        <field>qr_content</field>
+        <fieldName>二维码地址</fieldName>
+    </format>
+</fileFormat>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.ymf.dao.common.HolidayInfoDao">
+    <resultMap id="HolidayInfoMap" type="com.yeepay.g3.core.ymf.entity.common.HolidayInfo">
+        <id column="ID" jdbcType="BIGINT" property="id" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="LASTMODIFY_TIME" jdbcType="TIMESTAMP" property="lastmodifyTime" />
+        <result column="HOLIDAY_DATE" jdbcType="DATE" property="holidayDate" />
+        <result column="DEAL_TIMES" jdbcType="INTEGER" property="dealTimes" />
+        <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+        <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    </resultMap>
+
+    <select id="findAllByStatus" resultMap="HolidayInfoMap">
+       select * from YMF_HOLIDAY_INFO
+        <where>
+        <if test="status != null">
+            STATUS = #{status,jdbcType=VARCHAR}
+        </if>
+        </where>
+    </select>
+
+    <select id="findByHolidayDate" resultMap="HolidayInfoMap">
+       select * from YMF_HOLIDAY_INFO
+        <where>
+        <if test="holiday != null">
+            HOLIDAY_DATE = #{holiday,jdbcType=DATE}
+        </if>
+        </where>
+    </select>
+</mapper>

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,user-scalable=no"/>
+    <meta http-equiv = "pragma" content = "no-cache">
+    <title>申请</title>
+    <link rel="stylesheet" href="../css/uikit/uikit.min.css"/>
+    <link rel="stylesheet" href="../css/uikit/iconfont.css"/>
+    <script src="../js/jquery-1.10.1.min.js"></script>
+    <script src="../js/uikit.min.js"></script>
+
+    <style>
+        html {
+            background-color: #f8f8f8;
+        }
+
+        header {
+            display: none;
+            background-color: #ED722F;
+            padding: 10px;
+        }
+
+        header > * {
+            color: white;
+            font-size: 18px;
+        }
+
+        #i_back:active {
+            color: #dddddd;
+        }
+
+        .content-parent-box {
+            background-color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .apply-box {
+            padding: 14px;
+        }
+
+        .uk-button {
+            font-size: 16px;
+            line-height: 40px;
+        }
+
+        .uk-button-primary {
+            background-color: #ED722F;
+            color: #ffffff;
+        }
+
+        /* Hover */
+        .uk-button-primary:hover,
+        .uk-button-primary:focus {
+            background-color: #f06b00;
+            color: #ffffff;
+        }
+
+        /* Active */
+        .uk-button-primary:active,
+        .uk-button-primary.uk-active {
+            background-color: #f06b00;
+            color: #ffffff;
+        }
+
+        /* disabled */
+        .uk-button-primary:disabled {
+            background-color: #dddddd;
+            color: #ffffff;
+        }
+
+        .lk-success-box > * {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .lk-success-box > i {
+            font-size: 30px;
+            color: #22b829;
+        }
+
+        .lk-success-box > span {
+            font-size: 20px;
+            color: black;
+        }
+
+        .content-parent-box > p {
+            font-size: 16px;
+            color: dimgray;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="uk-width-1-1 uk-text-center">
+        <i id="i_back" class="iconfont icon-icon-test2 uk-float-left" onclick="btnclick()"></i>
+        <span>申请</span>
+    </div>
+</header>
+
+<div class="content-parent-box">
+    <div class="lk-success-box uk-margin-top">
+        <i class="iconfont icon-success"></i>
+        <span>申请订单已经提交</span>
+    </div>
+    <p>请等待工作人员与您联系</p>
+</div>
+<div class="apply-box uk-margin-top">
+    <button class="uk-button uk-button-primary uk-width-1-1 uk-border-rounded" onclick="btnclick()">返回首页</button>
+</div>
+
+<script type="text/javascript">
+    var browser = {
+        versions: function () {
+            var u = navigator.userAgent;
+            return {
+                trident: u.indexOf('Trident') > -1, //IE内核
+                presto: u.indexOf('Presto') > -1, //opera内核
+                webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,//火狐内核
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+                android: u.indexOf('Android') > -1 || u.indexOf('Adr') > -1, //android终端
+                iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
+                iPad: u.indexOf('iPad') > -1, //是否iPad
+                webApp: u.indexOf('Safari') == -1, //是否web应该程序，没有头部与底部
+                weixin: u.indexOf('MicroMessenger') > -1, //是否微信
+                qq: u.match(/\sQQ/i) == " qq" //是否QQ
+            };
+        }()
+    };
+
+    function btnclick() {
+        if (browser.versions.ios) {
+            window.webkit.messageHandlers.backhomeclick.postMessage("");
+        } else if (browser.versions.android) {
+            window.LikerJsbridge.backhomeclick();
+        }
+    }
+</script>
+
+</body>
+</html>

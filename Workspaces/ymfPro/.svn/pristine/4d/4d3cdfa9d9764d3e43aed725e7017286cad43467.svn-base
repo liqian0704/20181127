@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.laike.repository.RoleFunctionRepository">
+
+	<resultMap id="BaseResultMap" type="com.yeepay.g3.core.laike.entity.RoleFunctionEntity">
+		<id column="ID" property="id"/>
+		<result column="FUNCTION_ID" jdbcType="BIGINT" property="functionId"/>
+        <result column="ROLE_ID" jdbcType="VARCHAR" property="roleId"/>
+		<result column="AVAILABLE" jdbcType="SMALLINT" property="available"/>
+		<result column="OPERATOR" jdbcType="VARCHAR" property="operator"/>
+		<result column="DESCRIPTION" jdbcType="VARCHAR" property="description"/>
+		<result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+		<result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime"/>
+	</resultMap>
+
+	<select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select *
+		from TBL_ROLE_FUNC
+		where ID = #{id,jdbcType=BIGINT}
+	</select>
+
+    <select id="findByFunId" parameterType="java.lang.Long" resultType="java.lang.String">
+		select ROLE_ID
+		from TBL_ROLE_FUNC
+		where FUNCTION_ID = #{funcId,jdbcType=BIGINT}
+	</select>
+
+    <select id="findByRoleAndFunId" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select *
+		from TBL_ROLE_FUNC
+		where ROLE_ID = #{roleId,jdbcType=VARCHAR} AND FUNCTION_ID = #{funcId,jdbcType=BIGINT}
+	</select>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id"
+			parameterType="com.yeepay.g3.core.laike.entity.RoleFunctionEntity">
+        insert into TBL_ROLE_FUNC (FUNCTION_ID, ROLE_ID,AVAILABLE, OPERATOR,
+		DESCRIPTION,CREATE_TIME, UPDATE_TIME)
+        values ( #{functionId,jdbcType=BIGINT}, #{roleId,jdbcType=VARCHAR},1,
+		#{operator,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},CURRENT_TIMESTAMP , CURRENT_TIMESTAMP )
+	</insert>
+
+    <insert id="batchSave" useGeneratedKeys="true" keyProperty="id"
+            parameterType="java.util.Map">
+        insert into TBL_ROLE_FUNC (FUNCTION_ID, ROLE_ID,AVAILABLE, OPERATOR,
+        DESCRIPTION,CREATE_TIME, UPDATE_TIME) values
+        <foreach collection="list" index="index" item="item" separator=",">
+            (#{functionId,jdbcType=BIGINT}, #{item.itemroleId,jdbcType=VARCHAR},1,
+            #{operator,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR},CURRENT_TIMESTAMP , CURRENT_TIMESTAMP )
+        </foreach>
+    </insert>
+
+    <update id="toggleAvailable" parameterType="com.yeepay.g3.core.laike.entity.RoleFunctionEntity">
+        UPDATE TBL_ROLE_FUNC
+        SET AVAILABLE = 1 - AVAILABLE,
+        <if test="operator != null and operator.trim() != ''">
+            OPERATOR = #{operator,jdbcType=VARCHAR},
+        </if>
+        <if test="description != null and description.trim() != ''">
+            DESCRIPTION = #{description,jdbcType=VARCHAR},
+        </if>
+        UPDATE_TIME = CURRENT_TIMESTAMP
+        WHERE ID = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="closeAll" parameterType="java.util.Map">
+        update TBL_ROLE_FUNC
+        SET AVAILABLE = 0,
+        <if test="operator != null and operator.trim() != ''">
+            OPERATOR = #{operator,jdbcType=VARCHAR} ,
+        </if>
+        <if test="description != null and description.trim() != ''">
+            DESCRIPTION = #{description,jdbcType=VARCHAR} ,
+        </if>
+        UPDATE_TIME = CURRENT_TIMESTAMP
+        where FUNCTION_ID = #{funcId,jdbcType=BIGINT} AND ROLE_ID in (#{roleIds})
+    </update>
+
+    <update id="update" parameterType="com.yeepay.g3.core.laike.entity.RoleFunctionEntity">
+		update TBL_ROLE_FUNC
+		<set>
+            <if test="roleId != null">
+                ROLE_ID = #{roleId,jdbcType=VARCHAR},
+			</if>
+			<if test="available != null">
+				AVAILABLE = #{available,jdbcType=SMALLINT},
+			</if>
+			<if test="operator != null and operator.trim() != ''">
+				OPERATOR = #{operator,jdbcType=VARCHAR},
+			</if>
+			<if test="description != null and description.trim() != ''">
+				DESCRIPTION = #{description,jdbcType=VARCHAR},
+			</if>
+			UPDATE_TIME = CURRENT_TIMESTAMP
+		</set>
+		where ID = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

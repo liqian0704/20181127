@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Accounting_core_mapper.PayRecordMapper">
+
+    <resultMap id="PayRecordEntity" type="Accounting_entity.PayRecordEntity">
+        <id property="uniquePayNo" column="unique_pay_no"/>
+        <result property="optimistic" column="optimistic" />
+        <result property="billNo" column="bill_no"/>
+        <result property="payCompany" column="pay_company"/>
+        <result property="parentMerchantNo" column="parent_merchant_no"/>
+        <result property="payCompanyParentMerchantNo" column="pay_company_parent_merchant_no"/>
+        <result property="payCompanyPayNo" column="pay_company_pay_no"/>
+        <result property="payAmount" column="pay_amount" />
+        <result property="payStatus" column="pay_status"/>
+        <result property="beneficiary" column="beneficiary"/>
+        <result property="idCardName" column="id_card_no" />
+        <result property="idCardNo" column="id_card_no"/>
+        <result property="bankCardNo" column="bank_card_no"/>
+        <result property="bankCode" column="bank_code"/>
+        <result property="payRequestDate" column="pay_request_date"/>
+        <result property="paySuccessDate" column="pay_success_date"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="errorCode" column="error_code"/>
+        <result property="errorMessage" column="error_message"/>
+    </resultMap>
+
+    <!--<insert id="save" parameterType="com.yeepay.g3.core.laike.entity.SmsCodeEntity" keyProperty="id"-->
+    <!--useGeneratedKeys="true">-->
+    <!--INSERT INTO YMF.TBL_SMS_CODE-->
+    <!--(PHONE_NO,SMS_CODE,TYPE,AVAILABLE,CREATE_TIME,EFFECT_TIME)-->
+    <!--VALUES-->
+    <!--(#{phoneNo,typeHandler=SensitiveL2StringHandler},#{smsCode},#{smsType},1,#{createTime},#{effectTime})-->
+    <!--</insert>-->
+
+    <!--<select id="findOne" parameterType="map" resultMap="smsCodeMap">-->
+    <!--SELECT *-->
+    <!--FROM YMF.TBL_SMS_CODE a-->
+    <!--WHERE a.PHONE_NO = #{phoneNo,typeHandler=SensitiveL2StringHandler} AND a.TYPE = #{smsType} AND a.AVAILABLE = 1-->
+    <!--AND a.EFFECT_TIME > CURRENT_TIMESTAMP-->
+    <!--AND NOT EXISTS(SELECT 1-->
+    <!--FROM TBL_SMS_CODE b-->
+    <!--WHERE b.PHONE_NO = a.PHONE_NO-->
+    <!--AND AVAILABLE = b.AVAILABLE-->
+    <!--AND b.TYPE = a.TYPE-->
+    <!--AND b.EFFECT_TIME > a.EFFECT_TIME)-->
+    <!--</select>-->
+
+    <!--<update id="setUnAvaliable" parameterType="com.yeepay.g3.core.laike.entity.SmsCodeEntity">-->
+    <!--update YMF.TBL_SMS_CODE-->
+    <!--set AVAILABLE = 0-->
+    <!--WHERE ID = #{id}-->
+    <!--</update>-->
+    <!--<select id="symCode" resultMap="smsCodeEntity">-->
+	   <!--SELECT  * FROM YMF.TBL_SMS_CODE order by id desc fetch FIRST  1 rows ONLY-->
+	<!--</select>-->
+    <select id="selectPayRecord" resultMap="PayRecordEntity">
+        select * from tbl_pay_record_0 where parent_merchant_no= #{parent_merchant_no}
+    </select>
+</mapper>

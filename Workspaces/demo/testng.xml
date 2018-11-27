@@ -1,0 +1,22 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Suite1" verbose="1">
+
+    <test name="Test1">
+        <parameter name="URL" value="http://testng.org/" />
+
+        <classes>
+            <class name="cases.loginTest">
+                <methods>
+                    <include name="login" />
+                   <!-- <exclude name="Login" />-->
+                </methods>
+            </class>
+            <class name="cases.SearchTest">
+                <methods>
+                    <include name="search"></include>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

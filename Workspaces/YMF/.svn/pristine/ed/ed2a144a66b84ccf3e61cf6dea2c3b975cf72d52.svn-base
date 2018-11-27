@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.ymf.dao.material.TermDao">
+
+    <resultMap id="Term" type="com.yeepay.g3.core.ymf.entity.material.Term" >
+        <id column="ID" property="id" jdbcType="BIGINT" />
+        <result column="IN_TIME" property="inTime" jdbcType="TIMESTAMP" />
+        <result column="OUT_TIME" property="outTime" jdbcType="TIMESTAMP" />
+        <result column="SN_SERIAL" property="snSerial" jdbcType="VARCHAR" />
+        <result column="TERM_TYPE" property="termType" jdbcType="VARCHAR" />
+        <result column="MANUFACT" property="manufact" jdbcType="VARCHAR" />
+        <result column="TERM_STATUS" property="termStatus" jdbcType="VARCHAR" />
+        <result column="STOCK_STATUS" property="stockStatus" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <resultMap id="LaikeTermDto" type="com.yeepay.g3.facade.ymf.dto.laike.LaikeTermDTO" >
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ID, IN_TIME, OUT_TIME, SN_SERIAL, TERM_TYPE, MANUFACT, TERM_STATUS, STOCK_STATUS
+    </sql>
+
+    <select id="queryBySerials" resultMap="Term" >
+        select *
+        from YMF_TERM
+        where SN_SERIAL in
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        with ur
+    </select>
+
+    <select id="querySerialsBySerials" resultType="java.lang.String" >
+        select distinct SN_SERIAL
+        from YMF_TERM
+        where SN_SERIAL in
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        with ur
+    </select>
+
+    <select id="queryInTerm" resultMap="Term" >
+        select *
+        from YMF_TERM
+        where STOCK_STATUS = 'IN' AND SN_SERIAL in
+        <foreach item="item" index="index" collection="list"
+                 open="(" separator="," close=")">
+            #{item}
+        </foreach>
+        with ur
+    </select>
+
+    <select id="queryBindTerm" resultMap="LaikeTermDto" >
+        SELECT t.sn_serial AS snSerial,
+               t.term_type AS termType,
+               d1.NAME AS termTypeDisplayName,
+               t.manufact AS manufacture,
+               d2.name AS manufactureDisplayName,
+               r.customer_number AS customerNumber
+        FROM ymf_term t
+        LEFT JOIN ymf_term_rel r ON t.id = r.term_id AND r.status = 'ACTIVE'
+        LEFT JOIN YMF_DICTIONARY d1 ON d1.TYPE = 'TermType' AND d1.CODE = t.term_type
+        LEFT JOIN YMF_DICTIONARY d2 ON d2.TYPE = 'TermManufacture' AND d2.CODE = t.manufact
+        where r.customer_number = #{customerNumber,jdbcType=VARCHAR}
+        with ur
+    </select>
+
+    <select id="validateBindTerm" resultType="java.lang.Boolean" >
+        SELECT count(t.id) FROM YMF_TERM t
+        LEFT JOIN YMF_TERM_REL r ON t.ID  = r.TERM_ID
+        WHERE r.STATUS = 'ACTIVE' AND t.TERM_STATUS = 'BIND'
+          AND r.CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR}
+          AND t.SN_SERIAL = #{snSerial,jdbcType=VARCHAR}
+        with ur
+    </select>
+</mapper>

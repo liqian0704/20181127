@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.yeepay.g3.utils:yeepay-ftp:1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/utils/yeepay-ftp/1.0-SNAPSHOT/yeepay-ftp-1.0-20170425.073528-22.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/utils/yeepay-ftp/1.0-SNAPSHOT/yeepay-ftp-1.0-20170425.073528-22-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/utils/yeepay-ftp/1.0-SNAPSHOT/yeepay-ftp-1.0-20170425.073528-22-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

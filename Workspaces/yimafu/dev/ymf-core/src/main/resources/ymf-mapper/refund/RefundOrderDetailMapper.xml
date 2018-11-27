@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yeepay.g3.core.ymf.dao.refund.RefundOrderDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.yeepay.g3.core.ymf.entity.refund.RefundOrderDetail" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="VERSION" property="version" jdbcType="INTEGER" />
+    <result column="REFUNDINFO_ID" property="refundinfoId" jdbcType="BIGINT" />
+    <result column="REFUND_SOURCE" property="refundSource" jdbcType="VARCHAR" />
+    <result column="REFUND_ORDER_ID" property="refundOrderId" jdbcType="VARCHAR" />
+    <result column="REFUND_REQUEST_ID" property="refundRequestId" jdbcType="VARCHAR" />
+    <result column="YEEPAY_ORDER_ID" property="yeepayOrderId" jdbcType="VARCHAR" />
+    <result column="REFUND_TYPE" property="refundType" jdbcType="VARCHAR" />
+    <result column="TRX_AMOUNT" property="trxAmount" jdbcType="DECIMAL" />
+    <result column="PAY_SOURCE" property="paySource" jdbcType="VARCHAR" />
+    <result column="REFUND_AMOUNT" property="refundAmount" jdbcType="DECIMAL" />
+    <result column="REFUND_FEE" property="refundFee" jdbcType="DECIMAL" />
+    <result column="REFUND_STATUS" property="refundStatus" jdbcType="VARCHAR" />
+    <result column="REASON_CODE" property="reasonCode" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="REFUND_TIME" property="refundTime" jdbcType="TIMESTAMP" />
+    <result column="MANUAL_EXEC_TIME" property="manualExecTime" jdbcType="TIMESTAMP" />
+    <result column="MANUAL_OPERATOR" property="manualOperator" jdbcType="VARCHAR" />
+    <result column="REFUND_HANDLE_TYPE" property="refundHandleType" jdbcType="VARCHAR" />
+    <result column="CAUSE" property="cause" jdbcType="VARCHAR" />
+    <result column="PAY_TIME" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="REASON_MSG" property="reasonMsg" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, VERSION, REFUNDINFO_ID, REFUND_SOURCE, REFUND_ORDER_ID, REFUND_REQUEST_ID, YEEPAY_ORDER_ID, 
+    REFUND_TYPE, TRX_AMOUNT, PAY_SOURCE, REFUND_AMOUNT, REFUND_FEE, REFUND_STATUS, REASON_CODE, 
+    CREATE_TIME, REFUND_TIME, MANUAL_EXEC_TIME, MANUAL_OPERATOR, REFUND_HANDLE_TYPE, 
+    CAUSE, PAY_TIME, REASON_MSG
+  </sql>
+  <select id="selectByFilter" resultMap="BaseResultMap" parameterType="com.yeepay.g3.core.ymf.entity.refund.RefundOrderDetailParam" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from YMF_REFUND_DETAIL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from YMF_REFUND_DETAIL
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from YMF_REFUND_DETAIL
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByFilter" parameterType="com.yeepay.g3.core.ymf.entity.refund.RefundOrderDetailParam" >
+    delete from YMF_REFUND_DETAIL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yeepay.g3.core.ymf.entity.refund.RefundOrderDetail" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      VALUES NEXTVAL FOR YMF_REFUND_DETAIL_SEQ_ID
+    </selectKey>
+    insert into YMF_REFUND_DETAIL (ID, REFUNDINFO_ID,
+      REFUND_SOURCE, REFUND_ORDER_ID, REFUND_REQUEST_ID, 
+      YEEPAY_ORDER_ID, REFUND_TYPE, TRX_AMOUNT, 
+      PAY_SOURCE, REFUND_AMOUNT, REFUND_FEE, 
+      REFUND_STATUS, REASON_CODE, CREATE_TIME, 
+      REFUND_TIME, MANUAL_EXEC_TIME, MANUAL_OPERATOR, 
+      REFUND_HANDLE_TYPE, CAUSE, PAY_TIME, 
+      REASON_MSG)
+    values (#{id,jdbcType=BIGINT}, #{refundinfoId,jdbcType=BIGINT},
+      #{refundSource,jdbcType=VARCHAR}, #{refundOrderId,jdbcType=VARCHAR}, #{refundRequestId,jdbcType=VARCHAR}, 
+      #{yeepayOrderId,jdbcType=VARCHAR}, #{refundType,jdbcType=VARCHAR}, #{trxAmount,jdbcType=DECIMAL}, 
+      #{paySource,jdbcType=VARCHAR}, #{refundAmount,jdbcType=DECIMAL}, #{refundFee,jdbcType=DECIMAL}, 
+      #{refundStatus,jdbcType=VARCHAR}, #{reasonCode,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{refundTime,jdbcType=TIMESTAMP}, #{manualExecTime,jdbcType=TIMESTAMP}, #{manualOperator,jdbcType=VARCHAR}, 
+      #{refundHandleType,jdbcType=VARCHAR}, #{cause,jdbcType=VARCHAR}, #{payTime,jdbcType=TIMESTAMP}, 
+      #{reasonMsg,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yeepay.g3.core.ymf.entity.refund.RefundOrderDetail" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      VALUES NEXTVAL FOR YMF_REFUND_DETAIL_SEQ_ID
+    </selectKey>
+    insert into YMF_REFUND_DETAIL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="refundinfoId != null" >
+        REFUNDINFO_ID,
+      </if>
+      <if test="refundSource != null" >
+        REFUND_SOURCE,
+      </if>
+      <if test="refundOrderId != null" >
+        REFUND_ORDER_ID,
+      </if>
+      <if test="refundRequestId != null" >
+        REFUND_REQUEST_ID,
+      </if>
+      <if test="yeepayOrderId != null" >
+        YEEPAY_ORDER_ID,
+      </if>
+      <if test="refundType != null" >
+        REFUND_TYPE,
+      </if>
+      <if test="trxAmount != null" >
+        TRX_AMOUNT,
+      </if>
+      <if test="paySource != null" >
+        PAY_SOURCE,
+      </if>
+      <if test="refundAmount != null" >
+        REFUND_AMOUNT,
+      </if>
+      <if test="refundFee != null" >
+        REFUND_FEE,
+      </if>
+      <if test="refundStatus != null" >
+        REFUND_STATUS,
+      </if>
+      <if test="reasonCode != null" >
+        REASON_CODE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="refundTime != null" >
+        REFUND_TIME,
+      </if>
+      <if test="manualExecTime != null" >
+        MANUAL_EXEC_TIME,
+      </if>
+      <if test="manualOperator != null" >
+        MANUAL_OPERATOR,
+      </if>
+      <if test="refundHandleType != null" >
+        REFUND_HANDLE_TYPE,
+      </if>
+      <if test="cause != null" >
+        CAUSE,
+      </if>
+      <if test="payTime != null" >
+        PAY_TIME,
+      </if>
+      <if test="reasonMsg != null" >
+        REASON_MSG,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="refundinfoId != null" >
+        #{refundinfoId,jdbcType=BIGINT},
+      </if>
+      <if test="refundSource != null" >
+        #{refundSource,jdbcType=VARCHAR},
+      </if>
+      <if test="refundOrderId != null" >
+        #{refundOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="refundRequestId != null" >
+        #{refundRequestId,jdbcType=VARCHAR},
+      </if>
+      <if test="yeepayOrderId != null" >
+        #{yeepayOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="refundType != null" >
+        #{refundType,jdbcType=VARCHAR},
+      </if>
+      <if test="trxAmount != null" >
+        #{trxAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="paySource != null" >
+        #{paySource,jdbcType=VARCHAR},
+      </if>
+      <if test="refundAmount != null" >
+        #{refundAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="refundFee != null" >
+        #{refundFee,jdbcType=DECIMAL},
+      </if>
+      <if test="refundStatus != null" >
+        #{refundStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="reasonCode != null" >
+        #{reasonCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundTime != null" >
+        #{refundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="manualExecTime != null" >
+        #{manualExecTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="manualOperator != null" >
+        #{manualOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="refundHandleType != null" >
+        #{refundHandleType,jdbcType=VARCHAR},
+      </if>
+      <if test="cause != null" >
+        #{cause,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reasonMsg != null" >
+        #{reasonMsg,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByFilter" parameterType="com.yeepay.g3.core.ymf.entity.refund.RefundOrderDetailParam" resultType="java.lang.Integer" >
+    select count(*) from YMF_REFUND_DETAIL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByFilterSelective" parameterType="map" >
+    update YMF_REFUND_DETAIL
+    <set >
+      <if test="record.id != null" >
+        
+      </if>
+        VERSION = VERSION + 1,
+      <if test="record.refundinfoId != null" >
+        REFUNDINFO_ID = #{record.refundinfoId,jdbcType=BIGINT},
+      </if>
+      <if test="record.refundSource != null" >
+        REFUND_SOURCE = #{record.refundSource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundOrderId != null" >
+        REFUND_ORDER_ID = #{record.refundOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundRequestId != null" >
+        REFUND_REQUEST_ID = #{record.refundRequestId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yeepayOrderId != null" >
+        YEEPAY_ORDER_ID = #{record.yeepayOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundType != null" >
+        REFUND_TYPE = #{record.refundType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trxAmount != null" >
+        TRX_AMOUNT = #{record.trxAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.paySource != null" >
+        PAY_SOURCE = #{record.paySource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundAmount != null" >
+        REFUND_AMOUNT = #{record.refundAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.refundFee != null" >
+        REFUND_FEE = #{record.refundFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.refundStatus != null" >
+        REFUND_STATUS = #{record.refundStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.reasonCode != null" >
+        REASON_CODE = #{record.reasonCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.refundTime != null" >
+        REFUND_TIME = #{record.refundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.manualExecTime != null" >
+        MANUAL_EXEC_TIME = #{record.manualExecTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.manualOperator != null" >
+        MANUAL_OPERATOR = #{record.manualOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.refundHandleType != null" >
+        REFUND_HANDLE_TYPE = #{record.refundHandleType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cause != null" >
+        CAUSE = #{record.cause,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payTime != null" >
+        PAY_TIME = #{record.payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.reasonMsg != null" >
+        REASON_MSG = #{record.reasonMsg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByFilter" parameterType="map" >
+    update YMF_REFUND_DETAIL
+    set 
+      VERSION = VERSION + 1,
+      REFUNDINFO_ID = #{record.refundinfoId,jdbcType=BIGINT},
+      REFUND_SOURCE = #{record.refundSource,jdbcType=VARCHAR},
+      REFUND_ORDER_ID = #{record.refundOrderId,jdbcType=VARCHAR},
+      REFUND_REQUEST_ID = #{record.refundRequestId,jdbcType=VARCHAR},
+      YEEPAY_ORDER_ID = #{record.yeepayOrderId,jdbcType=VARCHAR},
+      REFUND_TYPE = #{record.refundType,jdbcType=VARCHAR},
+      TRX_AMOUNT = #{record.trxAmount,jdbcType=DECIMAL},
+      PAY_SOURCE = #{record.paySource,jdbcType=VARCHAR},
+      REFUND_AMOUNT = #{record.refundAmount,jdbcType=DECIMAL},
+      REFUND_FEE = #{record.refundFee,jdbcType=DECIMAL},
+      REFUND_STATUS = #{record.refundStatus,jdbcType=VARCHAR},
+      REASON_CODE = #{record.reasonCode,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      REFUND_TIME = #{record.refundTime,jdbcType=TIMESTAMP},
+      MANUAL_EXEC_TIME = #{record.manualExecTime,jdbcType=TIMESTAMP},
+      MANUAL_OPERATOR = #{record.manualOperator,jdbcType=VARCHAR},
+      REFUND_HANDLE_TYPE = #{record.refundHandleType,jdbcType=VARCHAR},
+      CAUSE = #{record.cause,jdbcType=VARCHAR},
+      PAY_TIME = #{record.payTime,jdbcType=TIMESTAMP},
+      REASON_MSG = #{record.reasonMsg,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yeepay.g3.core.ymf.entity.refund.RefundOrderDetail" >
+    update YMF_REFUND_DETAIL
+    <set >
+        VERSION = VERSION + 1,
+      <if test="refundinfoId != null" >
+        REFUNDINFO_ID = #{refundinfoId,jdbcType=BIGINT},
+      </if>
+      <if test="refundSource != null" >
+        REFUND_SOURCE = #{refundSource,jdbcType=VARCHAR},
+      </if>
+      <if test="refundOrderId != null" >
+        REFUND_ORDER_ID = #{refundOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="refundRequestId != null" >
+        REFUND_REQUEST_ID = #{refundRequestId,jdbcType=VARCHAR},
+      </if>
+      <if test="yeepayOrderId != null" >
+        YEEPAY_ORDER_ID = #{yeepayOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="refundType != null" >
+        REFUND_TYPE = #{refundType,jdbcType=VARCHAR},
+      </if>
+      <if test="trxAmount != null" >
+        TRX_AMOUNT = #{trxAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="paySource != null" >
+        PAY_SOURCE = #{paySource,jdbcType=VARCHAR},
+      </if>
+      <if test="refundAmount != null" >
+        REFUND_AMOUNT = #{refundAmount,jdbcType=DECIMAL},
+      </if>
+      <if test="refundFee != null" >
+        REFUND_FEE = #{refundFee,jdbcType=DECIMAL},
+      </if>
+      <if test="refundStatus != null" >
+        REFUND_STATUS = #{refundStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="reasonCode != null" >
+        REASON_CODE = #{reasonCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="refundTime != null" >
+        REFUND_TIME = #{refundTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="manualExecTime != null" >
+        MANUAL_EXEC_TIME = #{manualExecTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="manualOperator != null" >
+        MANUAL_OPERATOR = #{manualOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="refundHandleType != null" >
+        REFUND_HANDLE_TYPE = #{refundHandleType,jdbcType=VARCHAR},
+      </if>
+      <if test="cause != null" >
+        CAUSE = #{cause,jdbcType=VARCHAR},
+      </if>
+      <if test="payTime != null" >
+        PAY_TIME = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="reasonMsg != null" >
+        REASON_MSG = #{reasonMsg,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yeepay.g3.core.ymf.entity.refund.RefundOrderDetail" >
+    update YMF_REFUND_DETAIL
+    set VERSION = VERSION + 1,
+      REFUNDINFO_ID = #{refundinfoId,jdbcType=BIGINT},
+      REFUND_SOURCE = #{refundSource,jdbcType=VARCHAR},
+      REFUND_ORDER_ID = #{refundOrderId,jdbcType=VARCHAR},
+      REFUND_REQUEST_ID = #{refundRequestId,jdbcType=VARCHAR},
+      YEEPAY_ORDER_ID = #{yeepayOrderId,jdbcType=VARCHAR},
+      REFUND_TYPE = #{refundType,jdbcType=VARCHAR},
+      TRX_AMOUNT = #{trxAmount,jdbcType=DECIMAL},
+      PAY_SOURCE = #{paySource,jdbcType=VARCHAR},
+      REFUND_AMOUNT = #{refundAmount,jdbcType=DECIMAL},
+      REFUND_FEE = #{refundFee,jdbcType=DECIMAL},
+      REFUND_STATUS = #{refundStatus,jdbcType=VARCHAR},
+      REASON_CODE = #{reasonCode,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      REFUND_TIME = #{refundTime,jdbcType=TIMESTAMP},
+      MANUAL_EXEC_TIME = #{manualExecTime,jdbcType=TIMESTAMP},
+      MANUAL_OPERATOR = #{manualOperator,jdbcType=VARCHAR},
+      REFUND_HANDLE_TYPE = #{refundHandleType,jdbcType=VARCHAR},
+      CAUSE = #{cause,jdbcType=VARCHAR},
+      PAY_TIME = #{payTime,jdbcType=TIMESTAMP},
+      REASON_MSG = #{reasonMsg,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<artifactId>laike-parent</artifactId>
+		<groupId>com.yeepay.g3.laike</groupId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>laike-common-util</artifactId>
+	<version>${laike-common-util.version}</version>
+	<packaging>jar</packaging>
+
+	<name>LaiKe :: Common</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.yeepay.g3.laike</groupId>
+			<artifactId>laike-facade</artifactId>
+			<version>${laike-facade.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.yeepay.g3.utils</groupId>
+			<artifactId>yeepay-config</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>net.sf.ezmorph</groupId>
+			<artifactId>ezmorph</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.yeepay.g3.utils</groupId>
+			<artifactId>yeepay-query</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<version>${gson.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.yeepay.g3.utils</groupId>
+			<artifactId>yeepay-report</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.yeepay.g3.common</groupId>
+			<artifactId>yeepay-common</artifactId>
+		</dependency>
+	</dependencies>
+</project>

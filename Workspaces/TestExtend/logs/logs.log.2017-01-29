@@ -1,0 +1,2 @@
+2017-01-29 19:41:21,400-[SeleniumAutoFile] ERROR [main] com.util.DatabaseService.connectDBDriver(55) - Cannot connect to database server
+2017-01-29 19:41:21,407-[SeleniumAutoFile] INFO [main] com.cases.TestBase.beforeClass(83) - Start to run test class com.cases.KfglTest_New on driverType2

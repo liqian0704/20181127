@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd"
+		version="2.0">
+	<display-name>dicutils</display-name>
+	<tlib-version>3.0</tlib-version>
+	<short-name>dicutils</short-name>
+	<uri>/dicutils</uri>
+
+	<tag>
+		<description>
+			在页面上显示数据字典的name,
+		</description>
+		<name>write</name>
+		<tag-class>com.yeepay.g3.ymf.boss.support.DicTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>
+				数据字典的type
+			</description>
+			<name>type</name>
+			<required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+				数据字典的code
+			</description>
+			<name>code</name>
+			<required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<description>
+			在页面上显示数据字典的下拉菜单,
+		</description>
+		<name>select</name>
+		<tag-class>com.yeepay.g3.ymf.boss.support.DicSelectTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>select的id</description>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<description>select的name</description>
+			<name>name</name>
+		</attribute>
+		<attribute>
+			<description>select的class</description>
+			<name>clazz</name>
+		</attribute>
+		<attribute>
+			<description>
+				数据字典的type
+			</description>
+			<name>type</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<description>
+				需要被选中的code
+			</description>
+			<name>code</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+
+	<tag>
+		<description>在页面上显示所有的数据字典类型</description>
+		<name>typeSelect</name>
+		<tag-class>com.yeepay.g3.ymf.boss.support.DicTypeSelectTag</tag-class>
+		<body-content>JSP</body-content>
+		<attribute>
+			<description>select的id</description>
+			<name>id</name>
+		</attribute>
+		<attribute>
+			<description>select的name</description>
+			<name>name</name>
+		</attribute>
+		<attribute>
+			<description>select的class</description>
+			<name>clazz</name>
+		</attribute>
+		<attribute>
+			<description>需要选中的数据字典的type</description>
+			<name>type</name>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+
+</taglib>

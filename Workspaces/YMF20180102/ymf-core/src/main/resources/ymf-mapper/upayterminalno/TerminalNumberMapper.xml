@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.ymf.dao.upayterminalno.TerminalNumberMapper">
+  <resultMap id="BaseResultMap" type="com.yeepay.g3.core.ymf.entity.upayterminalno.TerminalNumber">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="OPTIMISITC" jdbcType="BIGINT" property="optimisitc" />
+    <result column="CUSTOMER_NUMBER" jdbcType="VARCHAR" property="customerNumber" />
+    <result column="TERMINAL_NUMBER" jdbcType="VARCHAR" property="terminalNumber" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="LASTMODIFY_TIME" jdbcType="TIMESTAMP" property="lastmodifyTime" />
+    <result column="OPERATOR_NAME" jdbcType="VARCHAR" property="operatorName" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, OPTIMISITC, CUSTOMER_NUMBER, TERMINAL_NUMBER, STATUS, CREATE_TIME, LASTMODIFY_TIME, 
+    OPERATOR_NAME
+  </sql>
+  <select id="selectByFilter" parameterType="com.yeepay.g3.core.ymf.entity.upayterminalno.TerminalNumberParam" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from YMF_TERMINALNO
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from YMF_TERMINALNO
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from YMF_TERMINALNO
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByFilter" parameterType="com.yeepay.g3.core.ymf.entity.upayterminalno.TerminalNumberParam">
+    delete from YMF_TERMINALNO
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yeepay.g3.core.ymf.entity.upayterminalno.TerminalNumber">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Long">
+      VALUES NEXTVAL FOR YMF_TERMINALNO_SEQ
+    </selectKey>
+    insert into YMF_TERMINALNO (ID, OPTIMISITC, CUSTOMER_NUMBER, 
+      TERMINAL_NUMBER, STATUS, CREATE_TIME, 
+      LASTMODIFY_TIME, OPERATOR_NAME)
+    values (#{id,jdbcType=BIGINT}, #{optimisitc,jdbcType=BIGINT}, #{customerNumber,jdbcType=VARCHAR}, 
+      #{terminalNumber,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{lastmodifyTime,jdbcType=TIMESTAMP}, #{operatorName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yeepay.g3.core.ymf.entity.upayterminalno.TerminalNumber">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Long">
+      VALUES NEXTVAL FOR YMF_TERMINALNO_SEQ
+    </selectKey>
+    insert into YMF_TERMINALNO
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      ID,
+      <if test="optimisitc != null">
+        OPTIMISITC,
+      </if>
+      <if test="customerNumber != null">
+        CUSTOMER_NUMBER,
+      </if>
+      <if test="terminalNumber != null">
+        TERMINAL_NUMBER,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="lastmodifyTime != null">
+        LASTMODIFY_TIME,
+      </if>
+      <if test="operatorName != null">
+        OPERATOR_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      #{id,jdbcType=BIGINT},
+      <if test="optimisitc != null">
+        #{optimisitc,jdbcType=BIGINT},
+      </if>
+      <if test="customerNumber != null">
+        #{customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="terminalNumber != null">
+        #{terminalNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastmodifyTime != null">
+        #{lastmodifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorName != null">
+        #{operatorName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByFilter" parameterType="com.yeepay.g3.core.ymf.entity.upayterminalno.TerminalNumberParam" resultType="java.lang.Integer">
+    select count(*) from YMF_TERMINALNO
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByFilterSelective" parameterType="map">
+    update YMF_TERMINALNO
+    <set>
+      <if test="record.id != null">
+        
+      </if>
+      <if test="record.optimisitc != null">
+        OPTIMISITC = #{record.optimisitc,jdbcType=BIGINT},
+      </if>
+      <if test="record.customerNumber != null">
+        CUSTOMER_NUMBER = #{record.customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.terminalNumber != null">
+        TERMINAL_NUMBER = #{record.terminalNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastmodifyTime != null">
+        LASTMODIFY_TIME = #{record.lastmodifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.operatorName != null">
+        OPERATOR_NAME = #{record.operatorName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByFilter" parameterType="map">
+    update YMF_TERMINALNO
+    set 
+      OPTIMISITC = #{record.optimisitc,jdbcType=BIGINT},
+      CUSTOMER_NUMBER = #{record.customerNumber,jdbcType=VARCHAR},
+      TERMINAL_NUMBER = #{record.terminalNumber,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      LASTMODIFY_TIME = #{record.lastmodifyTime,jdbcType=TIMESTAMP},
+      OPERATOR_NAME = #{record.operatorName,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yeepay.g3.core.ymf.entity.upayterminalno.TerminalNumber">
+    update YMF_TERMINALNO
+    <set>
+      <if test="optimisitc != null">
+        OPTIMISITC = #{optimisitc,jdbcType=BIGINT},
+      </if>
+      <if test="customerNumber != null">
+        CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="terminalNumber != null">
+        TERMINAL_NUMBER = #{terminalNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastmodifyTime != null">
+        LASTMODIFY_TIME = #{lastmodifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="operatorName != null">
+        OPERATOR_NAME = #{operatorName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yeepay.g3.core.ymf.entity.upayterminalno.TerminalNumber">
+    update YMF_TERMINALNO
+    set OPTIMISITC = #{optimisitc,jdbcType=BIGINT},
+      CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR},
+      TERMINAL_NUMBER = #{terminalNumber,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      LASTMODIFY_TIME = #{lastmodifyTime,jdbcType=TIMESTAMP},
+      OPERATOR_NAME = #{operatorName,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

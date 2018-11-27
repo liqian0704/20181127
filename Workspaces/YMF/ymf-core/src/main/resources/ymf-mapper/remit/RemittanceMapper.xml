@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.ymf.dao.remit.RemittanceMapper">
+  <resultMap id="RemittanceBaseResultMap" type="com.yeepay.g3.core.ymf.entity.remit.Remittance">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="VERSION" jdbcType="INTEGER" property="version" />
+    <result column="CUSTOMER_NUMBER" jdbcType="VARCHAR" property="customerNumber" />
+    <result column="CUSTOMER_ORDER_ID" jdbcType="VARCHAR" property="customerOrderId" />
+    <result column="YEEPAY_ORDER_ID" jdbcType="VARCHAR" property="yeepayOrderId" />
+    <result column="BATCH_NO" jdbcType="VARCHAR" property="batchNo" />
+    <result column="AMOUNT" jdbcType="DECIMAL" property="amount" />
+    <result column="SRC_FEE" jdbcType="DECIMAL" property="srcFee" />
+    <result column="TARGET_FEE" jdbcType="DECIMAL" property="targetFee" />
+    <result column="FEE" jdbcType="DECIMAL" property="fee" />
+    <result column="REMIT_STATUS" jdbcType="VARCHAR" property="remitStatus" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="REQUEST_TIME" jdbcType="TIMESTAMP" property="requestTime" />
+    <result column="CALLBACK_TIME" jdbcType="TIMESTAMP" property="callbackTime" />
+    <result column="LAST_NOTIFY_TIME" jdbcType="TIMESTAMP" property="lastNotifyTime" />
+    <result column="DESCRIPTION" jdbcType="VARCHAR" property="description" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+    <result column="REMIT_REQUEST_TIME" jdbcType="TIMESTAMP" property="remitRequestTime" />
+    <result column="REMIT_COUNT" jdbcType="INTEGER" property="remitCount" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, VERSION, CUSTOMER_NUMBER, CUSTOMER_ORDER_ID, YEEPAY_ORDER_ID, BATCH_NO, AMOUNT,
+    SRC_FEE, TARGET_FEE, FEE, REMIT_STATUS, CREATE_TIME, REQUEST_TIME, CALLBACK_TIME,
+    LAST_NOTIFY_TIME, DESCRIPTION, REMARK, STATUS, REMIT_REQUEST_TIME, REMIT_COUNT
+  </sql>
+  <select id="selectByFilter" parameterType="com.yeepay.g3.core.ymf.entity.remit.RemittanceParam" resultMap="RemittanceBaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from YMF_REMITTANCE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="RemittanceBaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from YMF_REMITTANCE
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from YMF_REMITTANCE
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByFilter" parameterType="com.yeepay.g3.core.ymf.entity.remit.RemittanceParam">
+    delete from YMF_REMITTANCE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yeepay.g3.core.ymf.entity.remit.Remittance">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Long">
+      VALUES NEXTVAL FOR YMF_REMITTANCE_SEQ
+    </selectKey>
+    insert into YMF_REMITTANCE (ID, VERSION, CUSTOMER_NUMBER,
+      CUSTOMER_ORDER_ID, YEEPAY_ORDER_ID, BATCH_NO,
+      AMOUNT, SRC_FEE, TARGET_FEE,
+      FEE, REMIT_STATUS, CREATE_TIME,
+      REQUEST_TIME, CALLBACK_TIME, LAST_NOTIFY_TIME,
+      DESCRIPTION, REMARK, STATUS,
+      REMIT_REQUEST_TIME, REMIT_COUNT)
+    values (#{id,jdbcType=BIGINT}, #{version,jdbcType=INTEGER}, #{customerNumber,jdbcType=VARCHAR},
+      #{customerOrderId,jdbcType=VARCHAR}, #{yeepayOrderId,jdbcType=VARCHAR}, #{batchNo,jdbcType=VARCHAR},
+      #{amount,jdbcType=DECIMAL}, #{srcFee,jdbcType=DECIMAL}, #{targetFee,jdbcType=DECIMAL},
+      #{fee,jdbcType=DECIMAL}, #{remitStatus,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP},
+      #{requestTime,jdbcType=TIMESTAMP}, #{callbackTime,jdbcType=TIMESTAMP}, #{lastNotifyTime,jdbcType=TIMESTAMP},
+      #{description,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
+      #{remitRequestTime,jdbcType=TIMESTAMP}, #{remitCount,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yeepay.g3.core.ymf.entity.remit.Remittance">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Long">
+      VALUES NEXTVAL FOR YMF_REMITTANCE_SEQ
+    </selectKey>
+    insert into YMF_REMITTANCE
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      ID,
+      <if test="version != null">
+        VERSION,
+      </if>
+      <if test="customerNumber != null">
+        CUSTOMER_NUMBER,
+      </if>
+      <if test="customerOrderId != null">
+        CUSTOMER_ORDER_ID,
+      </if>
+      <if test="yeepayOrderId != null">
+        YEEPAY_ORDER_ID,
+      </if>
+      <if test="batchNo != null">
+        BATCH_NO,
+      </if>
+      <if test="amount != null">
+        AMOUNT,
+      </if>
+      <if test="srcFee != null">
+        SRC_FEE,
+      </if>
+      <if test="targetFee != null">
+        TARGET_FEE,
+      </if>
+      <if test="fee != null">
+        FEE,
+      </if>
+      <if test="remitStatus != null">
+        REMIT_STATUS,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="requestTime != null">
+        REQUEST_TIME,
+      </if>
+      <if test="callbackTime != null">
+        CALLBACK_TIME,
+      </if>
+      <if test="lastNotifyTime != null">
+        LAST_NOTIFY_TIME,
+      </if>
+      <if test="description != null">
+        DESCRIPTION,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+      <if test="remitRequestTime != null">
+        REMIT_REQUEST_TIME,
+      </if>
+      <if test="remitCount != null">
+        REMIT_COUNT,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      #{id,jdbcType=BIGINT},
+      <if test="version != null">
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="customerNumber != null">
+        #{customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="customerOrderId != null">
+        #{customerOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="yeepayOrderId != null">
+        #{yeepayOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null">
+        #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="srcFee != null">
+        #{srcFee,jdbcType=DECIMAL},
+      </if>
+      <if test="targetFee != null">
+        #{targetFee,jdbcType=DECIMAL},
+      </if>
+      <if test="fee != null">
+        #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="remitStatus != null">
+        #{remitStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="requestTime != null">
+        #{requestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="callbackTime != null">
+        #{callbackTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastNotifyTime != null">
+        #{lastNotifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remitRequestTime != null">
+        #{remitRequestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remitCount != null">
+        #{remitCount,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByFilter" parameterType="com.yeepay.g3.core.ymf.entity.remit.RemittanceParam" resultType="java.lang.Integer">
+    select count(*) from YMF_REMITTANCE
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByFilterSelective" parameterType="map">
+    update YMF_REMITTANCE
+    <set>
+      <if test="record.id != null">
+
+      </if>
+      <if test="record.version != null">
+        VERSION = #{record.version,jdbcType=INTEGER},
+      </if>
+      <if test="record.customerNumber != null">
+        CUSTOMER_NUMBER = #{record.customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerOrderId != null">
+        CUSTOMER_ORDER_ID = #{record.customerOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yeepayOrderId != null">
+        YEEPAY_ORDER_ID = #{record.yeepayOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.batchNo != null">
+        BATCH_NO = #{record.batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.amount != null">
+        AMOUNT = #{record.amount,jdbcType=DECIMAL},
+      </if>
+      <if test="record.srcFee != null">
+        SRC_FEE = #{record.srcFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.targetFee != null">
+        TARGET_FEE = #{record.targetFee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.fee != null">
+        FEE = #{record.fee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.remitStatus != null">
+        REMIT_STATUS = #{record.remitStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.requestTime != null">
+        REQUEST_TIME = #{record.requestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.callbackTime != null">
+        CALLBACK_TIME = #{record.callbackTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastNotifyTime != null">
+        LAST_NOTIFY_TIME = #{record.lastNotifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.description != null">
+        DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remitRequestTime != null">
+        REMIT_REQUEST_TIME = #{record.remitRequestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.remitCount != null">
+        REMIT_COUNT = #{record.remitCount,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByFilter" parameterType="map">
+    update YMF_REMITTANCE
+    set
+      VERSION = #{record.version,jdbcType=INTEGER},
+      CUSTOMER_NUMBER = #{record.customerNumber,jdbcType=VARCHAR},
+      CUSTOMER_ORDER_ID = #{record.customerOrderId,jdbcType=VARCHAR},
+      YEEPAY_ORDER_ID = #{record.yeepayOrderId,jdbcType=VARCHAR},
+      BATCH_NO = #{record.batchNo,jdbcType=VARCHAR},
+      AMOUNT = #{record.amount,jdbcType=DECIMAL},
+      SRC_FEE = #{record.srcFee,jdbcType=DECIMAL},
+      TARGET_FEE = #{record.targetFee,jdbcType=DECIMAL},
+      FEE = #{record.fee,jdbcType=DECIMAL},
+      REMIT_STATUS = #{record.remitStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      REQUEST_TIME = #{record.requestTime,jdbcType=TIMESTAMP},
+      CALLBACK_TIME = #{record.callbackTime,jdbcType=TIMESTAMP},
+      LAST_NOTIFY_TIME = #{record.lastNotifyTime,jdbcType=TIMESTAMP},
+      DESCRIPTION = #{record.description,jdbcType=VARCHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      REMIT_REQUEST_TIME = #{record.remitRequestTime,jdbcType=TIMESTAMP},
+      REMIT_COUNT = #{record.remitCount,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yeepay.g3.core.ymf.entity.remit.Remittance">
+    update YMF_REMITTANCE
+    <set>
+      <if test="version != null">
+        VERSION = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="customerNumber != null">
+        CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="customerOrderId != null">
+        CUSTOMER_ORDER_ID = #{customerOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="yeepayOrderId != null">
+        YEEPAY_ORDER_ID = #{yeepayOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="batchNo != null">
+        BATCH_NO = #{batchNo,jdbcType=VARCHAR},
+      </if>
+      <if test="amount != null">
+        AMOUNT = #{amount,jdbcType=DECIMAL},
+      </if>
+      <if test="srcFee != null">
+        SRC_FEE = #{srcFee,jdbcType=DECIMAL},
+      </if>
+      <if test="targetFee != null">
+        TARGET_FEE = #{targetFee,jdbcType=DECIMAL},
+      </if>
+      <if test="fee != null">
+        FEE = #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="remitStatus != null">
+        REMIT_STATUS = #{remitStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="requestTime != null">
+        REQUEST_TIME = #{requestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="callbackTime != null">
+        CALLBACK_TIME = #{callbackTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastNotifyTime != null">
+        LAST_NOTIFY_TIME = #{lastNotifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null">
+        DESCRIPTION = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remitRequestTime != null">
+        REMIT_REQUEST_TIME = #{remitRequestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="remitCount != null">
+        REMIT_COUNT = #{remitCount,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yeepay.g3.core.ymf.entity.remit.Remittance">
+    update YMF_REMITTANCE
+    set VERSION = VERSION+1,
+      CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR},
+      CUSTOMER_ORDER_ID = #{customerOrderId,jdbcType=VARCHAR},
+      YEEPAY_ORDER_ID = #{yeepayOrderId,jdbcType=VARCHAR},
+      BATCH_NO = #{batchNo,jdbcType=VARCHAR},
+      AMOUNT = #{amount,jdbcType=DECIMAL},
+      SRC_FEE = #{srcFee,jdbcType=DECIMAL},
+      TARGET_FEE = #{targetFee,jdbcType=DECIMAL},
+      FEE = #{fee,jdbcType=DECIMAL},
+      REMIT_STATUS = #{remitStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      REQUEST_TIME = #{requestTime,jdbcType=TIMESTAMP},
+      CALLBACK_TIME = #{callbackTime,jdbcType=TIMESTAMP},
+      LAST_NOTIFY_TIME = #{lastNotifyTime,jdbcType=TIMESTAMP},
+      DESCRIPTION = #{description,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      REMIT_REQUEST_TIME = #{remitRequestTime,jdbcType=TIMESTAMP},
+      REMIT_COUNT = #{remitCount,jdbcType=INTEGER}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyAndVersion" parameterType="com.yeepay.g3.core.ymf.entity.remit.Remittance" >
+    update YMF_REMITTANCE
+    set VERSION = VERSION+1,
+    CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR},
+    CUSTOMER_ORDER_ID = #{customerOrderId,jdbcType=VARCHAR},
+    YEEPAY_ORDER_ID = #{yeepayOrderId,jdbcType=VARCHAR},
+    BATCH_NO = #{batchNo,jdbcType=VARCHAR},
+    AMOUNT = #{amount,jdbcType=DECIMAL},
+    SRC_FEE = #{srcFee,jdbcType=DECIMAL},
+    TARGET_FEE = #{targetFee,jdbcType=DECIMAL},
+    FEE = #{fee,jdbcType=DECIMAL},
+    REMIT_STATUS = #{remitStatus,jdbcType=VARCHAR},
+    CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+    REQUEST_TIME = #{requestTime,jdbcType=TIMESTAMP},
+    CALLBACK_TIME = #{callbackTime,jdbcType=TIMESTAMP},
+    LAST_NOTIFY_TIME = #{lastNotifyTime,jdbcType=TIMESTAMP},
+    DESCRIPTION = #{description,jdbcType=VARCHAR},
+    REMARK = #{remark,jdbcType=VARCHAR},
+    STATUS = #{status,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT} AND VERSION=#{version,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.ymf.dao.order.PaymentDao">
+    <resultMap id="Payment" type="com.yeepay.g3.core.ymf.entity.order.Payment">
+        <id column="ID" jdbcType="BIGINT" property="id" />
+        <result column="VERSION" jdbcType="BIGINT" property="version" />
+        <result column="ORDER_ID" jdbcType="BIGINT" property="orderId" />
+        <result column="CUSTOMER_NUMBER" jdbcType="VARCHAR" property="customerNumber" />
+        <result column="CUSTOMER_ORDER_ID" jdbcType="VARCHAR" property="customerOrderId" />
+        <result column="PAY_SOURCE" jdbcType="VARCHAR" property="paySource" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="EXPIRE_TIME" jdbcType="TIMESTAMP" property="expireTime" />
+        <result column="PAY_URL" jdbcType="VARCHAR" property="payUrl" />
+        <result column="PAY_REQUEST_TIME" jdbcType="TIMESTAMP" property="payRequestTime" />
+        <result column="PAY_TIME" jdbcType="TIMESTAMP" property="payTime" />
+        <result column="CHANNEL_PAY_TIME" jdbcType="TIMESTAMP" property="channelPayTime" />
+        <result column="PAY_STATUS" jdbcType="VARCHAR" property="payStatus" />
+        <result column="SETTLE_STATUS" jdbcType="VARCHAR" property="settleStatus" />
+        <result column="SETTLE_TIME" jdbcType="TIMESTAMP" property="settleTime" />
+        <result column="BACK_URL" jdbcType="VARCHAR" property="backUrl" />
+        <result column="BANK_ORDER_ID" jdbcType="VARCHAR" property="bankOrderId" />
+        <result column="YEEPAY_ORDER_ID" jdbcType="VARCHAR" property="yeepayOrderId" />
+        <result column="OUT_ORDER_ID" jdbcType="VARCHAR" property="outOrderId" />
+        <result column="TRX_AMT" jdbcType="DECIMAL" property="trxAmt" />
+        <result column="REAL_AMT" jdbcType="DECIMAL" property="realAmt" />
+        <result column="REFUND_AMT" jdbcType="DECIMAL" property="refundAmt" />
+        <result column="FEE" jdbcType="DECIMAL" property="fee" />
+        <result column="TRX_TYPE" jdbcType="VARCHAR" property="trxType" />
+        <result column="OPEN_ID" jdbcType="VARCHAR" property="openId" />
+        <result column="BANK_TYPE" jdbcType="VARCHAR" property="bankType" />
+        <result column="BANK_NAME" jdbcType="VARCHAR" property="bankName" />
+        <result column="CARD_NO" jdbcType="VARCHAR" property="cardNo" />
+        <result column="CARD_TYPE" jdbcType="VARCHAR" property="cardType" />
+    </resultMap>
+    
+    <sql id="PaymentColumns">
+        ID, VERSION, ORDER_ID, CUSTOMER_NUMBER, CUSTOMER_ORDER_ID, PAY_SOURCE, CREATE_TIME,
+        EXPIRE_TIME, PAY_URL, PAY_REQUEST_TIME, PAY_TIME, CHANNEL_PAY_TIME, PAY_STATUS, SETTLE_STATUS,
+        SETTLE_TIME, BACK_URL, BANK_ORDER_ID, YEEPAY_ORDER_ID, OUT_ORDER_ID, TRX_AMT, REAL_AMT,
+        REFUND_AMT, FEE, TRX_TYPE, OPEN_ID, BANK_TYPE, BANK_NAME, CARD_NO, CARD_TYPE
+    </sql>
+    
+	<select id="findByOrderIdAndPayStatus" resultMap="Payment">
+        select 
+        <include refid="PaymentColumns" />
+        from
+        YMF_PAYMENT
+        <where>
+            <if test="orderId != null">
+                ORDER_ID = #{orderId}
+            </if>
+            <if test="payStatus != null">
+              and  PAY_STATUS= #{payStatus}
+            </if>
+        </where>
+        with ur
+    </select>
+    
+	<select id="findByOrderIdAndPayStatusAndTrxType" resultMap="Payment">
+        select 
+        <include refid="PaymentColumns" />
+        from
+        YMF_PAYMENT
+        <where>
+            <if test="orderId != null">
+                ORDER_ID = #{orderId}
+            </if>
+            <if test="payStatus != null">
+              and  PAY_STATUS= #{payStatus}
+            </if>
+            <if test="trxType != null">
+              and  TRX_TYPE= #{trxType}
+            </if>
+        </where>
+        with ur
+    </select>
+    
+  <!-- 根据Id更新支付链接 -->
+  <update id="updatePayUrlById">
+    update YMF_PAYMENT
+    <set>
+      <if test="payUrl != null">
+        PAY_URL = #{payUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="payStatus != null">
+        PAY_STATUS = #{payStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="payRequestTime != null">
+        PAY_REQUEST_TIME = #{payRequestTime,jdbcType=VARCHAR},
+      </if>
+      <if test="yeepayOrderId != null">
+          YEEPAY_ORDER_ID = #{yeepayOrderId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <where> ID = #{id}</where>
+  </update>
+
+    <!--查询已失效订单-->
+    <select id="findExpriePayments" resultMap="Payment">
+        SELECT p.*
+        FROM YMF_PAYMENT p, YMF_ORDER o
+        where 1=1
+        AND p.ORDER_ID = o.ID
+        AND  p.PAY_STATUS IN ('INIT', 'PROCESS')
+        AND p.TRX_TYPE = 'PURCHASE'
+        <if test="begin != null">
+            <![CDATA[  AND p.CREATE_TIME >= #{begin,jdbcType=TIMESTAMP} ]]>
+        </if>
+        <if test="end != null">
+            <![CDATA[  AND p.CREATE_TIME < #{end,jdbcType=TIMESTAMP} ]]>
+        </if>
+        <if test="tradeSystem != null">
+            <![CDATA[
+          AND o.TRADE_SYSTEM = #{tradeSystem,jdbcType=VARCHAR}
+            ]]>
+        </if>
+        <if test="retryCount != null">
+            <![CDATA[
+            AND coalesce(o.QUERY_COUNT,0) = #{retryCount,jdbcType=INTEGER}
+            ]]>
+        </if>
+        <if test="rowCount != null">
+            <![CDATA[ fetch first ${rowCount} rows only ]]>
+        </if>
+        with ur
+    </select>
+</mapper>

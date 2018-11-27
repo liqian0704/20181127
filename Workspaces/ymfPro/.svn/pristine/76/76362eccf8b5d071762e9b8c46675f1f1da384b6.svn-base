@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.laike.repository.PushMsgRepository">
+
+	<resultMap id="BaseResultMap" type="com.yeepay.g3.core.laike.entity.PushMsgEntity">
+		<id column="ID" property="id"/>
+		<result column="MESSAGE_NO" jdbcType="VARCHAR" property="messageNo"/>
+		<result column="JPUSH_ID" jdbcType="VARCHAR" property="jpushId"/>
+		<result column="OPERATOR" jdbcType="VARCHAR" property="operator"/>
+		<result column="TYPE" jdbcType="VARCHAR" property="type"/>
+		<result column="TITLE" jdbcType="VARCHAR" property="title"/>
+		<result column="CONTENT" jdbcType="VARCHAR" property="content"/>
+		<result column="LIFE_START" jdbcType="TIMESTAMP" property="lifeStart"/>
+		<result column="LIFE_END" jdbcType="TIMESTAMP" property="lifeEnd"/>
+		<result column="URL1" jdbcType="VARCHAR" property="url1"/>
+		<result column="URL2" jdbcType="VARCHAR" property="url2"/>
+		<result column="PHONE_NUMBERS" jdbcType="VARCHAR" property="phoneNumbers"/>
+		<result column="ROLE" jdbcType="VARCHAR" property="role"/>
+		<result column="APP_VERSION_ID" jdbcType="VARCHAR" property="appVersionId"/>
+		<result column="PLATFORM" jdbcType="VARCHAR" property="platformEnum"/>
+		<result column="MANUFACTURER" jdbcType="VARCHAR" property="manufacturer"/>
+		<result column="MODEL" jdbcType="VARCHAR" property="model"/>
+		<result column="PUSH_STATUS" jdbcType="VARCHAR" property="pushStatus"/>
+		<result column="PUSH_TYPE" jdbcType="VARCHAR" property="pushType"/>
+		<result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+		<result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime"/>
+		<result column="PUSH_TIME" jdbcType="TIMESTAMP" property="pushTime"/>
+	</resultMap>
+
+	<select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select *
+		from TBL_PUSH_MSG
+		where ID = #{id,jdbcType=BIGINT}
+	</select>
+
+	<select id="findByMessageNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select *
+		from TBL_PUSH_MSG
+		where MESSAGE_NO = #{messageNo,jdbcType=VARCHAR}
+	</select>
+
+	<select id="nextSequence" resultType="long">
+		VALUES NEXTVAL FOR SEQ_YMF_MSG_ID
+  	</select>
+
+	<insert id="save" useGeneratedKeys="true" keyProperty="id"
+			parameterType="com.yeepay.g3.core.laike.entity.PushMsgEntity">
+		insert into TBL_PUSH_MSG (MESSAGE_NO, JPUSH_ID,OPERATOR, TYPE, TITLE,CONTENT, LIFE_START,
+		LIFE_END,URL1, URL2, PHONE_NUMBERS,ROLE, APP_VERSION_ID,PLATFORM, MANUFACTURER,MODEL, PUSH_STATUS,
+		CREATE_TIME,UPDATE_TIME, PUSH_TIME,PUSH_TYPE)
+		values (#{messageNo,jdbcType=VARCHAR}, #{jpushId,jdbcType=VARCHAR},
+		#{operator,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR},
+		#{content,jdbcType=VARCHAR}, #{lifeStart,jdbcType=TIMESTAMP}, #{lifeEnd,jdbcType=TIMESTAMP},
+		#{url1,jdbcType=VARCHAR}, #{url2,jdbcType=VARCHAR}, #{phoneNumbers,jdbcType=VARCHAR},
+		#{role,jdbcType=VARCHAR}, #{appVersionId,jdbcType=VARCHAR},#{platformEnum,jdbcType=VARCHAR},
+		#{manufacturer,jdbcType=VARCHAR},#{model,jdbcType=VARCHAR}, #{pushStatus,jdbcType=VARCHAR}, CURRENT_TIMESTAMP ,
+		CURRENT_TIMESTAMP, #{pushTime,jdbcType=TIMESTAMP},#{pushType,jdbcType=VARCHAR})
+	</insert>
+
+	<update id="delete" parameterType="com.yeepay.g3.core.laike.entity.PushMsgEntity">
+		update TBL_PUSH_MSG
+		<set>
+			<if test="operator != null and operator.trim() != ''">
+				OPERATOR = #{operator,jdbcType=VARCHAR},
+			</if>
+			PUSH_STATUS = 'DELETED',
+			UPDATE_TIME = CURRENT_TIMESTAMP
+		</set>
+		where ID = #{id,jdbcType=BIGINT} AND PUSH_STATUS = 'SENDED'
+	</update>
+
+	<update id="updateAfterSend" parameterType="com.yeepay.g3.core.laike.entity.PushMsgEntity">
+		update TBL_PUSH_MSG
+		<set>
+			<if test="jpushId != null">
+				JPUSH_ID = #{jpushId,jdbcType=VARCHAR},
+			</if>
+			<if test="operator != null and operator.trim() != ''">
+				OPERATOR = #{operator,jdbcType=VARCHAR},
+			</if>
+			<if test="pushStatus != null">
+				PUSH_STATUS = #{pushStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="pushTime != null">
+				PUSH_TIME = #{pushTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="pushType != null">
+				PUSH_TYPE = #{pushType,jdbcType=TIMESTAMP},
+			</if>
+			UPDATE_TIME = CURRENT_TIMESTAMP
+		</set>
+		where ID = #{id,jdbcType=BIGINT} AND PUSH_STATUS = 'NOT_SEND'
+	</update>
+
+	<update id="updateBeforeSend" parameterType="com.yeepay.g3.core.laike.entity.PushMsgEntity">
+		update TBL_PUSH_MSG
+		<set>
+			<if test="operator != null and operator.trim() != ''">
+				OPERATOR = #{operator,jdbcType=VARCHAR},
+			</if>
+			<if test="title != null and title.trim() != ''">
+				TITLE = #{title,jdbcType=VARCHAR},
+			</if>
+			<if test="content != null and content.trim() != ''">
+				CONTENT = #{content,jdbcType=VARCHAR},
+			</if>
+			<if test="lifeStart != null">
+				LIFE_START = #{lifeStart,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lifeEnd != null">
+				LIFE_END = #{lifeEnd,jdbcType=TIMESTAMP},
+			</if>
+			<if test="url1 != null and url1.trim() != ''">
+				URL1 = #{url1,jdbcType=VARCHAR},
+			</if>
+			<if test="url2 != null and url2.trim() != ''">
+				URL2 = #{url2,jdbcType=VARCHAR},
+			</if>
+			<if test="phoneNumbers != null and phoneNumbers.trim() != ''">
+				PHONE_NUMBERS = #{phoneNumbers,jdbcType=VARCHAR},
+			</if>
+			<if test="role != null">
+				ROLE = #{role,jdbcType=VARCHAR},
+			</if>
+			<if test="appVersionId != null and appVersionId.trim() != ''">
+				APP_VERSION_ID = #{appVersionId,jdbcType=VARCHAR},
+			</if>
+			<if test="manufacturer != null and manufacturer.trim() != ''">
+				MANUFACTURER = #{manufacturer,jdbcType=VARCHAR},
+			</if>
+			<if test="model != null and model.trim() != ''">
+				MODEL = #{model,jdbcType=VARCHAR},
+			</if>
+			UPDATE_TIME = CURRENT_TIMESTAMP
+		</set>
+		where ID = #{id,jdbcType=BIGINT} AND PUSH_STATUS = 'NOT_SEND'
+	</update>
+</mapper>

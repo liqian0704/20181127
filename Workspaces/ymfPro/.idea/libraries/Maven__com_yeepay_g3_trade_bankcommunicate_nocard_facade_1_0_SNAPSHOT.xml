@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.yeepay.g3.trade:bankcommunicate-nocard-facade:1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/trade/bankcommunicate-nocard-facade/1.0-SNAPSHOT/bankcommunicate-nocard-facade-1.0-20171228.052835-2275.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/trade/bankcommunicate-nocard-facade/1.0-SNAPSHOT/bankcommunicate-nocard-facade-1.0-20171228.052835-2275-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/trade/bankcommunicate-nocard-facade/1.0-SNAPSHOT/bankcommunicate-nocard-facade-1.0-20171228.052835-2275-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.ymf.dao.refund.RefundOrderDao">
+
+    <resultMap id="RefundOrder" type="com.yeepay.g3.core.ymf.entity.refund.RefundOrder">
+        <id column="ID" property="id" jdbcType="BIGINT" />
+        <result column="VERSION" property="version" jdbcType="INTEGER" />
+        <result column="ORDER_ID" property="orderId" jdbcType="BIGINT" />
+        <result column="CUSTOMER_NUMBER" property="customerNumber" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_ORDER_ID" property="customerOrderId" jdbcType="VARCHAR" />
+        <result column="REFUND_AMOUNT" property="refundAmount" jdbcType="DECIMAL" />
+        <result column="REMAIN" property="remain" jdbcType="DECIMAL" />
+        <result column="FEE" property="fee" jdbcType="DECIMAL" />
+        <result column="REFUND_STATUS" property="refundStatus" jdbcType="VARCHAR" />
+        <result column="REFUND_TIMES" property="refundTimes" jdbcType="INTEGER" />
+        <result column="TRX_AMOUNT" property="trxAmount" jdbcType="DECIMAL" />
+        <result column="ORDER_TIME" property="orderTime" jdbcType="TIMESTAMP" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="LAST_REFUND_TIME" property="lastRefundTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <!-- 商户后台查询退款记录DTO -->
+    <resultMap id="RefundDTO" type="com.yeepay.g3.facade.ymf.dto.refund.RefundDTO">
+        <result column="ID" jdbcType="BIGINT" property="id" />
+        <result column="ROWNUM" jdbcType="BIGINT" property="rowNumber" />
+        <result column="CUSTOMER_NUMBER" jdbcType="VARCHAR" property="customerNumber" />
+        <result column="CUSTOMER_ORDER_ID" jdbcType="VARCHAR" property="customerOrderId" />
+        <result column="REFUND_ORDER_ID" jdbcType="VARCHAR" property="refundOrderId" />
+        <result column="YEEPAY_ORDER_ID" jdbcType="VARCHAR" property="yeepayOrderId" />
+        <result column="REFUND_AMOUNT" jdbcType="DECIMAL" property="refundAmount" />
+        <result column="REFUND_AMOUNT" jdbcType="DECIMAL" property="refundRequestAmount" />
+        <result column="TRX_AMOUNT" jdbcType="DECIMAL" property="trxAmount" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="REFUND_TIME" jdbcType="TIMESTAMP" property="refundTime" />
+        <result column="REFUND_STATUS" jdbcType="VARCHAR" property="status" />
+        <result column="PAY_SOURCE" jdbcType="VARCHAR" property="payType" />
+        <result column="CAUSE" jdbcType="VARCHAR" property="cause" />
+    </resultMap>
+
+    <!-- 汇总返回 -->
+    <resultMap id="CountResponse" type="com.yeepay.g3.facade.ymf.dto.common.CountResponse">
+        <result column="COUNT" jdbcType="BIGINT" property="count" />
+        <result column="AMOUNT" jdbcType="DECIMAL" property="amount" />
+    </resultMap>
+
+    <sql id="RefundOrderColumns" >
+        ID, VERSION, ORDER_ID, CUSTOMER_NUMBER, CUSTOMER_ORDER_ID, REFUND_AMOUNT, REMAIN,
+        FEE, REFUND_STATUS, REFUND_TIMES, TRX_AMOUNT, ORDER_TIME, CREATE_TIME, LAST_REFUND_TIME
+    </sql>
+
+    <!-- 根据参数查询退款订单 -->
+    <select id="queryRefundDTOByArgs" resultMap="RefundDTO">
+        SELECT * FROM
+        (
+            SELECT ROW_NUMBER() OVER(ORDER BY d.ID DESC) AS ROWNUM,
+            d.ID,
+            i.CUSTOMER_NUMBER,
+            i.CUSTOMER_ORDER_ID,
+            d.REFUND_ORDER_ID,
+            d.YEEPAY_ORDER_ID,
+            d.REFUND_AMOUNT,
+            i.TRX_AMOUNT,
+            d.CREATE_TIME,
+            d.REFUND_TIME,
+            d.REFUND_STATUS,
+            c.NAME as PAY_SOURCE,
+            d.CAUSE
+            FROM YMF_REFUNDINFO i
+            LEFT JOIN YMF_REFUND_DETAIL d on i.ID = d.REFUNDINFO_ID
+            LEFT JOIN YMF_DICTIONARY c on d.PAY_SOURCE = c.CODE and c.TYPE = 'PaySource'
+            <where>
+                <if test="customerNumber != null">
+                    i.CUSTOMER_NUMBER= #{customerNumber,jdbcType=VARCHAR}
+                </if>
+                <if test="customerOrderId != null">
+                    and i.CUSTOMER_ORDER_ID= #{customerOrderId,jdbcType=VARCHAR}
+                </if>
+                <if test="refundStatus != null">
+                    and d.REFUND_STATUS= #{refundStatus,jdbcType=VARCHAR}
+                </if>
+                <if test="createTimeStart != null">
+                    <![CDATA[ and d.CREATE_TIME >= #{createTimeStart,jdbcType=TIMESTAMP} ]]>
+                </if>
+                <if test="createTimeEnd != null">
+                    <![CDATA[ and d.CREATE_TIME <= #{createTimeEnd,jdbcType=TIMESTAMP} ]]>
+                </if>
+                <if test="refundTimeStart != null">
+                    <![CDATA[ and d.REFUND_TIME >= #{refundTimeStart,jdbcType=VARCHAR} ]]>
+                </if>
+                <if test="refundTimeEnd != null">
+                    <![CDATA[ and d.REFUND_TIME <= #{refundTimeEnd,jdbcType=VARCHAR} ]]>
+                </if>
+            </where>
+        )
+        where ROWNUM BETWEEN #{start} and #{end}
+    </select>
+
+    <!-- 根据参数汇总退款订单 -->
+    <select id="countRefundByArgs" resultMap="CountResponse">
+        select count(1) as count, sum(d.REFUND_AMOUNT) as amount
+        FROM YMF_REFUNDINFO i
+        LEFT JOIN YMF_REFUND_DETAIL d on i.ID = d.REFUNDINFO_ID
+        <where>
+            <if test="customerNumber != null">
+                i.CUSTOMER_NUMBER= #{customerNumber,jdbcType=VARCHAR}
+            </if>
+            <if test="customerOrderId != null">
+                and i.CUSTOMER_ORDER_ID= #{customerOrderId,jdbcType=VARCHAR}
+            </if>
+            <if test="refundStatus != null">
+                and d.REFUND_STATUS= #{refundStatus,jdbcType=VARCHAR}
+            </if>
+            <if test="createTimeStart != null">
+                <![CDATA[ and d.CREATE_TIME >= #{createTimeStart,jdbcType=TIMESTAMP} ]]>
+            </if>
+            <if test="createTimeEnd != null">
+                <![CDATA[ and d.CREATE_TIME <= #{createTimeEnd,jdbcType=TIMESTAMP} ]]>
+            </if>
+            <if test="refundTimeStart != null">
+                <![CDATA[ and d.REFUND_TIME >= #{refundTimeStart,jdbcType=VARCHAR} ]]>
+            </if>
+            <if test="refundTimeEnd != null">
+                <![CDATA[ and d.REFUND_TIME <= #{refundTimeEnd,jdbcType=VARCHAR} ]]>
+            </if>
+        </where>
+    </select>
+
+    <select id="queryByOrderId" resultType="RefundOrder">
+        select
+        <include refid="RefundOrderColumns" />
+        from ymf_refundinfo
+        where
+        <![CDATA[ refund_status <> 'FAIL' ]]>
+        and order_id = #{orderId,jdbcType=BIGINT}
+    </select>
+
+</mapper>

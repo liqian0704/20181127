@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.ymf.dao.cod.CodNotifyInfoDao">
+
+    <resultMap id="CodNotifyInfo" type="com.yeepay.g3.core.ymf.entity.cod.CodNotifyInfo">
+        <id column="ID" property="id" jdbcType="BIGINT" />
+        <result column="EXTERNAL_ID" property="externalId" jdbcType="VARCHAR" />
+        <result column="ORDER_NO" property="orderNo" jdbcType="VARCHAR" />
+        <result column="STATUS" property="status" jdbcType="VARCHAR" />
+        <result column="COD_INTERFACE" property="codInterface" jdbcType="VARCHAR" />
+        <result column="EXTEND_INFO" property="extendInfo" jdbcType="VARCHAR" />
+        <result column="NOTIFY_TYPE" property="notifyType" jdbcType="VARCHAR" />
+        <result column="EXP_DATE" property="expDate" jdbcType="TIMESTAMP" />
+        <result column="SEND_NUM" property="sendNum" jdbcType="INTEGER" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="TRX_TYPE" property="trxType" jdbcType="VARCHAR" />
+        <result column="VERSION" property="version" jdbcType="INTEGER" />
+    </resultMap>
+
+    <resultMap id="CodNotifyDTO" type="com.yeepay.g3.facade.ymf.dto.spi.CodNotifyDTO">
+        <id column="ID" property="id" jdbcType="BIGINT" />
+        <result column="EXTERNAL_ID" property="externalId" jdbcType="VARCHAR" />
+        <result column="ORDER_NO" property="orderNo" jdbcType="VARCHAR" />
+        <result column="STATUS" property="status" jdbcType="VARCHAR" />
+        <result column="COD_INTERFACE" property="codInterface" jdbcType="VARCHAR" />
+        <result column="EXTEND_INFO" property="extendInfo" jdbcType="VARCHAR" />
+        <result column="NOTIFY_TYPE" property="notifyType" jdbcType="VARCHAR" />
+        <result column="EXP_DATE" property="expDate" jdbcType="TIMESTAMP" />
+        <result column="SEND_NUM" property="sendNum" jdbcType="INTEGER" />
+        <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+        <result column="TRX_TYPE" property="trxType" jdbcType="VARCHAR" />
+        <result column="VERSION" property="version" jdbcType="INTEGER" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ID, EXTERNAL_ID, ORDER_NO, STATUS, COD_INTERFACE, EXTEND_INFO, NOTIFY_TYPE, EXP_DATE,
+        SEND_NUM, CREATE_DATE, UPDATE_TIME, TRX_TYPE, VERSION
+    </sql>
+
+    <update id="updateStateById" parameterType="CodNotifyInfo">
+    update YMF_CODNOTIFYINFO
+    set 
+      STATUS = #{status,jdbcType=VARCHAR},
+      VERSION = VERSION + 1
+     where ID = #{id,jdbcType=BIGINT}
+    </update>
+
+    <select id="queryDTOByArgs" resultMap="CodNotifyDTO">
+        select
+        <include refid="Base_Column_List" />
+        from
+        YMF_CODNOTIFYINFO
+        <where>
+            <if test="status != null">
+                STATUS = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="startDate != null">
+                <![CDATA[ and EXP_DATE >= #{startDate,jdbcType=TIMESTAMP} ]]>
+            </if>
+            <if test="endDate != null">
+                <![CDATA[ and EXP_DATE < #{endDate,jdbcType=TIMESTAMP} ]]>
+            </if>
+            <if test="externalId != null">
+                and EXTERNAL_ID = #{externalId,jdbcType=VARCHAR}
+            </if>
+            <if test="trxType != null">
+                and TRX_TYPE = #{trxType, jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+
+    <select id="queryByArgs" resultMap="CodNotifyInfo">
+        select
+        <include refid="Base_Column_List" />
+        from
+        YMF_CODNOTIFYINFO
+        <where>
+            <if test="status != null">
+                and STATUS = #{status,jdbcType=VARCHAR}
+            </if>
+            <if test="startDate != null">
+                <![CDATA[ and EXP_DATE >= #{startDate,jdbcType=TIMESTAMP} ]]>
+            </if>
+            <if test="endDate != null">
+                <![CDATA[ and EXP_DATE < #{endDate,jdbcType=TIMESTAMP} ]]>
+            </if>
+            <if test="externalId != null">
+                and EXTERNAL_ID = #{externalId,jdbcType=VARCHAR}
+            </if>
+            <if test="trxType != null">
+                and TRX_TYPE = #{trxType, jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+</mapper>

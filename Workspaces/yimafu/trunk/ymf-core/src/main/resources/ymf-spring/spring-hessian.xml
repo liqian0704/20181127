@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="configureServiceUrl" class="com.yeepay.g3.core.ymf.hessian.ConfigureServiceUrlClient">
+        <property name="key" value="YMF_COD_HESSIAN_URL" />
+    </bean>
+
+	 <!-- 行业统一版“签到，订单查询,通知物流COD平台” httpinvoke-->
+    <bean id="codPOSPIndRemoteService"
+		class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<!--<property name="serviceUrl" value="${CodPlatformHost}/cod/codPOSPIndInvoker.remote" />-->
+        <property name="serviceUrl" ref="configureServiceUrl" />
+        <property name="serviceInterface" value="com.yeepay.cod.hessian.service.CodPOSPIndRemoteService" />
+		 <!-- 若用默认可不定义此属性 -->
+        <property name="httpInvokerRequestExecutor" ref="httpInvokerRequestExecutor" />
+	</bean>
+	<bean  id="httpInvokerRequestExecutor" 
+		class="org.springframework.remoting.httpinvoker.CommonsHttpInvokerRequestExecutor">  
+        <property name="httpClient" ref="httpclient" /> 
+    </bean>
+     <bean id="httpclient" class="org.apache.commons.httpclient.HttpClient">    
+        <constructor-arg ref="connectionManager" />
+    </bean>
+     <!-- http管理参数配置 -->
+    <bean id="connectionManager" class="org.apache.commons.httpclient.MultiThreadedHttpConnectionManager">
+        <property name="params" ref="connectionManagerParams"/>    
+    </bean>   
+    <!-- httpclient线程池 -->    
+    <bean id="connectionManagerParams" 
+		class="org.apache.commons.httpclient.params.HttpConnectionManagerParams">  
+        <!-- 设置 连接超时时间(毫秒),默认为0不使用 -->
+        <property name="connectionTimeout" value="5000"/>   
+        <!-- 设置 读取数据超时(毫秒),默认为0不使用 -->   
+        <property name="soTimeout" value="30000"/>
+        <!-- 设置默认的连接数量最大允许对一个给定的主机配置 -->  
+        <property name="maxTotalConnections" value="30"/>  
+        <!-- 允许的最大连接数 -->    
+        <property name="defaultMaxConnectionsPerHost" value="300"/>    
+ 	   </bean>   
+</beans>

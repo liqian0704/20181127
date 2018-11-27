@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.yeepay.g3.facade.merchant.account:merchant-account-facade:1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/facade/merchant/account/merchant-account-facade/1.0-SNAPSHOT/merchant-account-facade-1.0-20180110.094553-60.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/facade/merchant/account/merchant-account-facade/1.0-SNAPSHOT/merchant-account-facade-1.0-20180110.094553-60-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/facade/merchant/account/merchant-account-facade/1.0-SNAPSHOT/merchant-account-facade-1.0-20180110.094553-60-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

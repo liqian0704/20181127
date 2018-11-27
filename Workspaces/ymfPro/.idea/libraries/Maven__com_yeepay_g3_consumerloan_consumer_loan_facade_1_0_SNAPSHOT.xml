@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.yeepay.g3.consumerloan:consumer-loan-facade:1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/consumerloan/consumer-loan-facade/1.0-SNAPSHOT/consumer-loan-facade-1.0-20171116.030106-566.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/consumerloan/consumer-loan-facade/1.0-SNAPSHOT/consumer-loan-facade-1.0-20171116.030106-566-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/consumerloan/consumer-loan-facade/1.0-SNAPSHOT/consumer-loan-facade-1.0-20171116.030106-566-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

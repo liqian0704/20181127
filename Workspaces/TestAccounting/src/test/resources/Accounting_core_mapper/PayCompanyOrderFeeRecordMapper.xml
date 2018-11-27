@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Accounting_core_mapper.PayCompanyOrderFeeRecordMapper">
+
+    <resultMap id="PayCompanyOrderFeeRecordEntity" type="Accounting_entity.PayCompanyOrderFeeRecordEntity">
+        <id property="uniquePayFeeNo" column="unique_pay_fee_no"/>
+        <result property="uniqueOrderNo" column="unique_order_no" />
+        <result property="bizSystemNo" column="biz_system_no"/>
+        <result property="optimistic" column="optimistic"/>
+        <result property="payCompanyFeeFormulaId" column="pay_company_fee_formula_id"/>
+        <result property="payProduct" column="pay_product"/>
+        <result property="payAmount" column="pay_amount"/>
+        <result property="toPayCompanyAmount" column="to_pay_company_amount" />
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+    </resultMap>
+
+    <!--<insert id="save" parameterType="com.yeepay.g3.core.laike.entity.SmsCodeEntity" keyProperty="id"-->
+    <!--useGeneratedKeys="true">-->
+    <!--INSERT INTO YMF.TBL_SMS_CODE-->
+    <!--(PHONE_NO,SMS_CODE,TYPE,AVAILABLE,CREATE_TIME,EFFECT_TIME)-->
+    <!--VALUES-->
+    <!--(#{phoneNo,typeHandler=SensitiveL2StringHandler},#{smsCode},#{smsType},1,#{createTime},#{effectTime})-->
+    <!--</insert>-->
+
+    <!--<select id="findOne" parameterType="map" resultMap="smsCodeMap">-->
+    <!--SELECT *-->
+    <!--FROM YMF.TBL_SMS_CODE a-->
+    <!--WHERE a.PHONE_NO = #{phoneNo,typeHandler=SensitiveL2StringHandler} AND a.TYPE = #{smsType} AND a.AVAILABLE = 1-->
+    <!--AND a.EFFECT_TIME > CURRENT_TIMESTAMP-->
+    <!--AND NOT EXISTS(SELECT 1-->
+    <!--FROM TBL_SMS_CODE b-->
+    <!--WHERE b.PHONE_NO = a.PHONE_NO-->
+    <!--AND AVAILABLE = b.AVAILABLE-->
+    <!--AND b.TYPE = a.TYPE-->
+    <!--AND b.EFFECT_TIME > a.EFFECT_TIME)-->
+    <!--</select>-->
+
+    <!--<update id="setUnAvaliable" parameterType="com.yeepay.g3.core.laike.entity.SmsCodeEntity">-->
+    <!--update YMF.TBL_SMS_CODE-->
+    <!--set AVAILABLE = 0-->
+    <!--WHERE ID = #{id}-->
+    <!--</update>-->
+    <!--<select id="symCode" resultMap="smsCodeEntity">-->
+    <!--SELECT  * FROM YMF.TBL_SMS_CODE order by id desc fetch FIRST  1 rows ONLY-->
+    <!--</select>-->
+    <select id="selectPayComOrderFeeRecord" resultMap="PayCompanyOrderFeeRecordEntity">
+        select * from tbl_pay_company_order_fee_record_0 where unique_order_no=#{unique_order_no}
+    </select>
+
+    <select id="selectPayComOrderFeeRecordByDate" resultMap="PayCompanyOrderFeeRecordEntity">
+        select * from tbl_pay_company_order_fee_record_0 where create_date <![CDATA[ >= ]]> #{bill_start_time} and create_date <![CDATA[ < ]]> #{bill_end_time}
+    </select>
+
+
+</mapper>

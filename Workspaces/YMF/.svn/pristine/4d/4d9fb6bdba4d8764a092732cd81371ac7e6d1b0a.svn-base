@@ -1,0 +1,4 @@
+com.yeepay.g3.utils.config.ConfigurationUtils.init
+com.yeepay.g3.utils.rmi.RemoteServiceFactory.init
+com.yeepay.g3.utils.cache.remote.RemoteCacheUtils.init
+com.yeepay.g3.utils.holiday.HolidayUtils.init

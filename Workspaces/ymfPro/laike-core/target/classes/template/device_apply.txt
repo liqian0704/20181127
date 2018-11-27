@@ -1,0 +1,2 @@
+省份|市|硬件名称|姓名|电话
+province_name|city_name|biz_param|link_name|link_phone

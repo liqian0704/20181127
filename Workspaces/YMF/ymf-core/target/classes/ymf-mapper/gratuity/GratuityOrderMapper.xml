@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.ymf.dao.gratuity.GratuityOrderMapper">
+  <resultMap id="BaseResultMap" type="com.yeepay.g3.core.ymf.entity.gratuity.GratuityOrder">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="VERSION" jdbcType="BIGINT" property="version" />
+    <result column="TRX_AMT" jdbcType="DECIMAL" property="trxAmt" />
+    <result column="CUSTOMER_NUMBER" jdbcType="VARCHAR" property="customerNumber" />
+    <result column="GRATUITY_AMOUNT" jdbcType="VARCHAR" property="gratuityAmount" />
+    <result column="ORDER_STATUS" jdbcType="VARCHAR" property="orderStatus" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="COMPLETE_TIME" jdbcType="TIMESTAMP" property="completeTime" />
+    <result column="EMPLOYEE_NUMBER" jdbcType="VARCHAR" property="employeeNumber" />
+    <result column="ORGEXTERNAL_ID" jdbcType="VARCHAR" property="orgexternalId" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, VERSION, TRX_AMT, CUSTOMER_NUMBER, GRATUITY_AMOUNT, ORDER_STATUS, CREATE_TIME, 
+    COMPLETE_TIME, EMPLOYEE_NUMBER, ORGEXTERNAL_ID
+  </sql>
+  <select id="selectByFilter" parameterType="com.yeepay.g3.core.ymf.entity.gratuity.GratuityOrderParam" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from YMF_GRATUITY_ORDER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from YMF_GRATUITY_ORDER
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from YMF_GRATUITY_ORDER
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByFilter" parameterType="com.yeepay.g3.core.ymf.entity.gratuity.GratuityOrderParam">
+    delete from YMF_GRATUITY_ORDER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yeepay.g3.core.ymf.entity.gratuity.GratuityOrder">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Long">
+      VALUES NEXTVAL FOR YMF_GRATUITY_ORDER_SEQ
+    </selectKey>
+    insert into YMF_GRATUITY_ORDER (ID, VERSION, TRX_AMT, 
+      CUSTOMER_NUMBER, GRATUITY_AMOUNT, ORDER_STATUS, 
+      CREATE_TIME, COMPLETE_TIME, EMPLOYEE_NUMBER, 
+      ORGEXTERNAL_ID)
+    values (#{id,jdbcType=BIGINT}, #{version,jdbcType=BIGINT}, #{trxAmt,jdbcType=DECIMAL}, 
+      #{customerNumber,jdbcType=VARCHAR}, #{gratuityAmount,jdbcType=VARCHAR}, #{orderStatus,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{completeTime,jdbcType=TIMESTAMP}, #{employeeNumber,jdbcType=VARCHAR}, 
+      #{orgexternalId,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yeepay.g3.core.ymf.entity.gratuity.GratuityOrder">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Long">
+      VALUES NEXTVAL FOR YMF_GRATUITY_ORDER_SEQ
+    </selectKey>
+    insert into YMF_GRATUITY_ORDER
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      ID,
+      <if test="version != null">
+        VERSION,
+      </if>
+      <if test="trxAmt != null">
+        TRX_AMT,
+      </if>
+      <if test="customerNumber != null">
+        CUSTOMER_NUMBER,
+      </if>
+      <if test="gratuityAmount != null">
+        GRATUITY_AMOUNT,
+      </if>
+      <if test="orderStatus != null">
+        ORDER_STATUS,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="completeTime != null">
+        COMPLETE_TIME,
+      </if>
+      <if test="employeeNumber != null">
+        EMPLOYEE_NUMBER,
+      </if>
+      <if test="orgexternalId != null">
+        ORGEXTERNAL_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      #{id,jdbcType=BIGINT},
+      <if test="version != null">
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="trxAmt != null">
+        #{trxAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="customerNumber != null">
+        #{customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="gratuityAmount != null">
+        #{gratuityAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null">
+        #{orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completeTime != null">
+        #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="employeeNumber != null">
+        #{employeeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="orgexternalId != null">
+        #{orgexternalId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByFilter" parameterType="com.yeepay.g3.core.ymf.entity.gratuity.GratuityOrderParam" resultType="java.lang.Integer">
+    select count(*) from YMF_GRATUITY_ORDER
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByFilterSelective" parameterType="map">
+    update YMF_GRATUITY_ORDER
+    <set>
+      <if test="record.id != null">
+        
+      </if>
+      <if test="record.version != null">
+        VERSION = #{record.version,jdbcType=BIGINT},
+      </if>
+      <if test="record.trxAmt != null">
+        TRX_AMT = #{record.trxAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.customerNumber != null">
+        CUSTOMER_NUMBER = #{record.customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gratuityAmount != null">
+        GRATUITY_AMOUNT = #{record.gratuityAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderStatus != null">
+        ORDER_STATUS = #{record.orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.completeTime != null">
+        COMPLETE_TIME = #{record.completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.employeeNumber != null">
+        EMPLOYEE_NUMBER = #{record.employeeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orgexternalId != null">
+        ORGEXTERNAL_ID = #{record.orgexternalId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByFilter" parameterType="map">
+    update YMF_GRATUITY_ORDER
+    set 
+      VERSION = #{record.version,jdbcType=BIGINT},
+      TRX_AMT = #{record.trxAmt,jdbcType=DECIMAL},
+      CUSTOMER_NUMBER = #{record.customerNumber,jdbcType=VARCHAR},
+      GRATUITY_AMOUNT = #{record.gratuityAmount,jdbcType=VARCHAR},
+      ORDER_STATUS = #{record.orderStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      COMPLETE_TIME = #{record.completeTime,jdbcType=TIMESTAMP},
+      EMPLOYEE_NUMBER = #{record.employeeNumber,jdbcType=VARCHAR},
+      ORGEXTERNAL_ID = #{record.orgexternalId,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yeepay.g3.core.ymf.entity.gratuity.GratuityOrder">
+    update YMF_GRATUITY_ORDER
+    <set>
+      <if test="version != null">
+        VERSION = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="trxAmt != null">
+        TRX_AMT = #{trxAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="customerNumber != null">
+        CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="gratuityAmount != null">
+        GRATUITY_AMOUNT = #{gratuityAmount,jdbcType=VARCHAR},
+      </if>
+      <if test="orderStatus != null">
+        ORDER_STATUS = #{orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completeTime != null">
+        COMPLETE_TIME = #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="employeeNumber != null">
+        EMPLOYEE_NUMBER = #{employeeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="orgexternalId != null">
+        ORGEXTERNAL_ID = #{orgexternalId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yeepay.g3.core.ymf.entity.gratuity.GratuityOrder">
+    update YMF_GRATUITY_ORDER
+    set VERSION = #{version,jdbcType=BIGINT},
+      TRX_AMT = #{trxAmt,jdbcType=DECIMAL},
+      CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR},
+      GRATUITY_AMOUNT = #{gratuityAmount,jdbcType=VARCHAR},
+      ORDER_STATUS = #{orderStatus,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      COMPLETE_TIME = #{completeTime,jdbcType=TIMESTAMP},
+      EMPLOYEE_NUMBER = #{employeeNumber,jdbcType=VARCHAR},
+      ORGEXTERNAL_ID = #{orgexternalId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

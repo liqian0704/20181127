@@ -1,0 +1,169 @@
+package com.yeepay.g3.core.laike.service;
+
+import com.yeepay.agent.hessian.service.laike.GetLaikeAgentInfoService;
+import com.yeepay.bridge.transfer.facade.TransferEntrustSettleFacade;
+import com.yeepay.g3.component.member.facade.MemberManageFacade;
+import com.yeepay.g3.core.laike.repository.*;
+import com.yeepay.g3.core.laike.utils.RemoteFacadeFactory;
+import com.yeepay.g3.facade.account.manage.facade.AccountBalanceAndStatusQueryFacade;
+import com.yeepay.g3.facade.alliance.facade.member.RegisterFacade;
+import com.yeepay.g3.facade.auth2.ocr.facade.BankCardOCRFacade;
+import com.yeepay.g3.facade.auth2.ocr.facade.IdCardOCRFacade;
+import com.yeepay.g3.facade.bankinfo.service.BankInfoQueryFacade;
+import com.yeepay.g3.facade.consumerloan.facade.CashLoanFacade;
+import com.yeepay.g3.facade.fee.front.service.CalFeeModelManagementFacade;
+import com.yeepay.g3.facade.laike.enumtype.ExternalSystem;
+import com.yeepay.g3.facade.laike.exception.ErrorCodeTranslator;
+import com.yeepay.g3.facade.laike.exception.SystemErrorCodeTranslator;
+import com.yeepay.g3.facade.member.facade.MemberAuthenticationFacade;
+import com.yeepay.g3.facade.member.facade.MemberQueryFacade;
+import com.yeepay.g3.facade.member.facade.MemberSecurtiySetFacade;
+import com.yeepay.g3.facade.mer.facade.*;
+import com.yeepay.g3.facade.mer.facade.out.MerOutInvokeFacade;
+import com.yeepay.g3.facade.ncmember.facade.BindCardFacade;
+import com.yeepay.g3.facade.notifier.NotifyFacade;
+import com.yeepay.g3.facade.trade.bankinterface.nocard.BankInterfaceNoCardFacade;
+import com.yeepay.g3.facade.ymf.facade.YMFTradeBizFacade;
+import com.yeepay.g3.facade.ymf.facade.laike.CustomerBizFacade;
+import com.yeepay.g3.facade.ymf.facade.laike.LaikeTermFacade;
+import com.yeepay.g3.facade.ymf.facade.laike.PurchaseQrCodeFacade;
+import com.yeepay.g3.facade.yop.oauth2.facade.TokenFacade;
+import com.yeepay.riskcontrol.facade.TradeLimitConfigQueryFacade;
+import org.springframework.beans.factory.annotation.Autowired;
+
+/**
+ * @Description:
+ * @Author: zhaoyu.cui
+ * @Date: 16/10/9
+ * @Time: 下午5:19
+ */
+public class AbstractService{
+
+    @Autowired
+    protected UserRepository userRepository;
+
+    @Autowired
+    protected AccountOpenRepository accountOpenRepository;
+
+    @Autowired
+    protected AttachmentRepository attachmentRepository;
+
+    @Autowired
+    protected AppVersionRepository appVersionRepository;
+
+    @Autowired
+    protected PushMsgRepository pushMsgRepository;
+
+    @Autowired
+    protected FunctionRepository functionRepository;
+
+    @Autowired
+    protected RoleFunctionRepository roleFunctionRepository;
+
+    @Autowired
+    protected BlackListRepository blackListRepository;
+
+    @Autowired
+    protected SmsCodeRepository smsCodeRepository;
+
+    @Autowired
+    protected AppErrorMsgRepository appErrorMsgRepository;
+
+	@Autowired
+	protected S0RecordRepository s0RecordRepository;
+
+    @Autowired
+    protected OperateRecodeRepository operateRecodeRepository;
+
+    @Autowired
+    protected RoleRepository roleRepository;
+
+    protected ErrorCodeTranslator errorCodeTranslator = SystemErrorCodeTranslator.getInstance();
+
+    protected static TokenFacade tokenFacade = RemoteFacadeFactory.getService(TokenFacade.class,
+            ExternalSystem.OAUTH);
+
+    protected static NotifyFacade notifyFacade = RemoteFacadeFactory.getService(NotifyFacade.class,
+            ExternalSystem.NOTIFY);
+
+    protected static MemberAuthenticationFacade memberAuthenticationFacade = RemoteFacadeFactory.getService(MemberAuthenticationFacade.class,
+            ExternalSystem.G3MEMBER);
+
+    protected static MemberSecurtiySetFacade memberSecurtiySetFacade = RemoteFacadeFactory.getService(MemberSecurtiySetFacade.class,
+            ExternalSystem.G3MEMBER);
+
+    protected static MemberQueryFacade memberQueryFacade = RemoteFacadeFactory.getService(MemberQueryFacade.class,
+            ExternalSystem.G3MEMBER);
+
+    protected static MemberManageFacade memberManageFacade = RemoteFacadeFactory.getService(MemberManageFacade.class,
+            ExternalSystem.G3MEMBER);
+
+    protected static YMFTradeBizFacade ymfTradeBizFacade = RemoteFacadeFactory.getService(YMFTradeBizFacade.class,
+            ExternalSystem.YMF);
+
+    protected static PurchaseQrCodeFacade purchaseQrCodeFacade = RemoteFacadeFactory.getService(PurchaseQrCodeFacade.class,
+            ExternalSystem.YMF);
+
+    protected static LaikeTermFacade laikeTermFacade = RemoteFacadeFactory.getService(LaikeTermFacade.class,
+            ExternalSystem.YMF);
+
+    protected static GetLaikeAgentInfoService getLaikeAgentInfoService = RemoteFacadeFactory.
+            getHttpInvokeService(GetLaikeAgentInfoService.class, ExternalSystem.AGENT_BOSS, false);
+
+    protected static MerQuaInfoFacade merQuaInfoFacade = RemoteFacadeFactory.getService(MerQuaInfoFacade.class,
+            ExternalSystem.CS_MERCHANT);
+
+    protected static MerNetInFacade merNetInFacade = RemoteFacadeFactory.getService(MerNetInFacade.class,
+            ExternalSystem.CS_MERCHANT);
+
+    protected static MerSettleFacade merSettleFacade = RemoteFacadeFactory.getService(MerSettleFacade.class,
+            ExternalSystem.CS_MERCHANT);
+
+    protected static MerQuaFileFacade merQuaFileFacade = RemoteFacadeFactory.getService(MerQuaFileFacade.class,
+            ExternalSystem.CS_MERCHANT);
+
+    protected static MerProductInfoFacade merProductInfoFacade = RemoteFacadeFactory.getService(MerProductInfoFacade.class,
+            ExternalSystem.CS_MERCHANT);
+
+    protected static BankInfoQueryFacade bankInfoQueryFacade = RemoteFacadeFactory.getService(BankInfoQueryFacade.class,
+            ExternalSystem.BANK_INFO);
+
+    protected static AccountBalanceAndStatusQueryFacade accountBalanceAndStatusQueryFacade =
+            RemoteFacadeFactory.getService(AccountBalanceAndStatusQueryFacade.class, ExternalSystem.ACCOUNT_MANAGE);
+
+    protected static MerOutInvokeFacade merOutInvokeFacade = RemoteFacadeFactory.getService(MerOutInvokeFacade.class,
+            ExternalSystem.CS_MERCHANT);
+
+    protected static CashLoanFacade cashLoanFacade = RemoteFacadeFactory.getService(CashLoanFacade.class,
+            ExternalSystem.CONSUMER_LOAN);
+
+    protected static BindCardFacade bindCardFacade = RemoteFacadeFactory.getService(BindCardFacade.class,
+            ExternalSystem.NC_MEMBER);
+
+    protected static CustomerBizFacade customerBizFacade = RemoteFacadeFactory.getService(CustomerBizFacade.class,
+            ExternalSystem.YMF);
+
+    protected static TransferEntrustSettleFacade transferEntrustSettleFacade = RemoteFacadeFactory.getHttpInvokeService(TransferEntrustSettleFacade.class,
+            ExternalSystem.RJT);
+
+    protected static BankInterfaceNoCardFacade bankInterfaceNoCardFacade = RemoteFacadeFactory.getService(BankInterfaceNoCardFacade.class,
+            ExternalSystem.BANK_TRADE);
+
+    protected static IdCardOCRFacade idCardOCRFacade = RemoteFacadeFactory.getService(IdCardOCRFacade.class,
+            ExternalSystem.OCR);
+
+    protected static BankCardOCRFacade bankCardOCRFacade = RemoteFacadeFactory.getService(BankCardOCRFacade.class,
+            ExternalSystem.OCR);
+
+    protected static MerLaiKeExtensionFacade merLaiKeExtensionFacade = RemoteFacadeFactory.getService(MerLaiKeExtensionFacade.class,
+            ExternalSystem.CS_MERCHANT);
+
+    protected static RegisterFacade registerFacade = RemoteFacadeFactory.getService(RegisterFacade.class,
+            ExternalSystem.ALLIANCE);
+
+    protected static CalFeeModelManagementFacade calFeeModelManagementFacade = RemoteFacadeFactory.getService(CalFeeModelManagementFacade.class,
+            ExternalSystem.CAL_FEE);
+
+    protected static TradeLimitConfigQueryFacade tradeLimitConfigQueryFacade = RemoteFacadeFactory.getService(TradeLimitConfigQueryFacade.class,
+            ExternalSystem.RISK_CONTROL);
+}

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: apache-httpclient:commons-httpmime:4.1.2">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/apache-httpclient/commons-httpmime/4.1.2/commons-httpmime-4.1.2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/apache-httpclient/commons-httpmime/4.1.2/commons-httpmime-4.1.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/apache-httpclient/commons-httpmime/4.1.2/commons-httpmime-4.1.2-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

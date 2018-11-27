@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- 贷款查询 -->
+	<bean id="creditsQueryService" class="com.yeepay.g3.utils.query.impl.QueryServiceImpl">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="querys">
+			<map>
+				<!-- 应用系统贷款请求查询 -->
+				<entry key="QUERY_REQUEST_ORDER">
+					<bean class="com.yeepay.g3.utils.query.Query">
+						<property name="sql">
+							<value>
+								<![CDATA[
+									SELECT
+									  MESSAGE_NO as msgNo,
+									  JPUSH_ID as jpushID,
+									  TYPE as type,
+									  TITLE as title,
+									  CONTENT as content,
+									  PUSH_TIME as pushTime,
+									  LIFE_START as lifeStart,
+									  LIFE_END as lifeEnd,
+									  URL1 as url1,
+									  URL2 as url2
+									FROM TBL_PUSH_MSG
+									WHERE PUSH_STATUS = 'SENDED'
+										 /~type: AND TYPE = {type}~/
+										 /~phoneNo: AND PHONE_NUMBERS LIKE '%'||{phoneNo}||'%'~/
+									ORDER BY CREATE_TIME DESC
+									WITH UR
+                                ]]>
+							</value>
+						</property>
+					</bean>
+				</entry>
+				<!--商户是否实名认证-->
+			</map>
+		</property>
+	</bean>
+
+
+
+</beans>

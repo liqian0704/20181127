@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yeepay.g3.core.ymf.dao.material.TermMapper" >
+  <resultMap id="BaseResultMap" type="com.yeepay.g3.core.ymf.entity.material.Term" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="IN_TIME" property="inTime" jdbcType="TIMESTAMP" />
+    <result column="OUT_TIME" property="outTime" jdbcType="TIMESTAMP" />
+    <result column="SN_SERIAL" property="snSerial" jdbcType="VARCHAR" />
+    <result column="TERM_TYPE" property="termType" jdbcType="VARCHAR" />
+    <result column="MANUFACT" property="manufact" jdbcType="VARCHAR" />
+    <result column="TERM_STATUS" property="termStatus" jdbcType="VARCHAR" />
+    <result column="STOCK_STATUS" property="stockStatus" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, IN_TIME, OUT_TIME, SN_SERIAL, TERM_TYPE, MANUFACT, TERM_STATUS, STOCK_STATUS
+  </sql>
+  <select id="selectByFilter" resultMap="BaseResultMap" parameterType="com.yeepay.g3.core.ymf.entity.material.TermParam" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from YMF_TERM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from YMF_TERM
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from YMF_TERM
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByFilter" parameterType="com.yeepay.g3.core.ymf.entity.material.TermParam" >
+    delete from YMF_TERM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yeepay.g3.core.ymf.entity.material.Term" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      VALUES NEXTVAL FOR YMF_TERM_ID_SEQ
+    </selectKey>
+    insert into YMF_TERM (ID, IN_TIME, OUT_TIME, 
+      SN_SERIAL, TERM_TYPE, MANUFACT, 
+      TERM_STATUS, STOCK_STATUS)
+    values (#{id,jdbcType=BIGINT}, #{inTime,jdbcType=TIMESTAMP}, #{outTime,jdbcType=TIMESTAMP}, 
+      #{snSerial,jdbcType=VARCHAR}, #{termType,jdbcType=VARCHAR}, #{manufact,jdbcType=VARCHAR}, 
+      #{termStatus,jdbcType=VARCHAR}, #{stockStatus,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yeepay.g3.core.ymf.entity.material.Term" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      VALUES NEXTVAL FOR YMF_TERM_ID_SEQ
+    </selectKey>
+    insert into YMF_TERM
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="inTime != null" >
+        IN_TIME,
+      </if>
+      <if test="outTime != null" >
+        OUT_TIME,
+      </if>
+      <if test="snSerial != null" >
+        SN_SERIAL,
+      </if>
+      <if test="termType != null" >
+        TERM_TYPE,
+      </if>
+      <if test="manufact != null" >
+        MANUFACT,
+      </if>
+      <if test="termStatus != null" >
+        TERM_STATUS,
+      </if>
+      <if test="stockStatus != null" >
+        STOCK_STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="inTime != null" >
+        #{inTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="outTime != null" >
+        #{outTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="snSerial != null" >
+        #{snSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="termType != null" >
+        #{termType,jdbcType=VARCHAR},
+      </if>
+      <if test="manufact != null" >
+        #{manufact,jdbcType=VARCHAR},
+      </if>
+      <if test="termStatus != null" >
+        #{termStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="stockStatus != null" >
+        #{stockStatus,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByFilter" parameterType="com.yeepay.g3.core.ymf.entity.material.TermParam" resultType="java.lang.Integer" >
+    select count(*) from YMF_TERM
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByFilterSelective" parameterType="map" >
+    update YMF_TERM
+    <set >
+      <if test="record.id != null" >
+        
+      </if>
+      <if test="record.inTime != null" >
+        IN_TIME = #{record.inTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.outTime != null" >
+        OUT_TIME = #{record.outTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.snSerial != null" >
+        SN_SERIAL = #{record.snSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="record.termType != null" >
+        TERM_TYPE = #{record.termType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.manufact != null" >
+        MANUFACT = #{record.manufact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.termStatus != null" >
+        TERM_STATUS = #{record.termStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stockStatus != null" >
+        STOCK_STATUS = #{record.stockStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByFilter" parameterType="map" >
+    update YMF_TERM
+    set 
+      IN_TIME = #{record.inTime,jdbcType=TIMESTAMP},
+      OUT_TIME = #{record.outTime,jdbcType=TIMESTAMP},
+      SN_SERIAL = #{record.snSerial,jdbcType=VARCHAR},
+      TERM_TYPE = #{record.termType,jdbcType=VARCHAR},
+      MANUFACT = #{record.manufact,jdbcType=VARCHAR},
+      TERM_STATUS = #{record.termStatus,jdbcType=VARCHAR},
+      STOCK_STATUS = #{record.stockStatus,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yeepay.g3.core.ymf.entity.material.Term" >
+    update YMF_TERM
+    <set >
+      <if test="inTime != null" >
+        IN_TIME = #{inTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="outTime != null" >
+        OUT_TIME = #{outTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="snSerial != null" >
+        SN_SERIAL = #{snSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="termType != null" >
+        TERM_TYPE = #{termType,jdbcType=VARCHAR},
+      </if>
+      <if test="manufact != null" >
+        MANUFACT = #{manufact,jdbcType=VARCHAR},
+      </if>
+      <if test="termStatus != null" >
+        TERM_STATUS = #{termStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="stockStatus != null" >
+        STOCK_STATUS = #{stockStatus,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yeepay.g3.core.ymf.entity.material.Term" >
+    update YMF_TERM
+    set IN_TIME = #{inTime,jdbcType=TIMESTAMP},
+      OUT_TIME = #{outTime,jdbcType=TIMESTAMP},
+      SN_SERIAL = #{snSerial,jdbcType=VARCHAR},
+      TERM_TYPE = #{termType,jdbcType=VARCHAR},
+      MANUFACT = #{manufact,jdbcType=VARCHAR},
+      TERM_STATUS = #{termStatus,jdbcType=VARCHAR},
+      STOCK_STATUS = #{stockStatus,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

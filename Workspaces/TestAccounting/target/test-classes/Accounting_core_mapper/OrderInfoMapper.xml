@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Accounting_core_mapper.OrderInfoMapper">
+
+    <resultMap id="OrderInfoEntity" type="Accounting_entity.OrderInfoEntity">
+        <id property="uniqueOrderNo" column="unique_order_no"/>
+        <result property="optimistic" column="optimistic" />
+        <result property="bizSystemNo" column="biz_system_no"/>
+        <result property="parentMerchantNo" column="parent_merchant_no"/>
+        <result property="payCompanyParentMerchantNo" column="pay_company_parent_merchant_no"/>
+        <result property="parentMerchantName" column="parent_merchant_name"/>
+        <result property="merchantNo" column="merchant_no"/>
+        <result property="payCompanyMerchantNo" column="pay_company_merchant_no" />
+        <result property="merchantName" column="merchant_name"/>
+        <result property="payCompany" column="pay_company"/>
+        <result property="productCode" column="product_code" />
+        <result property="orderAmount" column="order_amount"/>
+        <result property="payAmount" column="pay_amount"/>
+        <result property="inaccountAmount" column="inaccount_amount"/>
+        <result property="feeType" column="fee_type"/>
+        <result property="fee" column="fee"/>
+        <result property="orderCreateDate" column="order_create_date"/>
+        <result property="paySuccessDate" column="pay_success_date"/>
+        <result property="toMtStatus" column="to_mt_status"/>
+        <result property="toPayCompanyStatus" column="to_pay_company_status"/>
+        <result property="toPromoterStatus" column="to_promoter_status"/>
+        <result property="toMtAmount" column="to_mt_amount"/>
+        <result property="toPayCompanyAmount" column="to_pay_company_amount"/>
+        <result property="toPromoterAmount" column="to_promoter_amount"/>
+        <result property="createDate" column="create_date"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="errorCode" column="error_code"/>
+        <result property="errorMessage" column="error_message"/>
+    </resultMap>
+
+    <!--<insert id="save" parameterType="com.yeepay.g3.core.laike.entity.SmsCodeEntity" keyProperty="id"-->
+    <!--useGeneratedKeys="true">-->
+    <!--INSERT INTO YMF.TBL_SMS_CODE-->
+    <!--(PHONE_NO,SMS_CODE,TYPE,AVAILABLE,CREATE_TIME,EFFECT_TIME)-->
+    <!--VALUES-->
+    <!--(#{phoneNo,typeHandler=SensitiveL2StringHandler},#{smsCode},#{smsType},1,#{createTime},#{effectTime})-->
+    <!--</insert>-->
+
+    <!--<select id="findOne" parameterType="map" resultMap="smsCodeMap">-->
+    <!--SELECT *-->
+    <!--FROM YMF.TBL_SMS_CODE a-->
+    <!--WHERE a.PHONE_NO = #{phoneNo,typeHandler=SensitiveL2StringHandler} AND a.TYPE = #{smsType} AND a.AVAILABLE = 1-->
+    <!--AND a.EFFECT_TIME > CURRENT_TIMESTAMP-->
+    <!--AND NOT EXISTS(SELECT 1-->
+    <!--FROM TBL_SMS_CODE b-->
+    <!--WHERE b.PHONE_NO = a.PHONE_NO-->
+    <!--AND AVAILABLE = b.AVAILABLE-->
+    <!--AND b.TYPE = a.TYPE-->
+    <!--AND b.EFFECT_TIME > a.EFFECT_TIME)-->
+    <!--</select>-->
+
+    <!--<update id="setUnAvaliable" parameterType="com.yeepay.g3.core.laike.entity.SmsCodeEntity">-->
+    <!--update YMF.TBL_SMS_CODE-->
+    <!--set AVAILABLE = 0-->
+    <!--WHERE ID = #{id}-->
+    <!--</update>-->
+    <!--<select id="symCode" resultMap="smsCodeEntity">-->
+	   <!--SELECT  * FROM YMF.TBL_SMS_CODE order by id desc fetch FIRST  1 rows ONLY-->
+	<!--</select>-->
+    <select id="selectOrderByPMNo" resultMap="OrderInfoEntity">
+        SELECT * FROM mt_accounting_verify.tbl_order_info_0 WHERE parent_merchant_no = #{parent_merchant_no}
+    </select>
+    <update id="updateOrderStatus" >
+        update mt_accounting_verify.tbl_order_info_0 set to_mt_status='INIT',to_pay_company_status='INIT' where parent_merchant_no=#{parent_merchant_no}
+    </update>
+    <select id="selectOrderByPMNoandPeriod" resultMap="OrderInfoEntity">
+        SELECT * FROM mt_accounting_verify.tbl_order_info_0 WHERE parent_merchant_no = #{parent_merchant_no} and create_date <![CDATA[ >= ]]> #{bill_start_time} and create_date <![CDATA[ < ]]> #{bill_end_time}
+    </select>
+
+</mapper>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.ymf.dao.GratuityOrderDao">
+    <resultMap id="GratuityOrderResultMap" type="com.yeepay.g3.core.ymf.entity.gratuity.GratuityOrder">
+        <id column="ID" jdbcType="BIGINT" property="id" />
+        <result column="VERSION" jdbcType="BIGINT" property="version" />
+        <result column="TRX_AMT" jdbcType="DECIMAL" property="trxAmt" />
+        <result column="CUSTOMER_NUMBER" jdbcType="VARCHAR" property="customerNumber" />
+        <result column="GRATUITY_AMOUNT" jdbcType="VARCHAR" property="gratuityAmount" />
+        <result column="ORDER_STATUS" jdbcType="VARCHAR" property="orderStatus" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="COMPLETE_TIME" jdbcType="TIMESTAMP" property="completeTime" />
+        <result column="EMPLOYEE_NUMBER" jdbcType="VARCHAR" property="employeeNumber" />
+        <result column="ORGEXTERNAL_ID" jdbcType="VARCHAR" property="orgexternalId" />
+    </resultMap>
+
+</mapper>

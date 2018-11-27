@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Accounting_core_mapper.PromoterPayRecordMapper">
+
+    <resultMap id="baseResultMap" type="Accounting_entity.PromoterPayRecordEntity" >
+        <id column="unique_promoter_pay_no" property="uniquePromoterPayNo" jdbcType="VARCHAR" />
+        <result column="optimistic" property="optimistic" jdbcType="INTEGER" />
+        <result column="total_bill_no" property="totalBillNo" jdbcType="VARCHAR" />
+        <result column="promoter_no" property="promoterNo" jdbcType="VARCHAR" />
+        <result column="parent_merchant_no" property="parentMerchantNo" jdbcType="VARCHAR" />
+        <result column="parent_merchant_name" property="parentMerchantName" jdbcType="VARCHAR" />
+        <result column="profit_amount" property="profitAmount" jdbcType="DECIMAL" />
+        <result column="profit_fee" property="profitFee" jdbcType="DECIMAL" />
+        <result column="fee_status" property="feeStatus" jdbcType="VARCHAR" />
+        <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+        <result column="update_date" property="updateDate" jdbcType="TIMESTAMP" />
+    <!--</resultMap>-->
+
+    <!--<resultMap id="PromoterOrderTotalQueryResModel" type="com.miitang.core.accounting.model.PromoterOrderTotalQueryResModel" >-->
+        <!--<result column="parentMerchantNo" property="parentMerchantNo" jdbcType="VARCHAR" />-->
+        <!--<result column="totalAmount" property="totalAmount" jdbcType="DECIMAL" />-->
+        <!--<result column="totalFeeAmount" property="totalFeeAmount" jdbcType="DECIMAL" />-->
+        <!--<result column="totalCount" property="totalCount" jdbcType="INTEGER" />-->
+        <!--<result column="feeStatus" property="status" jdbcType="VARCHAR" />-->
+    </resultMap>
+
+    <!--<insert id="save" parameterType="com.yeepay.g3.core.laike.entity.SmsCodeEntity" keyProperty="id"-->
+    <!--useGeneratedKeys="true">-->
+    <!--INSERT INTO YMF.TBL_SMS_CODE-->
+    <!--(PHONE_NO,SMS_CODE,TYPE,AVAILABLE,CREATE_TIME,EFFECT_TIME)-->
+    <!--VALUES-->
+    <!--(#{phoneNo,typeHandler=SensitiveL2StringHandler},#{smsCode},#{smsType},1,#{createTime},#{effectTime})-->
+    <!--</insert>-->
+
+    <!--<select id="findOne" parameterType="map" resultMap="smsCodeMap">-->
+    <!--SELECT *-->
+    <!--FROM YMF.TBL_SMS_CODE a-->
+    <!--WHERE a.PHONE_NO = #{phoneNo,typeHandler=SensitiveL2StringHandler} AND a.TYPE = #{smsType} AND a.AVAILABLE = 1-->
+    <!--AND a.EFFECT_TIME > CURRENT_TIMESTAMP-->
+    <!--AND NOT EXISTS(SELECT 1-->
+    <!--FROM TBL_SMS_CODE b-->
+    <!--WHERE b.PHONE_NO = a.PHONE_NO-->
+    <!--AND AVAILABLE = b.AVAILABLE-->
+    <!--AND b.TYPE = a.TYPE-->
+    <!--AND b.EFFECT_TIME > a.EFFECT_TIME)-->
+    <!--</select>-->
+
+    <!--<update id="setUnAvaliable" parameterType="com.yeepay.g3.core.laike.entity.SmsCodeEntity">-->
+    <!--update YMF.TBL_SMS_CODE-->
+    <!--set AVAILABLE = 0-->
+    <!--WHERE ID = #{id}-->
+    <!--</update>-->
+    <!--<select id="symCode" resultMap="smsCodeEntity">-->
+	   <!--SELECT  * FROM YMF.TBL_SMS_CODE order by id desc fetch FIRST  1 rows ONLY-->
+	<!--</select>-->
+    <select id="selectPromoterPayRecord" resultMap="baseResultMap">
+        select * from tbl_promoter_pay_record_0 where parent_merchant_no = #{parent_merchant_no}
+    </select>
+    <select id="selectPromoterPayRecordbyBillNo" resultMap="baseResultMap">
+        select * from tbl_promoter_pay_record_0 where parent_merchant_no = #{parentMerchantNo} and total_bill_no=#{bilNo}
+    </select>
+</mapper>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head lang="zh-CN">
+    <meta charset="UTF-8">
+    <title>产品协议</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1,user-scalable=0"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <style>
+        body {
+            background-color: #FFF;
+            color: darkgray;
+        }
+
+        body, div {
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        p {
+            color: darkslategrey;
+            font-size: 16px;
+        }
+        .s0-protocol-area {
+            width: 90%;
+            overflow-y: visible;
+            font-size: 14px;
+            border: none;
+            min-height: 100%;
+            margin-bottom: 45px;
+            display: inline-block;
+        }
+
+        .s0-protocol-div {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            margin-bottom: 50px;
+        }
+
+        .s0-bottom-div {
+            position: fixed;
+            bottom: 10px;
+            height: 40px;
+            min-width: 100%;
+        }
+
+        #s0-openS0Btn:active {
+            background-color: lightgrey;
+        }
+
+        #s0-openS0Btn {
+            width: 90%;
+            min-height: 100%;
+            border: none;
+            border-radius: 4px;
+            color: #FFF;
+            font-size: 16px;
+            display: inline-block;
+            background-color: #FCB718;
+        }
+    </style>
+</head>
+<body>
+<div></div>
+<div class="s0-protocol-div">
+    <p>秒到产品协议</p>
+    <textarea class="s0-protocol-area" disabled="true">
+本产品申请人（简称“甲方”）经与易宝支付有限公司（以下简称“乙方”）协商一致，就甲方自愿使用本产品的服务达成本协议：
+1. 定义
+“秒到”是一款为客户提供收款资金逐笔出款的产品。
+2. 服务内容
+乙方为甲方提供逐笔出款服务。甲方使用乙方提供的收款服务后，在满足事先约定的交易时间和金额时，自动向乙方发出出款指令，乙方接收到甲方指令后，按照甲方要求，将收款资金汇入甲方事先约定的银行账户中，当日到账。
+3.服务费用
+3.1. 乙方为甲方提供秒到产品服务，并收取相应服务手续费。具体签约服务手续费请咨询您的所属代理商。
+4.特殊说明
+4.1. 如甲方出款金额超出乙方额度，则会导致出款失败。
+4.2. 乙方有权根据甲方交易情况，调整相关资金管理政策；乙方应提前一个工作日告知甲方相关政策的变化。
+4.3. 乙方有权根据甲方交易情况，依照央行相关支付及金融政策，暂停甲方使用该产品。 
+4.4. 若甲方出现风险或投诉情况，乙方有权冻结商户账户余额或商户本身保证金并暂停日结通出款交易。</textarea>
+</div>
+<div class="s0-bottom-div">
+    <button id="s0-openS0Btn">同意开通</button>
+</div>
+<script>
+    var browser = {
+        versions: function () {
+            var u = navigator.userAgent;
+            return {
+                trident: u.indexOf('Trident') > -1, //IE内核
+                presto: u.indexOf('Presto') > -1, //opera内核
+                webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,//火狐内核
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+                android: u.indexOf('Android') > -1 || u.indexOf('Adr') > -1, //android终端
+                iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
+                iPad: u.indexOf('iPad') > -1, //是否iPad
+                webApp: u.indexOf('Safari') == -1, //是否web应该程序，没有头部与底部
+                weixin: u.indexOf('MicroMessenger') > -1, //是否微信
+                qq: u.match(/\sQQ/i) == " qq" //是否QQ
+            };
+        }()
+    };
+    document.querySelector("#s0-openS0Btn").addEventListener("click", function () {
+        if (browser.versions.ios) {
+            /*
+             * IOS
+             * */
+            //openS0();
+            window.webkit.messageHandlers.openS0.postMessage({body: '开通秒到'});
+        } else if (browser.versions.android) {
+            /*
+             * Android
+             * */
+            window.Android.openS0();
+        }
+    });
+</script>
+</body>
+</html>

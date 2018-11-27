@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<parent>
+		<artifactId>laike-parent</artifactId>
+		<groupId>com.yeepay.g3.laike</groupId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<modelVersion>4.0.0</modelVersion>
+
+	<artifactId>laike-hessian</artifactId>
+	<version>${laike-hessian.version}</version>
+	<packaging>war</packaging>
+
+	<name>LaiKe :: Hessian</name>
+	<url>http://www.yeepay.com</url>
+
+	<dependencies>
+
+		<dependency>
+			<groupId>com.yeepay.g3.utils</groupId>
+			<artifactId>yeepay-rmi</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.yeepay.g3.laike</groupId>
+			<artifactId>laike-core</artifactId>
+			<version>${laike-core.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>com.yeepay.g3.utils</groupId>
+			<artifactId>yeepay-log</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+        <dependency>
+            <groupId>com.yeepay.g3.athena</groupId>
+            <artifactId>athena-collection</artifactId>
+            <version>1.5.1</version>
+        </dependency>
+
+		<dependency>
+			<groupId>com.yeepay.infra</groupId>
+			<artifactId>metrics-agent-core</artifactId>
+			<version>1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.yeepay.infra</groupId>
+			<artifactId>tomcat-plugin</artifactId>
+			<version>1.0</version>
+		</dependency>
+
+	</dependencies>
+	<build>
+		<finalName>laike-hessian</finalName>
+		<plugins>
+			<plugin>
+				<artifactId>maven-deploy-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

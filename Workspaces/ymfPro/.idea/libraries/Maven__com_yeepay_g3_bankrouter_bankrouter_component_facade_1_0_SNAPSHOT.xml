@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.yeepay.g3.bankrouter:bankrouter-component-facade:1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/bankrouter/bankrouter-component-facade/1.0-SNAPSHOT/bankrouter-component-facade-1.0-20171228.061843-586.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/bankrouter/bankrouter-component-facade/1.0-SNAPSHOT/bankrouter-component-facade-1.0-20171228.061843-586-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/bankrouter/bankrouter-component-facade/1.0-SNAPSHOT/bankrouter-component-facade-1.0-20171228.061843-586-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

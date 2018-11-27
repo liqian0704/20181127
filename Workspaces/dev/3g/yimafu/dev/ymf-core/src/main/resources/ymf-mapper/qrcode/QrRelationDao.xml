@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yeepay.g3.core.ymf.dao.qrcode.QrRelationDao" >
+    <resultMap id="QrRelationResultMap" type="com.yeepay.g3.core.ymf.entity.qrcode.QrRelation" >
+        <id column="ID" property="id" jdbcType="BIGINT" />
+        <result column="VERSION" property="version" jdbcType="BIGINT" />
+        <result column="AGENT_NUMBER" property="agentNumber" jdbcType="VARCHAR" />
+        <result column="REQUEST_ID" property="requestId" jdbcType="VARCHAR" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="COMPLETE_TIME" property="completeTime" jdbcType="TIMESTAMP" />
+        <result column="QRCOUNT" property="qrcount" jdbcType="SMALLINT" />
+        <result column="SELLER_ID" property="sellerId" jdbcType="BIGINT" />
+        <result column="INVOICE" property="invoice" jdbcType="VARCHAR" />
+        <result column="STATUS" property="status" jdbcType="VARCHAR" />
+        <result column="SALES_NO" property="salesNo" jdbcType="VARCHAR" />
+        <result column="SALES_NAME" property="salesName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="getByAgentNumberAndRequestId" resultMap="QrRelationResultMap">
+      select * from YMF_QR_RELATION where
+      AGENT_NUMBER = #{agentNumber,jdbcType=VARCHAR}
+      AND REQUEST_ID = #{requestID,jdbcType=VARCHAR}
+    </select>
+    <select id="getByCustomerNumberAndRequestId" resultMap="QrRelationResultMap">
+      select * from YMF_QR_RELATION where
+      AGENT_NUMBER = #{customerNumber,jdbcType=VARCHAR}
+      AND REQUEST_ID = #{requestID,jdbcType=VARCHAR}
+    </select>
+    <select id="getBySalesNameAndRequestId" resultMap="QrRelationResultMap">
+      select * from YMF_QR_RELATION where
+      SALES_NAME = #{salesName,jdbcType=VARCHAR}
+      AND REQUEST_ID = #{requestID,jdbcType=VARCHAR}
+    </select>
+
+    <select id="getByQrCodeID" resultMap="QrRelationResultMap">
+      select re.* from YMF_QR_RELATION re inner join YMF_QRCODE qr
+      on qr.RELATION_ID = re.REQUEST_ID where
+      qr.QR_ID= #{qrCodeID,jdbcType=VARCHAR}
+    </select>
+
+</mapper>

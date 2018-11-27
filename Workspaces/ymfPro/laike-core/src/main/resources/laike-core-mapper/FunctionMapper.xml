@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.laike.repository.FunctionRepository">
+	<resultMap id="BaseResultMap" type="com.yeepay.g3.core.laike.entity.FunctionEntity">
+		<id column="ID" property="id"/>
+		<result column="FUNCTION_NAME" jdbcType="VARCHAR" property="functionName"/>
+		<result column="FUNCTION_CODE" jdbcType="VARCHAR" property="functionCode"/>
+		<result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+		<result column="OPERATOR" jdbcType="VARCHAR" property="operator"/>
+		<result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime"/>
+        <result column="FUNC_LEVEL" jdbcType="VARCHAR" property="funcLevel"/>
+        <result column="AVAILABLE" jdbcType="SMALLINT" property="available"/>
+        <result column="REASON" jdbcType="VARCHAR" property="reason"/>
+	</resultMap>
+
+	<select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select *
+        from TBL_FUNCTION
+        where ID = #{id,jdbcType=BIGINT}
+	</select>
+
+    <select id="findByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select *
+		from TBL_FUNCTION
+		where FUNCTION_CODE = #{functionCode,jdbcType=VARCHAR}
+	</select>
+
+    <insert id="save" useGeneratedKeys="true" keyProperty="id"
+			parameterType="com.yeepay.g3.core.laike.entity.FunctionEntity">
+		insert into TBL_FUNCTION (FUNCTION_NAME, FUNCTION_CODE,
+        CREATE_TIME, OPERATOR,UPDATE_TIME,FUNC_LEVEL,AVAILABLE,REASON)
+		values (#{functionName,jdbcType=VARCHAR}, #{functionCode,jdbcType=VARCHAR},
+        CURRENT_TIMESTAMP , #{operator,jdbcType=VARCHAR},
+        CURRENT_TIMESTAMP,#{funcLevel,jdbcType=VARCHAR},1,#{reason,jdbcType=VARCHAR})
+	</insert>
+
+	<update id="update" parameterType="com.yeepay.g3.core.laike.entity.FunctionEntity">
+		update TBL_FUNCTION
+		<set>
+			<if test="functionName != null and functionName.trim() != ''">
+				FUNCTION_NAME = #{functionName,jdbcType=VARCHAR},
+			</if>
+			<if test="operator != null and operator.trim() != ''">
+				OPERATOR = #{operator,jdbcType=VARCHAR},
+			</if>
+            <if test="reason != null and reason.trim() != ''">
+                REASON = #{reason,jdbcType=VARCHAR},
+            </if>
+            <if test="available != null">
+                AVAILABLE = #{available,jdbcType=SMALLINT},
+            </if>
+			UPDATE_TIME = CURRENT_TIMESTAMP
+		</set>
+		where ID = #{id,jdbcType=BIGINT}
+    </update>
+
+    <update id="toggleAvailable" parameterType="com.yeepay.g3.core.laike.entity.FunctionEntity">
+        UPDATE TBL_FUNCTION
+        SET AVAILABLE = 1 - AVAILABLE,
+        <if test="operator != null and operator.trim() != ''">
+            OPERATOR = #{operator,jdbcType=VARCHAR},
+        </if>
+        <if test="reason != null and reason.trim() != ''">
+            REASON = #{reason,jdbcType=VARCHAR},
+        </if>
+        UPDATE_TIME = CURRENT_TIMESTAMP
+        WHERE ID = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

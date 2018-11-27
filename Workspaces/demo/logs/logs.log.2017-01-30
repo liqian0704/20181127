@@ -1,0 +1,18 @@
+2017-01-30 22:20:41,262-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(36) - can't connect to database server
+2017-01-30 22:20:41,266-[SeleniumAutoFile] INFO [main] cases.testBase.beforeClass(74) - Start to run test class cases.loginTest on driverType2
+2017-01-30 22:24:12,811-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(36) - can't connect to database server
+2017-01-30 22:24:12,816-[SeleniumAutoFile] INFO [main] cases.testBase.beforeClass(74) - Start to run test class cases.loginTest on driverType2
+2017-01-30 22:26:55,548-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(36) - can't connect to database server
+2017-01-30 22:26:55,555-[SeleniumAutoFile] INFO [main] cases.testBase.beforeClass(74) - Start to run test class cases.loginTest on driverType3
+2017-01-30 22:42:49,963-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(36) - can't connect to database server
+2017-01-30 22:42:49,967-[SeleniumAutoFile] INFO [main] cases.testBase.beforeClass(74) - Start to run test class cases.loginTest on driverType3
+2017-01-30 22:54:59,878-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(36) - can't connect to database server
+2017-01-30 22:54:59,884-[SeleniumAutoFile] INFO [main] cases.testBase.beforeClass(74) - Start to run test class cases.loginTest on driverType3
+2017-01-30 23:02:07,341-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(36) - can't connect to database server
+2017-01-30 23:02:07,346-[SeleniumAutoFile] INFO [main] cases.testBase.beforeClass(74) - Start to run test class cases.loginTest on driverType1
+2017-01-30 23:19:34,480-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(36) - can't connect to database server
+2017-01-30 23:19:34,485-[SeleniumAutoFile] INFO [main] cases.testBase.beforeClass(74) - Start to run test class cases.Baidu on driverType1
+2017-01-30 23:21:03,283-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(36) - can't connect to database server
+2017-01-30 23:21:03,287-[SeleniumAutoFile] INFO [main] cases.testBase.beforeClass(74) - Start to run test class cases.Baidu on driverType1
+2017-01-30 23:26:22,504-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(36) - can't connect to database server
+2017-01-30 23:26:22,508-[SeleniumAutoFile] INFO [main] cases.testBase.beforeClass(74) - Start to run test class cases.Baidu on driverType1

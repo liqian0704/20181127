@@ -1,0 +1,5 @@
+2017-08-02 18:50:52,799-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2017-08-02 18:50:52,806-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(45) - Start to run test class cases.Baidu on driverType1
+2017-08-02 18:51:01,225-[SeleniumAutoFile] INFO [main] config.DriverManage.getWebDriver(33) - this is FireFoxDriver
+2017-08-02 18:51:05,951-[SeleniumAutoFile] INFO [main] cases.Baidu.testBadidu(30) - testBadiduis running
+2017-08-02 18:51:07,512-[SeleniumAutoFile] ERROR [main] util.DBservice.closeDBDriver(57) - java.lang.NullPointerException

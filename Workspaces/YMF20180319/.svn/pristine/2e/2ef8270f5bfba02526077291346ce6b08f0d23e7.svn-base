@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yeepay.g3.core.ymf.dao.profit.ReportorDao" >
+  <resultMap id="BaseResultMap" type="com.yeepay.g3.core.ymf.entity.profit.Profit" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="UNIQUE_ID" property="uniqueId" jdbcType="VARCHAR" />
+    <result column="TRX_DATE" property="trxDate" jdbcType="DATE" />
+    <result column="MONTH" property="month" jdbcType="VARCHAR" />
+    <result column="SALE" property="sale" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_NUMBER" property="customerNumber" jdbcType="VARCHAR" />
+    <result column="AGENT_NUMBER" property="agentNumber" jdbcType="VARCHAR" />
+    <result column="TOTAL_TRX_COUNT" property="totalTrxCount" jdbcType="BIGINT" />
+    <result column="TRX_AMT" property="trxAmt" jdbcType="DECIMAL" />
+    <result column="PROFIT_AMT" property="profitAmt" jdbcType="DECIMAL" />
+    <result column="SALES_PRODUCT_CODE" property="salesProductCode" jdbcType="VARCHAR" />
+    <result column="PRODUCT_CODE" property="productCode" jdbcType="VARCHAR" />
+    <result column="PROFIT_PRODUCT_TYPE" property="profitProductType" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_TYPE" property="customerType" jdbcType="VARCHAR" />
+    <result column="MITANG_TRXAMT" property="mitangTrxamt" jdbcType="DECIMAL" />
+    <result column="MITANG_PROFIT_AMT" property="mitangProfitAmt" jdbcType="DECIMAL" />
+    <result column="PERCENT" property="percent" jdbcType="DECIMAL" />
+    <result column="CALCULATE_STATUS" property="calculateStatus" jdbcType="VARCHAR" />
+    <result column="SUMMATION_ID" property="summationId" jdbcType="BIGINT" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+
+
+  <select id="countByType" resultMap="BaseResultMap" >
+    select count(*)
+    WHERE
+    <![CDATA[
+      d.trxdate >= #{beginDate,jdbcType=VARCHAR}
+      AND d.trxdate <= #{endDate,jdbcType=VARCHAR}
+      ]]>
+    <if test="profitProductType == SKB_RJT_PROFIT">
+      AND (d.sales_product_code = '3011004001004A' AND
+      d.product_code IN ('3011101001001', '3011004003002', '3011004003001'))
+    </if>
+    <if test="profitProductType == SKB_PROFIT">
+      AND (d.sales_product_code = '3011004001004A' AND
+      d.product_code NOT IN ('3011101001001', '3011004003002', '3011004003001'))
+    </if>
+    <if test="profitProductType == E_WALLET_PROFIT">
+      AND (d.sales_product_code = '3011001001003A')
+    </if>
+    <if test="profitProductType == LAKER_PROFIT">
+      AND (d.sales_product_code = '3011001001001F')
+    </if>
+    group by d.trxdate, cu.salesname, cu.customernumber, cu.agentcode, d.product_code, d.sales_product_code
+    with ur
+  </select>
+
+  <select id="selectByType" resultMap="BaseResultMap">
+    SELECT * FROM (
+        SELECT
+          ROW_NUMBER() OVER(ORDER BY d.trxdate DESC) AS ROWNUM,
+          d.trxdate TRX_DATE,
+          cu.salesname SALE,
+          cu.customernumber CUSTOMER_NUMBER,
+          cu.agentcode AGENT_NUMBER,
+          sum(d.trxcount)-sum(d.refundcount) total_trx_count,
+          sum(d.trxamount)-sum(d.refundamount) TRX_AMT,
+          sum(d.trxfee)-sum(d.refundfee)-sum(d.accountingcost) PROFIT_AMT,
+          d.sales_product_code SALES_PRODUCT_CODE,
+          d.product_code PRODUCT_CODE
+        FROM dailytrxstat d
+          LEFT JOIN customerinfo cu ON d.receiverid = cu.id
+        WHERE
+          <![CDATA[
+          d.trxdate >= #{beginDate,jdbcType=VARCHAR}
+          AND d.trxdate <= #{endDate,jdbcType=VARCHAR}
+          ]]>
+          <if test="profitProductType == 'RJT_PROFIT'">
+            AND (d.sales_product_code = '3011004001004A' AND
+            d.product_code IN ('3011101001001', '3011004003002', '3011004003001'))
+          </if>
+          <if test="profitProductType == 'SKB_PROFIT'">
+            AND (d.sales_product_code = '3011004001004A' AND
+            d.product_code NOT IN ('3011101001001', '3011004003002', '3011004003001'))
+          </if>
+          <if test="profitProductType == 'E_WALLET_PROFIT'">
+            AND (d.sales_product_code = '3011001001003A')
+          </if>
+          <if test="profitProductType == 'LAKER_PROFIT'">
+            AND (d.sales_product_code = '3011001001001F')
+          </if>
+        GROUP BY d.trxdate, cu.salesname, cu.customernumber, cu.agentcode, d.product_code, d.sales_product_code
+        WITH UR
+    ) A WHERE
+        <![CDATA[
+            ROWNUM > ${lowNum}
+            AND ROWNUM <= ${highNum}
+        ]]>
+  </select>
+</mapper>

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: yibaoopen.internal-sdk:internal-sdk:1.0.13">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/yibaoopen/internal-sdk/internal-sdk/1.0.13/internal-sdk-1.0.13.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/yibaoopen/internal-sdk/internal-sdk/1.0.13/internal-sdk-1.0.13-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/yibaoopen/internal-sdk/internal-sdk/1.0.13/internal-sdk-1.0.13-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

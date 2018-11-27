@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,user-scalable=no"/>
+    <meta http-equiv = "pragma" content = "no-cache">
+    <link rel="stylesheet" href="../css/uikit/uikit.min.css"/>
+    <link rel="stylesheet" href="../css/uikit/iconfont.css"/>
+    <link rel="stylesheet" href="../css/uikit/tooltip.min.css"/>
+    <script type="text/javascript" src="../js/jquery-1.10.1.min.js"></script>
+    <script type="text/javascript" src="../js/uikit.min.js"></script>
+    <script src="../js/uikitComponents/tooltip.min.js"></script>
+
+    <title>商品详情</title>
+
+    <style type="text/css">
+        body > div:first-child{
+            margin: 20px 20px;
+        }
+
+        hr{
+            background-color: #ed722f;
+            border: none;
+            height: 1px;
+            margin-top: 0.5px;
+        }
+
+        span{
+            line-height: 2.0;
+        }
+
+        .lk-des-title-top {
+            text-align: center;
+        }
+
+        .lk-des-title-top > * {
+            display: inline-block;
+            vertical-align: middle;
+
+        }
+        .lk-des-title-top  > img{
+            width: 100px;
+            height:auto;
+        }
+        .des-detail-list-title{
+            border-radius: 2px;
+            display: inline-block;
+            background-color: #ed722f;
+            color: white;
+            padding: 1px 5px;
+        }
+        .triangle-bottomleft{
+            display: inline-block;
+            width: 0;
+            height: 0;
+            margin-top: 0px;
+            padding-top: 0px;
+            border-bottom: 10px solid #ed722f;
+            border-right: 10px solid transparent;
+        }
+
+        .des-detail-list-rules, .lk-des-title,.lk-des-title-top{
+            margin-bottom: 15px;
+        }
+
+        .button-apply:active{
+            background-color: #f06b00;
+        }
+
+        .button-apply{
+            min-width: 100%;
+            bottom: 10px;
+            height: 40px;
+            min-height: 100%;
+            border: none;
+            border-radius: 4px;
+            color: #FFF;
+            font-size: 16px;
+            background-color: #ed722f;
+        }
+        
+        .lk-span-title{
+            font-size: 1.5em;
+            font-weight: bold;
+            color: black;
+        }
+        
+        .lk-span-subtitle{
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #ed722f;
+        }
+
+
+        .apply-box {
+            padding: 14px;
+        }
+
+        .uk-button {
+            font-size: 16px;
+            line-height: 40px;
+        }
+
+        .uk-button-primary {
+            background-color: #ed722f;
+            color: #ffffff;
+        }
+
+        /* Hover */
+        .uk-button-primary:hover,
+        .uk-button-primary:focus {
+            background-color: #f06b00;
+            color: #ffffff;
+        }
+
+        /* Active */
+        .uk-button-primary:active,
+        .uk-button-primary.uk-active {
+            background-color: #f06b00;
+            color: #ffffff;
+        }
+
+        /* disabled */
+        .uk-button-primary:disabled {
+            background-color: #dddddd;
+            color: #ffffff;
+        }
+
+        .lk-list-line > .input-parent-box:nth-child(n+2) {
+            border-top: 1px solid #dddddd;
+        }
+
+        .input-parent-box {
+            padding: 10px;
+            background-color: white;
+        }
+
+        .input-parent-box > * {
+            font-size: 15px;
+            color: #666666;
+        }
+
+        input {
+            padding-left: 10px;
+            border: none;
+        }
+
+        input:focus {
+            outline: none;
+            border: none;
+        }
+        .uk-close:after {
+            display: block;
+            content: "";
+        }
+
+        .uk-modal-dialog {
+            position: absolute;
+            left: 0px;
+            bottom: 0px;
+            padding: 0px;
+            margin: 0px;
+            width: 100%;
+            max-width: 100%;
+            -webkit-transform: translateY(100px);
+            transform: translateY(100px);
+        }
+
+        .uk-modal-header {
+            padding: 10px;
+            margin: 0px;
+            background-color: #f8f8f8;
+        }
+
+        .uk-modal-header > span {
+            font-size: 18px;
+            color: black;
+        }
+
+        .uk-modal-header > i {
+            font-size: 24px;
+            color: #666666;
+        }
+
+        .uk-modal-footer {
+            background-color: #f8f8f8;
+            margin: 0px;
+            padding: 20px 10px 20px 10px;
+        }
+
+        .uk-modal-footer > * {
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div class="lk-des-title">
+        <div class="lk-des-title-top">
+        </div>
+        <div class="lk-des-title-bottom">
+        </div>
+    </div>
+    <div class="lk-des-detail">
+    </div>
+    <div class="lk-order-submit">
+        <button class="button-apply" data-uk-modal="{target:'#modal',bgclose:false}">我要申请</button>
+    </div>
+</div>
+
+<div id="modal" class="uk-modal">
+    <div class="uk-modal-dialog">
+        <div class="uk-modal-header">
+            <span>申请信息</span>
+            <i class="uk-modal-close iconfont icon-shibai1 uk-close uk-float-right"></i>
+        </div>
+        <div class="model-parent-box lk-list-line">
+            <div class="input-parent-box">
+                <span class="uk-margin-right">联系人</span>
+                <input class="uk-width-2-3" id="user_name" type="text" data-uk-tooltip="{pos:'bottom-left'}" title="">
+            </div>
+            <div class="input-parent-box">
+                <span>联系电话</span>
+                <input class="uk-width-2-3" id="user_phone" type="text" data-uk-tooltip="{pos:'bottom-left'}" title="">
+            </div>
+
+            <div class="uk-modal-footer">
+                <button class="uk-button uk-button-primary uk-width-1-1 uk-border-rounded" onclick="btnclick()">确定
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+
+    var jsondata;
+    var browser = {
+        versions: function () {
+            var u = navigator.userAgent;
+            return {
+                trident: u.indexOf('Trident') > -1, //IE内核
+                presto: u.indexOf('Presto') > -1, //opera内核
+                webKit: u.indexOf('AppleWebKit') > -1, //苹果、谷歌内核
+                gecko: u.indexOf('Gecko') > -1 && u.indexOf('KHTML') == -1,//火狐内核
+                mobile: !!u.match(/AppleWebKit.*Mobile.*/), //是否为移动终端
+                ios: !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/), //ios终端
+                android: u.indexOf('Android') > -1 || u.indexOf('Adr') > -1, //android终端
+                iPhone: u.indexOf('iPhone') > -1, //是否为iPhone或者QQHD浏览器
+                iPad: u.indexOf('iPad') > -1, //是否iPad
+                iPod: u.indexOf('iPod') > -1, //是否iPod
+                webApp: u.indexOf('Safari') == -1, //是否web应该程序，没有头部与底部
+                weixin: u.indexOf('MicroMessenger') > -1, //是否微信
+                qq: u.match(/\sQQ/i) == " qq" //是否QQ
+            };
+        }()
+    };
+
+    function btnclick() {
+        var user_name = $('#user_name').val();
+        var user_phone = $('#user_phone').val();
+        if(!validUserName(user_name)) {
+            showTips('#user_name', "请输入正确的姓名");
+        } else if(!validPhone(user_phone)) {
+            showTips('#user_phone', "请输入正确的联系方式");
+        } else {
+            var json = JSON.stringify({"username":user_name,"phone":user_phone,"goodsid":jsondata["goodsid"],"goodsname":jsondata["goodsname"]});
+            var url = "http://106.120.186.94:28080/ymf-pay/static/h5/hwgoods_success.html";
+            if (browser.versions.ios) {
+                window.webkit.messageHandlers.submitclick.postMessage({"url":url,"data":json});
+            } else if (browser.versions.android) {
+                window.LikerJsbridge.submitclick(url,json);
+            }else{
+                window.location.href=url;
+            }
+        }
+    }
+
+    function validUserName(username){
+        return /^[\u4e00-\u9fa5]{2,10}$/.test(username) || /^([\u4e00-\u9fa5]{1,8})([·\u4e00-\u9fa5]{0,3})$/.test(username);
+    }
+
+    function validPhone(phone){
+        return /^1[0-9]{10}$/.test(phone) || /^\([0-9]{3,4}\)[0-9]{7,8}$/.test(phone) || /^[0-9]{3,4}-[0-9]{7,8}$/.test(phone);
+    }
+
+    function showTips(mid, message) {
+        $(mid).attr('title', message);
+        $(mid).focus();
+        setTimeout(function() {
+            $(mid).attr('title',"");
+            $('body').find('div.uk-tooltip').hide();
+        }, 3000);
+    }
+
+
+    function init(){
+        var url = window.location.href;
+        var params = url.substring(url.lastIndexOf("?")+1,url.length);
+
+        jsondata = (params.split('=')[0] == "jsonStr" ? decodeURIComponent(params.substring(params.indexOf("?jsonStr=")+"?jsonStr=".length, params.length)) : "");
+        jsondata = JSON.parse(jsondata);
+        console.log(jsondata);
+        if (jsondata) {
+
+            $('.lk-des-title-top').html(
+                    "<img src=" + jsondata["imgurl"] + ">"
+                    + "<div><span class = \"lk-span-eliminate lk-span-title\">" + jsondata["goodsname"] + "</span><br>"
+//                    + "<span class = \"lk-span-eliminate lk-span-subtitle\">¥&nbsp;" + jsondata["goodsprice"] + "</span>"
+                    + "</div>"
+            );
+            $('.lk-des-title-bottom').html(
+                    "<span>" +jsondata["goodsdesp"] + "</span>"
+            );
+
+            var eDivNode = "";
+            for(var index in jsondata["detaildesps"]){
+
+                var detaildesps = jsondata["detaildesps"][index];
+                var despstringsNode = "";
+
+                for (var inde in detaildesps["despstrings"]){
+                    despstringsNode += "<span class=\"triangle-bottomleft\"></span>"
+                            + "<span>" + detaildesps["despstrings"][inde]+ "</span>"
+                            + "<br>";
+                }
+                despstringsNode = despstringsNode.substring(0,despstringsNode.lastIndexOf("<br>"));
+
+                eDivNode += "<div class=\"des-detail-list-rules\">"
+                        + "<span class=\"des-detail-list-title\">" + detaildesps["label"] +"</span>"
+                        + "<hr>"
+                        + "<div>"
+                        + despstringsNode
+                        + "</div>"
+                        + "</div>";
+            }
+            $('.lk-des-detail').html(eDivNode);
+        }
+    }
+    init();
+</script>
+
+</body>
+</html>
+
+

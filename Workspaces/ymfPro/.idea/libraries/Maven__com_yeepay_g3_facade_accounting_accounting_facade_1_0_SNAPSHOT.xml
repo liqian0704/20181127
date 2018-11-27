@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.yeepay.g3.facade.accounting:accounting-facade:1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/facade/accounting/accounting-facade/1.0-SNAPSHOT/accounting-facade-1.0-20171227.101002-604.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/facade/accounting/accounting-facade/1.0-SNAPSHOT/accounting-facade-1.0-20171227.101002-604-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/facade/accounting/accounting-facade/1.0-SNAPSHOT/accounting-facade-1.0-20171227.101002-604-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

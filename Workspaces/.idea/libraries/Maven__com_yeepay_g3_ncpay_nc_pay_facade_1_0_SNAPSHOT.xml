@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.yeepay.g3.ncpay:nc-pay-facade:1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/ncpay/nc-pay-facade/1.0-SNAPSHOT/nc-pay-facade-1.0-20180302.060811-1891.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/ncpay/nc-pay-facade/1.0-SNAPSHOT/nc-pay-facade-1.0-20180302.060811-1891-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/ncpay/nc-pay-facade/1.0-SNAPSHOT/nc-pay-facade-1.0-20180302.060811-1891-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

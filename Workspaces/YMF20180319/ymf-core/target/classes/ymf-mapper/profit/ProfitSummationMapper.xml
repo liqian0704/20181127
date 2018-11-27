@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yeepay.g3.core.ymf.dao.profit.ProfitSummationMapper" >
+  <resultMap id="BaseResultMap" type="com.yeepay.g3.core.ymf.entity.profit.ProfitSummation" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="MONTH" property="month" jdbcType="VARCHAR" />
+    <result column="TOTAL_COUNT" property="totalCount" jdbcType="BIGINT" />
+    <result column="TOTAL_DAY_COUNT" property="totalDayCount" jdbcType="BIGINT" />
+    <result column="TOTAL_TRX_COUNT" property="totalTrxCount" jdbcType="BIGINT" />
+    <result column="TOTAL_TRX_AMT" property="totalTrxAmt" jdbcType="DECIMAL" />
+    <result column="MITANG_TOTAL_TRXAMT" property="mitangTotalTrxamt" jdbcType="DECIMAL" />
+    <result column="MITANG_TOTAL_PROFIT_AMT" property="mitangTotalProfitAmt" jdbcType="DECIMAL" />
+    <result column="TOTAL_PROFIT_AMT" property="totalProfitAmt" jdbcType="DECIMAL" />
+    <result column="PROFIT_PRODUCT_TYPE" property="profitProductType" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_TYPE" property="customerType" jdbcType="VARCHAR" />
+    <result column="CALCULATE_STATUS" property="calculateStatus" jdbcType="VARCHAR" />
+    <result column="PERCENT" property="percent" jdbcType="DECIMAL" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, MONTH, TOTAL_COUNT, TOTAL_DAY_COUNT, TOTAL_TRX_COUNT, TOTAL_TRX_AMT, MITANG_TOTAL_TRXAMT, 
+    MITANG_TOTAL_PROFIT_AMT, TOTAL_PROFIT_AMT, PROFIT_PRODUCT_TYPE, CUSTOMER_TYPE, CALCULATE_STATUS, 
+    PERCENT, CREATE_TIME, UPDATE_TIME
+  </sql>
+  <select id="selectByFilter" resultMap="BaseResultMap" parameterType="com.yeepay.g3.core.ymf.entity.profit.ProfitSummationParam" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from YMF_PROFIT_SUMMATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from YMF_PROFIT_SUMMATION
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from YMF_PROFIT_SUMMATION
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByFilter" parameterType="com.yeepay.g3.core.ymf.entity.profit.ProfitSummationParam" >
+    delete from YMF_PROFIT_SUMMATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yeepay.g3.core.ymf.entity.profit.ProfitSummation" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      VALUES NEXTVAL FOR YMF_PROFIT_SUMMATION_ID_SEQ
+    </selectKey>
+    insert into YMF_PROFIT_SUMMATION (ID, MONTH, TOTAL_COUNT, 
+      TOTAL_DAY_COUNT, TOTAL_TRX_COUNT, TOTAL_TRX_AMT, 
+      MITANG_TOTAL_TRXAMT, MITANG_TOTAL_PROFIT_AMT, 
+      TOTAL_PROFIT_AMT, PROFIT_PRODUCT_TYPE, CUSTOMER_TYPE, 
+      CALCULATE_STATUS, PERCENT, CREATE_TIME, 
+      UPDATE_TIME)
+    values (#{id,jdbcType=BIGINT}, #{month,jdbcType=VARCHAR}, #{totalCount,jdbcType=BIGINT}, 
+      #{totalDayCount,jdbcType=BIGINT}, #{totalTrxCount,jdbcType=BIGINT}, #{totalTrxAmt,jdbcType=DECIMAL}, 
+      #{mitangTotalTrxamt,jdbcType=DECIMAL}, #{mitangTotalProfitAmt,jdbcType=DECIMAL}, 
+      #{totalProfitAmt,jdbcType=DECIMAL}, #{profitProductType,jdbcType=VARCHAR}, #{customerType,jdbcType=VARCHAR}, 
+      #{calculateStatus,jdbcType=VARCHAR}, #{percent,jdbcType=DECIMAL}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yeepay.g3.core.ymf.entity.profit.ProfitSummation" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      VALUES NEXTVAL FOR YMF_PROFIT_SUMMATION_ID_SEQ
+    </selectKey>
+    insert into YMF_PROFIT_SUMMATION
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="month != null" >
+        MONTH,
+      </if>
+      <if test="totalCount != null" >
+        TOTAL_COUNT,
+      </if>
+      <if test="totalDayCount != null" >
+        TOTAL_DAY_COUNT,
+      </if>
+      <if test="totalTrxCount != null" >
+        TOTAL_TRX_COUNT,
+      </if>
+      <if test="totalTrxAmt != null" >
+        TOTAL_TRX_AMT,
+      </if>
+      <if test="mitangTotalTrxamt != null" >
+        MITANG_TOTAL_TRXAMT,
+      </if>
+      <if test="mitangTotalProfitAmt != null" >
+        MITANG_TOTAL_PROFIT_AMT,
+      </if>
+      <if test="totalProfitAmt != null" >
+        TOTAL_PROFIT_AMT,
+      </if>
+      <if test="profitProductType != null" >
+        PROFIT_PRODUCT_TYPE,
+      </if>
+      <if test="customerType != null" >
+        CUSTOMER_TYPE,
+      </if>
+      <if test="calculateStatus != null" >
+        CALCULATE_STATUS,
+      </if>
+      <if test="percent != null" >
+        PERCENT,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="month != null" >
+        #{month,jdbcType=VARCHAR},
+      </if>
+      <if test="totalCount != null" >
+        #{totalCount,jdbcType=BIGINT},
+      </if>
+      <if test="totalDayCount != null" >
+        #{totalDayCount,jdbcType=BIGINT},
+      </if>
+      <if test="totalTrxCount != null" >
+        #{totalTrxCount,jdbcType=BIGINT},
+      </if>
+      <if test="totalTrxAmt != null" >
+        #{totalTrxAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="mitangTotalTrxamt != null" >
+        #{mitangTotalTrxamt,jdbcType=DECIMAL},
+      </if>
+      <if test="mitangTotalProfitAmt != null" >
+        #{mitangTotalProfitAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="totalProfitAmt != null" >
+        #{totalProfitAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="profitProductType != null" >
+        #{profitProductType,jdbcType=VARCHAR},
+      </if>
+      <if test="customerType != null" >
+        #{customerType,jdbcType=VARCHAR},
+      </if>
+      <if test="calculateStatus != null" >
+        #{calculateStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="percent != null" >
+        #{percent,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByFilter" parameterType="com.yeepay.g3.core.ymf.entity.profit.ProfitSummationParam" resultType="java.lang.Integer" >
+    select count(*) from YMF_PROFIT_SUMMATION
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByFilterSelective" parameterType="map" >
+    update YMF_PROFIT_SUMMATION
+    <set >
+      <if test="record.id != null" >
+        
+      </if>
+      <if test="record.month != null" >
+        MONTH = #{record.month,jdbcType=VARCHAR},
+      </if>
+      <if test="record.totalCount != null" >
+        TOTAL_COUNT = #{record.totalCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.totalDayCount != null" >
+        TOTAL_DAY_COUNT = #{record.totalDayCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.totalTrxCount != null" >
+        TOTAL_TRX_COUNT = #{record.totalTrxCount,jdbcType=BIGINT},
+      </if>
+      <if test="record.totalTrxAmt != null" >
+        TOTAL_TRX_AMT = #{record.totalTrxAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.mitangTotalTrxamt != null" >
+        MITANG_TOTAL_TRXAMT = #{record.mitangTotalTrxamt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.mitangTotalProfitAmt != null" >
+        MITANG_TOTAL_PROFIT_AMT = #{record.mitangTotalProfitAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.totalProfitAmt != null" >
+        TOTAL_PROFIT_AMT = #{record.totalProfitAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.profitProductType != null" >
+        PROFIT_PRODUCT_TYPE = #{record.profitProductType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerType != null" >
+        CUSTOMER_TYPE = #{record.customerType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.calculateStatus != null" >
+        CALCULATE_STATUS = #{record.calculateStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.percent != null" >
+        PERCENT = #{record.percent,jdbcType=DECIMAL},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByFilter" parameterType="map" >
+    update YMF_PROFIT_SUMMATION
+    set 
+      MONTH = #{record.month,jdbcType=VARCHAR},
+      TOTAL_COUNT = #{record.totalCount,jdbcType=BIGINT},
+      TOTAL_DAY_COUNT = #{record.totalDayCount,jdbcType=BIGINT},
+      TOTAL_TRX_COUNT = #{record.totalTrxCount,jdbcType=BIGINT},
+      TOTAL_TRX_AMT = #{record.totalTrxAmt,jdbcType=DECIMAL},
+      MITANG_TOTAL_TRXAMT = #{record.mitangTotalTrxamt,jdbcType=DECIMAL},
+      MITANG_TOTAL_PROFIT_AMT = #{record.mitangTotalProfitAmt,jdbcType=DECIMAL},
+      TOTAL_PROFIT_AMT = #{record.totalProfitAmt,jdbcType=DECIMAL},
+      PROFIT_PRODUCT_TYPE = #{record.profitProductType,jdbcType=VARCHAR},
+      CUSTOMER_TYPE = #{record.customerType,jdbcType=VARCHAR},
+      CALCULATE_STATUS = #{record.calculateStatus,jdbcType=VARCHAR},
+      PERCENT = #{record.percent,jdbcType=DECIMAL},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yeepay.g3.core.ymf.entity.profit.ProfitSummation" >
+    update YMF_PROFIT_SUMMATION
+    <set >
+      <if test="month != null" >
+        MONTH = #{month,jdbcType=VARCHAR},
+      </if>
+      <if test="totalCount != null" >
+        TOTAL_COUNT = #{totalCount,jdbcType=BIGINT},
+      </if>
+      <if test="totalDayCount != null" >
+        TOTAL_DAY_COUNT = #{totalDayCount,jdbcType=BIGINT},
+      </if>
+      <if test="totalTrxCount != null" >
+        TOTAL_TRX_COUNT = #{totalTrxCount,jdbcType=BIGINT},
+      </if>
+      <if test="totalTrxAmt != null" >
+        TOTAL_TRX_AMT = #{totalTrxAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="mitangTotalTrxamt != null" >
+        MITANG_TOTAL_TRXAMT = #{mitangTotalTrxamt,jdbcType=DECIMAL},
+      </if>
+      <if test="mitangTotalProfitAmt != null" >
+        MITANG_TOTAL_PROFIT_AMT = #{mitangTotalProfitAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="totalProfitAmt != null" >
+        TOTAL_PROFIT_AMT = #{totalProfitAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="profitProductType != null" >
+        PROFIT_PRODUCT_TYPE = #{profitProductType,jdbcType=VARCHAR},
+      </if>
+      <if test="customerType != null" >
+        CUSTOMER_TYPE = #{customerType,jdbcType=VARCHAR},
+      </if>
+      <if test="calculateStatus != null" >
+        CALCULATE_STATUS = #{calculateStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="percent != null" >
+        PERCENT = #{percent,jdbcType=DECIMAL},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yeepay.g3.core.ymf.entity.profit.ProfitSummation" >
+    update YMF_PROFIT_SUMMATION
+    set MONTH = #{month,jdbcType=VARCHAR},
+      TOTAL_COUNT = #{totalCount,jdbcType=BIGINT},
+      TOTAL_DAY_COUNT = #{totalDayCount,jdbcType=BIGINT},
+      TOTAL_TRX_COUNT = #{totalTrxCount,jdbcType=BIGINT},
+      TOTAL_TRX_AMT = #{totalTrxAmt,jdbcType=DECIMAL},
+      MITANG_TOTAL_TRXAMT = #{mitangTotalTrxamt,jdbcType=DECIMAL},
+      MITANG_TOTAL_PROFIT_AMT = #{mitangTotalProfitAmt,jdbcType=DECIMAL},
+      TOTAL_PROFIT_AMT = #{totalProfitAmt,jdbcType=DECIMAL},
+      PROFIT_PRODUCT_TYPE = #{profitProductType,jdbcType=VARCHAR},
+      CUSTOMER_TYPE = #{customerType,jdbcType=VARCHAR},
+      CALCULATE_STATUS = #{calculateStatus,jdbcType=VARCHAR},
+      PERCENT = #{percent,jdbcType=DECIMAL},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

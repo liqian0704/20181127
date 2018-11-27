@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.miitang.marketing:mt-marketing-facade:1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/miitang/marketing/mt-marketing-facade/1.0-SNAPSHOT/mt-marketing-facade-1.0-20180927.064227-599.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/miitang/marketing/mt-marketing-facade/1.0-SNAPSHOT/mt-marketing-facade-1.0-20180927.064227-599-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/miitang/marketing/mt-marketing-facade/1.0-SNAPSHOT/mt-marketing-facade-1.0-20180927.064227-599-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

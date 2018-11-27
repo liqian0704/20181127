@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yeepay.g3.core.ymf.dao.notify.NotifyRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.yeepay.g3.core.ymf.entity.notify.NotifyRecord" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="VERSION" property="version" jdbcType="BIGINT" />
+    <result column="CUSTOMER_NUMBER" property="customerNumber" jdbcType="VARCHAR" />
+    <result column="REQUEST_ID" property="requestId" jdbcType="VARCHAR" />
+    <result column="EXTERNAL_ID" property="externalId" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="LAST_NOTIFY_TIME" property="lastNotifyTime" jdbcType="TIMESTAMP" />
+    <result column="NOTIFY_RECODE" property="notifyRecode" jdbcType="SMALLINT" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="NOTIFY_TYPE" property="notifyType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, VERSION, CUSTOMER_NUMBER, REQUEST_ID, EXTERNAL_ID, CREATE_TIME, LAST_NOTIFY_TIME, 
+    NOTIFY_RECODE, STATUS, REMARK, NOTIFY_TYPE
+  </sql>
+  <select id="selectByFilter" resultMap="BaseResultMap" parameterType="com.yeepay.g3.core.ymf.entity.notify.NotifyRecordParam" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from YMF_NOTIFY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from YMF_NOTIFY
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from YMF_NOTIFY
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByFilter" parameterType="com.yeepay.g3.core.ymf.entity.notify.NotifyRecordParam" >
+    delete from YMF_NOTIFY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yeepay.g3.core.ymf.entity.notify.NotifyRecord" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      VALUES NEXTVAL FOR YMF_NOTIFY_SEQ
+    </selectKey>
+    insert into YMF_NOTIFY (ID, VERSION, CUSTOMER_NUMBER, 
+      REQUEST_ID, EXTERNAL_ID, CREATE_TIME, 
+      LAST_NOTIFY_TIME, NOTIFY_RECODE, STATUS, 
+      REMARK, NOTIFY_TYPE)
+    values (#{id,jdbcType=BIGINT}, #{version,jdbcType=BIGINT}, #{customerNumber,jdbcType=VARCHAR}, 
+      #{requestId,jdbcType=VARCHAR}, #{externalId,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{lastNotifyTime,jdbcType=TIMESTAMP}, #{notifyRecode,jdbcType=SMALLINT}, #{status,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{notifyType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yeepay.g3.core.ymf.entity.notify.NotifyRecord" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      VALUES NEXTVAL FOR YMF_NOTIFY_SEQ
+    </selectKey>
+    insert into YMF_NOTIFY
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="version != null" >
+        VERSION,
+      </if>
+      <if test="customerNumber != null" >
+        CUSTOMER_NUMBER,
+      </if>
+      <if test="requestId != null" >
+        REQUEST_ID,
+      </if>
+      <if test="externalId != null" >
+        EXTERNAL_ID,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="lastNotifyTime != null" >
+        LAST_NOTIFY_TIME,
+      </if>
+      <if test="notifyRecode != null" >
+        NOTIFY_RECODE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="notifyType != null" >
+        NOTIFY_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="version != null" >
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="customerNumber != null" >
+        #{customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="requestId != null" >
+        #{requestId,jdbcType=VARCHAR},
+      </if>
+      <if test="externalId != null" >
+        #{externalId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastNotifyTime != null" >
+        #{lastNotifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="notifyRecode != null" >
+        #{notifyRecode,jdbcType=SMALLINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyType != null" >
+        #{notifyType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByFilter" parameterType="com.yeepay.g3.core.ymf.entity.notify.NotifyRecordParam" resultType="java.lang.Integer" >
+    select count(*) from YMF_NOTIFY
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByFilterSelective" parameterType="map" >
+    update YMF_NOTIFY
+    <set >
+      <if test="record.id != null" >
+        
+      </if>
+      <if test="record.version != null" >
+        VERSION = #{record.version,jdbcType=BIGINT},
+      </if>
+      <if test="record.customerNumber != null" >
+        CUSTOMER_NUMBER = #{record.customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestId != null" >
+        REQUEST_ID = #{record.requestId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.externalId != null" >
+        EXTERNAL_ID = #{record.externalId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastNotifyTime != null" >
+        LAST_NOTIFY_TIME = #{record.lastNotifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.notifyRecode != null" >
+        NOTIFY_RECODE = #{record.notifyRecode,jdbcType=SMALLINT},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.notifyType != null" >
+        NOTIFY_TYPE = #{record.notifyType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByFilter" parameterType="map" >
+    update YMF_NOTIFY
+    set 
+      VERSION = #{record.version,jdbcType=BIGINT},
+      CUSTOMER_NUMBER = #{record.customerNumber,jdbcType=VARCHAR},
+      REQUEST_ID = #{record.requestId,jdbcType=VARCHAR},
+      EXTERNAL_ID = #{record.externalId,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      LAST_NOTIFY_TIME = #{record.lastNotifyTime,jdbcType=TIMESTAMP},
+      NOTIFY_RECODE = #{record.notifyRecode,jdbcType=SMALLINT},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      NOTIFY_TYPE = #{record.notifyType,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yeepay.g3.core.ymf.entity.notify.NotifyRecord" >
+    update YMF_NOTIFY
+    <set >
+      <if test="version != null" >
+        VERSION = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="customerNumber != null" >
+        CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="requestId != null" >
+        REQUEST_ID = #{requestId,jdbcType=VARCHAR},
+      </if>
+      <if test="externalId != null" >
+        EXTERNAL_ID = #{externalId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastNotifyTime != null" >
+        LAST_NOTIFY_TIME = #{lastNotifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="notifyRecode != null" >
+        NOTIFY_RECODE = #{notifyRecode,jdbcType=SMALLINT},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyType != null" >
+        NOTIFY_TYPE = #{notifyType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yeepay.g3.core.ymf.entity.notify.NotifyRecord" >
+    update YMF_NOTIFY
+    set VERSION = #{version,jdbcType=BIGINT},
+      CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR},
+      REQUEST_ID = #{requestId,jdbcType=VARCHAR},
+      EXTERNAL_ID = #{externalId,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      LAST_NOTIFY_TIME = #{lastNotifyTime,jdbcType=TIMESTAMP},
+      NOTIFY_RECODE = #{notifyRecode,jdbcType=SMALLINT},
+      STATUS = #{status,jdbcType=VARCHAR},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      NOTIFY_TYPE = #{notifyType,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

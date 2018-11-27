@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.yeepay.g3.ncapi:nc-api-facade:1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/ncapi/nc-api-facade/1.0-SNAPSHOT/nc-api-facade-1.0-20171228.031915-1666.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/ncapi/nc-api-facade/1.0-SNAPSHOT/nc-api-facade-1.0-20171228.031915-1666-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/ncapi/nc-api-facade/1.0-SNAPSHOT/nc-api-facade-1.0-20171228.031915-1666-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

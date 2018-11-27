@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.miitang.accounting:mt-accounting-facade:1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/miitang/accounting/mt-accounting-facade/1.0-SNAPSHOT/mt-accounting-facade-1.0-20180927.084401-128.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/miitang/accounting/mt-accounting-facade/1.0-SNAPSHOT/mt-accounting-facade-1.0-20180927.084401-128-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/miitang/accounting/mt-accounting-facade/1.0-SNAPSHOT/mt-accounting-facade-1.0-20180927.084401-128-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,515 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yeepay.g3.core.ymf.dao.order.OrderMapper" >
+  <resultMap id="OrderBaseResultMap" type="com.yeepay.g3.core.ymf.entity.order.Order" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="VERSION" property="version" jdbcType="BIGINT" />
+    <result column="CUSTOMER_NUMBER" property="customerNumber" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_ORDER_ID" property="customerOrderId" jdbcType="VARCHAR" />
+    <result column="EXTERNAL_ID" property="externalId" jdbcType="VARCHAR" />
+    <result column="OUT_ORDER_ID" property="outOrderId" jdbcType="VARCHAR" />
+    <result column="SAN_CODE" property="sanCode" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="COMPLETE_TIME" property="completeTime" jdbcType="TIMESTAMP" />
+    <result column="ORDER_STATUS" property="orderStatus" jdbcType="VARCHAR" />
+    <result column="TRX_AMT" property="trxAmt" jdbcType="DECIMAL" />
+    <result column="REAL_AMT" property="realAmt" jdbcType="DECIMAL" />
+    <result column="REFUND_AMT" property="refundAmt" jdbcType="DECIMAL" />
+    <result column="FEE" property="fee" jdbcType="DECIMAL" />
+    <result column="RECEIVER_NAME" property="receiverName" jdbcType="VARCHAR" />
+    <result column="RECEIVER_TEL" property="receiverTel" jdbcType="VARCHAR" />
+    <result column="BUSINESS_TYPE" property="businessType" jdbcType="VARCHAR" />
+    <result column="QUERY_COUNT" property="queryCount" jdbcType="INTEGER" />
+    <result column="REMARK" property="remark" jdbcType="VARCHAR" />
+    <result column="PAY_CONFIRM" property="payConfirm" jdbcType="VARCHAR" />
+    <result column="TRADE_SYSTEM" property="tradeSystem" jdbcType="VARCHAR" />
+    <result column="BALANCE_TYPE" property="balanceType" jdbcType="VARCHAR" />
+    <result column="SHOP_NUMBER" property="shopNumber" jdbcType="VARCHAR" />
+    <result column="USER_ID" property="userId" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, VERSION, CUSTOMER_NUMBER, CUSTOMER_ORDER_ID, EXTERNAL_ID, OUT_ORDER_ID, SAN_CODE, 
+    CREATE_TIME, COMPLETE_TIME, ORDER_STATUS, TRX_AMT, REAL_AMT, REFUND_AMT, FEE, RECEIVER_NAME, 
+    RECEIVER_TEL, BUSINESS_TYPE, QUERY_COUNT, REMARK, PAY_CONFIRM, TRADE_SYSTEM, BALANCE_TYPE, 
+    SHOP_NUMBER, USER_ID
+  </sql>
+  <select id="selectByFilter" resultMap="OrderBaseResultMap" parameterType="com.yeepay.g3.core.ymf.entity.order.OrderParam" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from YMF_ORDER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="OrderBaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from YMF_ORDER
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from YMF_ORDER
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByFilter" parameterType="com.yeepay.g3.core.ymf.entity.order.OrderParam" >
+    delete from YMF_ORDER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yeepay.g3.core.ymf.entity.order.Order" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      VALUES NEXTVAL FOR YMF_ORDER_SEQ
+    </selectKey>
+    insert into YMF_ORDER (ID, VERSION, CUSTOMER_NUMBER, 
+      CUSTOMER_ORDER_ID, EXTERNAL_ID, OUT_ORDER_ID, 
+      SAN_CODE, CREATE_TIME, COMPLETE_TIME, 
+      ORDER_STATUS, TRX_AMT, REAL_AMT, 
+      REFUND_AMT, FEE, RECEIVER_NAME, 
+      RECEIVER_TEL, BUSINESS_TYPE, QUERY_COUNT, 
+      REMARK, PAY_CONFIRM, TRADE_SYSTEM, 
+      BALANCE_TYPE, SHOP_NUMBER, USER_ID
+      )
+    values (#{id,jdbcType=BIGINT}, #{version,jdbcType=BIGINT}, #{customerNumber,jdbcType=VARCHAR}, 
+      #{customerOrderId,jdbcType=VARCHAR}, #{externalId,jdbcType=VARCHAR}, #{outOrderId,jdbcType=VARCHAR}, 
+      #{sanCode,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{completeTime,jdbcType=TIMESTAMP}, 
+      #{orderStatus,jdbcType=VARCHAR}, #{trxAmt,jdbcType=DECIMAL}, #{realAmt,jdbcType=DECIMAL}, 
+      #{refundAmt,jdbcType=DECIMAL}, #{fee,jdbcType=DECIMAL}, #{receiverName,jdbcType=VARCHAR}, 
+      #{receiverTel,jdbcType=VARCHAR}, #{businessType,jdbcType=VARCHAR}, #{queryCount,jdbcType=INTEGER}, 
+      #{remark,jdbcType=VARCHAR}, #{payConfirm,jdbcType=VARCHAR}, #{tradeSystem,jdbcType=VARCHAR}, 
+      #{balanceType,jdbcType=VARCHAR}, #{shopNumber,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yeepay.g3.core.ymf.entity.order.Order" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      VALUES NEXTVAL FOR YMF_ORDER_SEQ
+    </selectKey>
+    insert into YMF_ORDER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="version != null" >
+        VERSION,
+      </if>
+      <if test="customerNumber != null" >
+        CUSTOMER_NUMBER,
+      </if>
+      <if test="customerOrderId != null" >
+        CUSTOMER_ORDER_ID,
+      </if>
+      <if test="externalId != null" >
+        EXTERNAL_ID,
+      </if>
+      <if test="outOrderId != null" >
+        OUT_ORDER_ID,
+      </if>
+      <if test="sanCode != null" >
+        SAN_CODE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="completeTime != null" >
+        COMPLETE_TIME,
+      </if>
+      <if test="orderStatus != null" >
+        ORDER_STATUS,
+      </if>
+      <if test="trxAmt != null" >
+        TRX_AMT,
+      </if>
+      <if test="realAmt != null" >
+        REAL_AMT,
+      </if>
+      <if test="refundAmt != null" >
+        REFUND_AMT,
+      </if>
+      <if test="fee != null" >
+        FEE,
+      </if>
+      <if test="receiverName != null" >
+        RECEIVER_NAME,
+      </if>
+      <if test="receiverTel != null" >
+        RECEIVER_TEL,
+      </if>
+      <if test="businessType != null" >
+        BUSINESS_TYPE,
+      </if>
+      <if test="queryCount != null" >
+        QUERY_COUNT,
+      </if>
+      <if test="remark != null" >
+        REMARK,
+      </if>
+      <if test="payConfirm != null" >
+        PAY_CONFIRM,
+      </if>
+      <if test="tradeSystem != null" >
+        TRADE_SYSTEM,
+      </if>
+      <if test="balanceType != null" >
+        BALANCE_TYPE,
+      </if>
+      <if test="shopNumber != null" >
+        SHOP_NUMBER,
+      </if>
+      <if test="userId != null" >
+        USER_ID,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="version != null" >
+        #{version,jdbcType=BIGINT},
+      </if>
+      <if test="customerNumber != null" >
+        #{customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="customerOrderId != null" >
+        #{customerOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="externalId != null" >
+        #{externalId,jdbcType=VARCHAR},
+      </if>
+      <if test="outOrderId != null" >
+        #{outOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="sanCode != null" >
+        #{sanCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completeTime != null" >
+        #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderStatus != null" >
+        #{orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="trxAmt != null" >
+        #{trxAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="realAmt != null" >
+        #{realAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="refundAmt != null" >
+        #{refundAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="fee != null" >
+        #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="receiverName != null" >
+        #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverTel != null" >
+        #{receiverTel,jdbcType=VARCHAR},
+      </if>
+      <if test="businessType != null" >
+        #{businessType,jdbcType=VARCHAR},
+      </if>
+      <if test="queryCount != null" >
+        #{queryCount,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="payConfirm != null" >
+        #{payConfirm,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeSystem != null" >
+        #{tradeSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="balanceType != null" >
+        #{balanceType,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNumber != null" >
+        #{shopNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByFilter" parameterType="com.yeepay.g3.core.ymf.entity.order.OrderParam" resultType="java.lang.Integer" >
+    select count(*) from YMF_ORDER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByFilterSelective" parameterType="map" >
+    update YMF_ORDER
+    <set >
+      <if test="record.id != null" >
+        
+      </if>
+      <if test="record.version != null" >
+        VERSION = #{record.version,jdbcType=BIGINT},
+      </if>
+      <if test="record.customerNumber != null" >
+        CUSTOMER_NUMBER = #{record.customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerOrderId != null" >
+        CUSTOMER_ORDER_ID = #{record.customerOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.externalId != null" >
+        EXTERNAL_ID = #{record.externalId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outOrderId != null" >
+        OUT_ORDER_ID = #{record.outOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sanCode != null" >
+        SAN_CODE = #{record.sanCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.completeTime != null" >
+        COMPLETE_TIME = #{record.completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.orderStatus != null" >
+        ORDER_STATUS = #{record.orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trxAmt != null" >
+        TRX_AMT = #{record.trxAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.realAmt != null" >
+        REAL_AMT = #{record.realAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.refundAmt != null" >
+        REFUND_AMT = #{record.refundAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.fee != null" >
+        FEE = #{record.fee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.receiverName != null" >
+        RECEIVER_NAME = #{record.receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.receiverTel != null" >
+        RECEIVER_TEL = #{record.receiverTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessType != null" >
+        BUSINESS_TYPE = #{record.businessType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.queryCount != null" >
+        QUERY_COUNT = #{record.queryCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null" >
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payConfirm != null" >
+        PAY_CONFIRM = #{record.payConfirm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tradeSystem != null" >
+        TRADE_SYSTEM = #{record.tradeSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="record.balanceType != null" >
+        BALANCE_TYPE = #{record.balanceType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopNumber != null" >
+        SHOP_NUMBER = #{record.shopNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userId != null" >
+        USER_ID = #{record.userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByFilter" parameterType="map" >
+    update YMF_ORDER
+    set 
+      VERSION = #{record.version,jdbcType=BIGINT},
+      CUSTOMER_NUMBER = #{record.customerNumber,jdbcType=VARCHAR},
+      CUSTOMER_ORDER_ID = #{record.customerOrderId,jdbcType=VARCHAR},
+      EXTERNAL_ID = #{record.externalId,jdbcType=VARCHAR},
+      OUT_ORDER_ID = #{record.outOrderId,jdbcType=VARCHAR},
+      SAN_CODE = #{record.sanCode,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      COMPLETE_TIME = #{record.completeTime,jdbcType=TIMESTAMP},
+      ORDER_STATUS = #{record.orderStatus,jdbcType=VARCHAR},
+      TRX_AMT = #{record.trxAmt,jdbcType=DECIMAL},
+      REAL_AMT = #{record.realAmt,jdbcType=DECIMAL},
+      REFUND_AMT = #{record.refundAmt,jdbcType=DECIMAL},
+      FEE = #{record.fee,jdbcType=DECIMAL},
+      RECEIVER_NAME = #{record.receiverName,jdbcType=VARCHAR},
+      RECEIVER_TEL = #{record.receiverTel,jdbcType=VARCHAR},
+      BUSINESS_TYPE = #{record.businessType,jdbcType=VARCHAR},
+      QUERY_COUNT = #{record.queryCount,jdbcType=INTEGER},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      PAY_CONFIRM = #{record.payConfirm,jdbcType=VARCHAR},
+      TRADE_SYSTEM = #{record.tradeSystem,jdbcType=VARCHAR},
+      BALANCE_TYPE = #{record.balanceType,jdbcType=VARCHAR},
+      SHOP_NUMBER = #{record.shopNumber,jdbcType=VARCHAR},
+      USER_ID = #{record.userId,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yeepay.g3.core.ymf.entity.order.Order" >
+    update YMF_ORDER
+    <set >
+      <if test="version != null" >
+        VERSION = #{version,jdbcType=BIGINT},
+      </if>
+      <if test="customerNumber != null" >
+        CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="customerOrderId != null" >
+        CUSTOMER_ORDER_ID = #{customerOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="externalId != null" >
+        EXTERNAL_ID = #{externalId,jdbcType=VARCHAR},
+      </if>
+      <if test="outOrderId != null" >
+        OUT_ORDER_ID = #{outOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="sanCode != null" >
+        SAN_CODE = #{sanCode,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="completeTime != null" >
+        COMPLETE_TIME = #{completeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="orderStatus != null" >
+        ORDER_STATUS = #{orderStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="trxAmt != null" >
+        TRX_AMT = #{trxAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="realAmt != null" >
+        REAL_AMT = #{realAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="refundAmt != null" >
+        REFUND_AMT = #{refundAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="fee != null" >
+        FEE = #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="receiverName != null" >
+        RECEIVER_NAME = #{receiverName,jdbcType=VARCHAR},
+      </if>
+      <if test="receiverTel != null" >
+        RECEIVER_TEL = #{receiverTel,jdbcType=VARCHAR},
+      </if>
+      <if test="businessType != null" >
+        BUSINESS_TYPE = #{businessType,jdbcType=VARCHAR},
+      </if>
+      <if test="queryCount != null" >
+        QUERY_COUNT = #{queryCount,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null" >
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="payConfirm != null" >
+        PAY_CONFIRM = #{payConfirm,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeSystem != null" >
+        TRADE_SYSTEM = #{tradeSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="balanceType != null" >
+        BALANCE_TYPE = #{balanceType,jdbcType=VARCHAR},
+      </if>
+      <if test="shopNumber != null" >
+        SHOP_NUMBER = #{shopNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="userId != null" >
+        USER_ID = #{userId,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yeepay.g3.core.ymf.entity.order.Order" >
+    update YMF_ORDER
+    set VERSION = #{version,jdbcType=BIGINT},
+      CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR},
+      CUSTOMER_ORDER_ID = #{customerOrderId,jdbcType=VARCHAR},
+      EXTERNAL_ID = #{externalId,jdbcType=VARCHAR},
+      OUT_ORDER_ID = #{outOrderId,jdbcType=VARCHAR},
+      SAN_CODE = #{sanCode,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      COMPLETE_TIME = #{completeTime,jdbcType=TIMESTAMP},
+      ORDER_STATUS = #{orderStatus,jdbcType=VARCHAR},
+      TRX_AMT = #{trxAmt,jdbcType=DECIMAL},
+      REAL_AMT = #{realAmt,jdbcType=DECIMAL},
+      REFUND_AMT = #{refundAmt,jdbcType=DECIMAL},
+      FEE = #{fee,jdbcType=DECIMAL},
+      RECEIVER_NAME = #{receiverName,jdbcType=VARCHAR},
+      RECEIVER_TEL = #{receiverTel,jdbcType=VARCHAR},
+      BUSINESS_TYPE = #{businessType,jdbcType=VARCHAR},
+      QUERY_COUNT = #{queryCount,jdbcType=INTEGER},
+      REMARK = #{remark,jdbcType=VARCHAR},
+      PAY_CONFIRM = #{payConfirm,jdbcType=VARCHAR},
+      TRADE_SYSTEM = #{tradeSystem,jdbcType=VARCHAR},
+      BALANCE_TYPE = #{balanceType,jdbcType=VARCHAR},
+      SHOP_NUMBER = #{shopNumber,jdbcType=VARCHAR},
+      USER_ID = #{userId,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

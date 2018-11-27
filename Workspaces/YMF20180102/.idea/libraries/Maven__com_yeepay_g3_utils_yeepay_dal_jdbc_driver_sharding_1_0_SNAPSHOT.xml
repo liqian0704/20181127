@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.yeepay.g3.utils:yeepay-dal-jdbc-driver-sharding:1.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/utils/yeepay-dal-jdbc-driver-sharding/1.0-SNAPSHOT/yeepay-dal-jdbc-driver-sharding-1.0-20171128.042352-24.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/utils/yeepay-dal-jdbc-driver-sharding/1.0-SNAPSHOT/yeepay-dal-jdbc-driver-sharding-1.0-20171128.042352-24-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/utils/yeepay-dal-jdbc-driver-sharding/1.0-SNAPSHOT/yeepay-dal-jdbc-driver-sharding-1.0-20171128.042352-24-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yeepay.g3.core.ymf.dao.profit.ProfitSummationDao" >
+
+    <resultMap id="BaseResultMap" type="com.yeepay.g3.core.ymf.entity.profit.ProfitSummation" >
+        <id column="ID" property="id" jdbcType="BIGINT" />
+        <result column="MONTH" property="month" jdbcType="VARCHAR" />
+        <result column="TOTAL_COUNT" property="totalCount" jdbcType="BIGINT" />
+        <result column="TOTAL_DAY_COUNT" property="totalDayCount" jdbcType="BIGINT" />
+        <result column="TOTAL_TRX_COUNT" property="totalTrxCount" jdbcType="BIGINT" />
+        <result column="TOTAL_TRX_AMT" property="totalTrxAmt" jdbcType="DECIMAL" />
+        <result column="MITANG_TOTAL_TRXAMT" property="mitangTotalTrxamt" jdbcType="DECIMAL" />
+        <result column="MITANG_TOTAL_PROFIT_AMT" property="mitangTotalProfitAmt" jdbcType="DECIMAL" />
+        <result column="TOTAL_PROFIT_AMT" property="totalProfitAmt" jdbcType="DECIMAL" />
+        <result column="PROFIT_PRODUCT_TYPE" property="profitProductType" jdbcType="VARCHAR" />
+        <result column="CUSTOMER_TYPE" property="customerType" jdbcType="VARCHAR" />
+        <result column="CALCULATE_STATUS" property="calculateStatus" jdbcType="VARCHAR" />
+        <result column="PERCENT" property="percent" jdbcType="DECIMAL" />
+        <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+        <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+        ID, MONTH, TOTAL_COUNT, TOTAL_DAY_COUNT, TOTAL_TRX_COUNT, TOTAL_TRX_AMT, MITANG_TOTAL_TRXAMT,
+        MITANG_TOTAL_PROFIT_AMT, TOTAL_PROFIT_AMT, PROFIT_PRODUCT_TYPE, CUSTOMER_TYPE, CALCULATE_STATUS,
+        PERCENT, CREATE_TIME, UPDATE_TIME
+    </sql>
+
+    <select id="findByProductType" resultMap="BaseResultMap" >
+        SELECT
+            <include refid="Base_Column_List"></include>
+        FROM YMF_PROFIT_SUMMATION
+        WHERE PROFIT_PRODUCT_TYPE = #{profitType,jdbcType=VARCHAR}
+        AND CUSTOMER_TYPE = #{customerType,jdbcType=VARCHAR}
+        <![CDATA[
+              AND MONTH = #{month,jdbcType=VARCHAR}
+        ]]>
+    </select>
+
+    <select id="findByMonth" resultMap="BaseResultMap" >
+        SELECT
+            <include refid="Base_Column_List"></include>
+        FROM YMF_PROFIT_SUMMATION
+        WHERE 1=1
+        <![CDATA[
+            AND MONTH = #{month,jdbcType=VARCHAR}
+        ]]>
+        <if test="calculateStatus != null">
+            AND CALCULATE_STATUS = #{calculateStatus,jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <!--删除指定月份的所有数据-->
+    <delete id="deleteByMonth" parameterType="java.lang.String" >
+        delete from YMF_PROFIT_SUMMATION
+        where MONTH = #{month,jdbcType=VARCHAR}
+    </delete>
+
+</mapper>

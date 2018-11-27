@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.ymf.dao.customer.CustomerSettltDetailMapper">
+
+	<resultMap id="BaseResultMap" type="com.yeepay.g3.core.ymf.entity.customer.CustomerSettleDetail">
+		<id column="ID" jdbcType="BIGINT" property="id"/>
+		<result column="CUSTOMER_NUMBER" jdbcType="VARCHAR" property="customerNumber"/>
+		<result column="YEEPAY_ORDER_ID" jdbcType="VARCHAR" property="yeepayOrderId"/>
+		<result column="BATCH_ID" jdbcType="VARCHAR" property="batchId"/>
+		<result column="SETTLE_AMOUNT" jdbcType="DECIMAL" property="settleAmount"/>
+		<result column="SETTLE_REAL_AMOUNT" jdbcType="DECIMAL" property="settleRealAmount"/>
+		<result column="TRADE_FEE_AMOUNT" jdbcType="DECIMAL" property="tradeFeeAmount"/>
+		<result column="SETTLE_FEE_AMOUNT" jdbcType="DECIMAL" property="settleFeeAmount"/>
+		<result column="BANK_FEE_AMOUNT" jdbcType="DECIMAL" property="bankFeeAmount"/>
+		<result column="SETTLE_TYPE" jdbcType="VARCHAR" property="settleType"/>
+		<result column="SETTLE_TIME" jdbcType="TIMESTAMP" property="settleTime"/>
+		<result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+		<result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime"/>
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		ID,CUSTOMER_NUMBER,YEEPAY_ORDER_ID,BATCH_ID,SETTLE_AMOUNT,
+		SETTLE_REAL_AMOUNT,TRADE_FEE_AMOUNT,SETTLE_FEE_AMOUNT,BANK_FEE_AMOUNT,
+		SETTLE_TYPE,SETTLE_TIME,CREATE_TIME,UPDATE_TIME
+	</sql>
+
+	<insert id="save" parameterType="com.yeepay.g3.core.ymf.entity.customer.CustomerSettleDetail">
+		insert into YMF_SETTLE_DETAIL (CUSTOMER_NUMBER,YEEPAY_ORDER_ID,BATCH_ID,SETTLE_AMOUNT,
+		SETTLE_REAL_AMOUNT,TRADE_FEE_AMOUNT,SETTLE_FEE_AMOUNT,BANK_FEE_AMOUNT,
+		SETTLE_TYPE,SETTLE_TIME,CREATE_TIME, UPDATE_TIME)
+		values (#{customerNumber,jdbcType=VARCHAR}, #{yeepayOrderId,jdbcType=VARCHAR},
+		#{batchId,jdbcType=VARCHAR}, #{settleAmount,jdbcType=DECIMAL},#{settleRealAmount,jdbcType=DECIMAL},
+		#{tradeFeeAmount,jdbcType=DECIMAL},#{settleFeeAmount,jdbcType=DECIMAL},
+		#{bankFeeAmount,jdbcType=DECIMAL},#{settleType,jdbcType=VARCHAR},
+		#{settleTime,jdbcType=TIMESTAMP}, CURRENT_TIMESTAMP , CURRENT_TIMESTAMP)
+	</insert>
+
+	<insert id="batchSave" parameterType="java.util.List" useGeneratedKeys="true">
+		insert into YMF_SETTLE_DETAIL (CUSTOMER_NUMBER,YEEPAY_ORDER_ID,BATCH_ID,SETTLE_AMOUNT,
+		SETTLE_REAL_AMOUNT,TRADE_FEE_AMOUNT,SETTLE_FEE_AMOUNT,BANK_FEE_AMOUNT,
+		SETTLE_TYPE,SETTLE_TIME,CREATE_TIME, UPDATE_TIME)
+		values
+		<foreach collection="list" index="index" item="detail" separator=",">
+			(#{detail.customerNumber,jdbcType=VARCHAR}, #{detail.yeepayOrderId,jdbcType=VARCHAR},
+			#{detail.batchId,jdbcType=VARCHAR}, #{detail.settleAmount,jdbcType=DECIMAL},
+			#{detail.settleRealAmount,jdbcType=DECIMAL},
+			#{detail.tradeFeeAmount,jdbcType=DECIMAL},#{detail.settleFeeAmount,jdbcType=DECIMAL},
+			#{detail.bankFeeAmount,jdbcType=DECIMAL},#{detail.settleType,jdbcType=VARCHAR},
+			#{detail.settleTime,jdbcType=TIMESTAMP}, CURRENT_TIMESTAMP , CURRENT_TIMESTAMP)
+		</foreach>
+	</insert>
+
+	<select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from YMF_SETTLE_DETAIL
+		where ID = #{id,jdbcType=BIGINT}
+	</select>
+
+	<select id="findByYeepayOrderId" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from YMF_SETTLE_DETAIL
+		where YEEPAY_ORDER_ID = #{yeepayOrderId,jdbcType=VARCHAR}
+	</select>
+
+	<select id="listBySettleTime" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select <include refid="Base_Column_List"/>
+		from YMF_SETTLE_DETAIL
+		where
+		CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR}
+		AND SETTLE_TIME BETWEEN #{startDate,jdbcType=TIMESTAMP} AND #{endDate,jdbcType=TIMESTAMP}
+	</select>
+
+	<select id="sumS0BySettleTime" parameterType="java.util.Map" resultType="java.util.Map">
+		SELECT
+		CUSTOMER_NUMBER as customerNumber,
+		sum(SETTLE_REAL_AMOUNT) as realAmount,
+		sum(COALESCE(SETTLE_FEE_AMOUNT, 0)) + sum(COALESCE(BANK_FEE_AMOUNT, 0)) as settleFee,
+		sum(COALESCE(TRADE_FEE_AMOUNT, 0)) as trxFee,
+		count(1) as count
+		FROM YMF_SETTLE_DETAIL
+		WHERE
+		CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR}
+		AND SETTLE_TIME BETWEEN #{startDate,jdbcType=TIMESTAMP} AND #{endDate,jdbcType=TIMESTAMP}
+		AND SETTLE_TYPE='S0'
+		GROUP BY CUSTOMER_NUMBER
+	</select>
+
+	<select id="nextSequence" resultType="long">
+		VALUES NEXTVAL FOR SEQ_YMF_S0_APPLY_ID
+	</select>
+
+	<update id="update" parameterType="com.yeepay.g3.core.ymf.entity.customer.CustomerSettleDetail">
+		update YMF_SETTLE_DETAIL
+		<set>
+			<if test="batchId != null and batchId.trim() != ''">
+				BATCH_ID = #{batchId,jdbcType=VARCHAR},
+			</if>
+			<if test="settleAmount != null">
+				SETTLE_AMOUNT = #{settleAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="settleRealAmount != null">
+				SETTLE_REAL_AMOUNT = #{settleRealAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="tradeFeeAmount != null">
+				TRADE_FEE_AMOUNT = #{tradeFeeAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="settleFeeAmount != null">
+				SETTLE_FEE_AMOUNT = #{settleFeeAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="bankFeeAmount != null">
+				BANK_FEE_AMOUNT = #{bankFeeAmount,jdbcType=DECIMAL},
+			</if>
+			<if test="settleType != null">
+				SETTLE_TYPE = #{settleType,jdbcType=VARCHAR},
+			</if>
+			<if test="settleTime != null">
+				SETTLE_TIME = #{settleTime,jdbcType=TIMESTAMP},
+			</if>
+			UPDATE_TIME = CURRENT_TIMESTAMP
+		</set>
+		where ID = #{id,jdbcType=BIGINT}
+	</update>
+</mapper>

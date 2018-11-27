@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.laike.repository.AppErrorMsgRepository">
+
+    <resultMap id="BaseResultMap" type="com.yeepay.g3.core.laike.entity.AppErrorMsgEntity">
+        <id column="ID" jdbcType="VARCHAR" property="id"/>
+        <result column="MEMBER_NO" jdbcType="VARCHAR" property="memberNo"/>
+        <result column="APP_VERSION_ID" jdbcType="VARCHAR" property="appVersionId"/>
+        <result column="PHONE_MANUFACTURER" jdbcType="VARCHAR" property="phoneManufacturer"/>
+        <result column="PHONE_MODEL" jdbcType="VARCHAR" property="phoneModel"/>
+        <result column="REQ_INTERFACE" jdbcType="VARCHAR" property="reqInterface"/>
+        <result column="LOG_CONTENT" jdbcType="VARCHAR" property="logContent"/>
+        <result column="SDK" jdbcType="VARCHAR" property="sdk"/>
+        <result column="LOG_LEVEL" jdbcType="VARCHAR" property="logLevel"/>
+        <result column="CURRENT_ACTIVITY" jdbcType="VARCHAR" property="currentActivity"/>
+        <result column="IMEI" jdbcType="VARCHAR" property="imei"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+    </resultMap>
+
+    <insert id="save" parameterType="com.yeepay.g3.core.laike.entity.AppErrorMsgEntity" keyProperty="id" useGeneratedKeys="true">
+        insert into TBL_APP_ERROR_MSG (MEMBER_NO, APP_VERSION_ID, PHONE_MANUFACTURER, PHONE_MODEL, REQ_INTERFACE,
+        LOG_CONTENT, SDK, LOG_LEVEL, CURRENT_ACTIVITY, IMEI, CREATE_TIME)
+        values (#{memberNo,jdbcType=VARCHAR}, #{appVersionId,jdbcType=VARCHAR}, #{phoneManufacturer,jdbcType=VARCHAR},
+        #{phoneModel,jdbcType=VARCHAR}, #{reqInterface,jdbcType=VARCHAR},
+        #{logContent,jdbcType=VARCHAR}, #{sdk,jdbcType=VARCHAR}, #{logLevel,jdbcType=VARCHAR},
+        #{currentActivity,jdbcType=VARCHAR}, #{imei,jdbcType=VARCHAR} , CURRENT_TIMESTAMP)
+    </insert>
+
+</mapper>

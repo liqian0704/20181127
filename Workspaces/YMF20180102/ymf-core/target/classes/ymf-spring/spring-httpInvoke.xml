@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+	http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <!-- server config -->
+    <!-- 发布服务 httpInvoker -->
+    <bean id="doPurchaseQrCodeHttpInvoke"
+          class="org.springframework.remoting.httpinvoker.HttpInvokerServiceExporter">
+        <property name="service" ref="purchaseQrCodeFacade" />
+        <property name="serviceInterface" value="com.yeepay.g3.facade.ymf.facade.laike.PurchaseQrCodeFacade" />
+    </bean>
+
+
+    <!-- client config -->
+    <bean id="lkPosInfoService"
+          class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+        <property name="serviceUrl" value="http://10.151.30.151:8080/pos_boss/remote/lkPosInfoService" />
+        <property name="serviceInterface" value="com.yeepay.g3.facade.ymf.facade.posboss.LKPosInfoService" />
+    </bean>
+
+</beans>

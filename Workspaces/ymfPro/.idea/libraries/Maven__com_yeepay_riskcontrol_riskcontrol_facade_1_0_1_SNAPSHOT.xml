@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.yeepay.riskcontrol:riskcontrol-facade:1.0.1-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/riskcontrol/riskcontrol-facade/1.0.1-SNAPSHOT/riskcontrol-facade-1.0.1-20170110.085321-4.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/riskcontrol/riskcontrol-facade/1.0.1-SNAPSHOT/riskcontrol-facade-1.0.1-20170110.085321-4-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/riskcontrol/riskcontrol-facade/1.0.1-SNAPSHOT/riskcontrol-facade-1.0.1-20170110.085321-4-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,13 @@
+[{
+  "homeAdImg" : "../images/appHome/xjd.png",
+  "homoAdLink" : "",
+  "detailDesp": "",
+  "detailImgl": "../images/appHome/xjdxq.png"
+},
+  {
+    "homeAdImg" : "../images/appHome/gyq.jpg",
+    "homoAdLink" : "http://gongyi.yeepay.com",
+    "detailDesp": "",
+    "detailImgl": ""
+  }
+]

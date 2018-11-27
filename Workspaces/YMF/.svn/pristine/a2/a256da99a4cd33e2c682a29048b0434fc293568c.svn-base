@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.ymf.dao.common.HolidayInfoMapper">
+  <resultMap id="BaseResultMap" type="com.yeepay.g3.core.ymf.entity.common.HolidayInfo">
+    <id column="ID" jdbcType="BIGINT" property="id" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="LASTMODIFY_TIME" jdbcType="TIMESTAMP" property="lastmodifyTime" />
+    <result column="HOLIDAY_DATE" jdbcType="DATE" property="holidayDate" />
+    <result column="DEAL_TIMES" jdbcType="INTEGER" property="dealTimes" />
+    <result column="REMARK" jdbcType="VARCHAR" property="remark" />
+    <result column="STATUS" jdbcType="VARCHAR" property="status" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    ID, CREATE_TIME, LASTMODIFY_TIME, HOLIDAY_DATE, DEAL_TIMES, REMARK, STATUS
+  </sql>
+  <select id="selectByFilter" parameterType="com.yeepay.g3.core.ymf.entity.common.HolidayInfoParam" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from YMF_HOLIDAY_INFO
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from YMF_HOLIDAY_INFO
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from YMF_HOLIDAY_INFO
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByFilter" parameterType="com.yeepay.g3.core.ymf.entity.common.HolidayInfoParam">
+    delete from YMF_HOLIDAY_INFO
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yeepay.g3.core.ymf.entity.common.HolidayInfo">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Long">
+      VALUES NEXTVAL FOR YMF_HOLIDAY_SEQ
+    </selectKey>
+    insert into YMF_HOLIDAY_INFO (ID, CREATE_TIME, LASTMODIFY_TIME, 
+      HOLIDAY_DATE, DEAL_TIMES, REMARK, 
+      STATUS)
+    values (#{id,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, #{lastmodifyTime,jdbcType=TIMESTAMP}, 
+      #{holidayDate,jdbcType=DATE}, #{dealTimes,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yeepay.g3.core.ymf.entity.common.HolidayInfo">
+    <selectKey keyProperty="id" order="BEFORE" resultType="java.lang.Long">
+      VALUES NEXTVAL FOR YMF_HOLIDAY_SEQ
+    </selectKey>
+    insert into YMF_HOLIDAY_INFO
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      ID,
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="lastmodifyTime != null">
+        LASTMODIFY_TIME,
+      </if>
+      <if test="holidayDate != null">
+        HOLIDAY_DATE,
+      </if>
+      <if test="dealTimes != null">
+        DEAL_TIMES,
+      </if>
+      <if test="remark != null">
+        REMARK,
+      </if>
+      <if test="status != null">
+        STATUS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      #{id,jdbcType=BIGINT},
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastmodifyTime != null">
+        #{lastmodifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="holidayDate != null">
+        #{holidayDate,jdbcType=DATE},
+      </if>
+      <if test="dealTimes != null">
+        #{dealTimes,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByFilter" parameterType="com.yeepay.g3.core.ymf.entity.common.HolidayInfoParam" resultType="java.lang.Integer">
+    select count(*) from YMF_HOLIDAY_INFO
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByFilterSelective" parameterType="map">
+    update YMF_HOLIDAY_INFO
+    <set>
+      <if test="record.id != null">
+        
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.lastmodifyTime != null">
+        LASTMODIFY_TIME = #{record.lastmodifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.holidayDate != null">
+        HOLIDAY_DATE = #{record.holidayDate,jdbcType=DATE},
+      </if>
+      <if test="record.dealTimes != null">
+        DEAL_TIMES = #{record.dealTimes,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null">
+        REMARK = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByFilter" parameterType="map">
+    update YMF_HOLIDAY_INFO
+    set 
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      LASTMODIFY_TIME = #{record.lastmodifyTime,jdbcType=TIMESTAMP},
+      HOLIDAY_DATE = #{record.holidayDate,jdbcType=DATE},
+      DEAL_TIMES = #{record.dealTimes,jdbcType=INTEGER},
+      REMARK = #{record.remark,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yeepay.g3.core.ymf.entity.common.HolidayInfo">
+    update YMF_HOLIDAY_INFO
+    <set>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastmodifyTime != null">
+        LASTMODIFY_TIME = #{lastmodifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="holidayDate != null">
+        HOLIDAY_DATE = #{holidayDate,jdbcType=DATE},
+      </if>
+      <if test="dealTimes != null">
+        DEAL_TIMES = #{dealTimes,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        REMARK = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yeepay.g3.core.ymf.entity.common.HolidayInfo">
+    update YMF_HOLIDAY_INFO
+    set CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      LASTMODIFY_TIME = #{lastmodifyTime,jdbcType=TIMESTAMP},
+      HOLIDAY_DATE = #{holidayDate,jdbcType=DATE},
+      DEAL_TIMES = coalesce(DEAL_TIMES,0)+1,
+      REMARK = #{remark,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

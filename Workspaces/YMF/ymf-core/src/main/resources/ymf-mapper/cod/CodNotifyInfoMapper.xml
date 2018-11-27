@@ -1,0 +1,328 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yeepay.g3.core.ymf.dao.cod.CodNotifyInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.yeepay.g3.core.ymf.entity.cod.CodNotifyInfo" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="EXTERNAL_ID" property="externalId" jdbcType="VARCHAR" />
+    <result column="ORDER_NO" property="orderNo" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="COD_INTERFACE" property="codInterface" jdbcType="VARCHAR" />
+    <result column="EXTEND_INFO" property="extendInfo" jdbcType="VARCHAR" />
+    <result column="NOTIFY_TYPE" property="notifyType" jdbcType="VARCHAR" />
+    <result column="EXP_DATE" property="expDate" jdbcType="TIMESTAMP" />
+    <result column="SEND_NUM" property="sendNum" jdbcType="INTEGER" />
+    <result column="CREATE_DATE" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="TRX_TYPE" property="trxType" jdbcType="VARCHAR" />
+    <result column="VERSION" property="version" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, EXTERNAL_ID, ORDER_NO, STATUS, COD_INTERFACE, EXTEND_INFO, NOTIFY_TYPE, EXP_DATE, 
+    SEND_NUM, CREATE_DATE, UPDATE_TIME, TRX_TYPE, VERSION
+  </sql>
+  <select id="selectByFilter" resultMap="BaseResultMap" parameterType="com.yeepay.g3.core.ymf.entity.cod.CodNotifyInfoParam" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from YMF_CODNOTIFYINFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from YMF_CODNOTIFYINFO
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from YMF_CODNOTIFYINFO
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByFilter" parameterType="com.yeepay.g3.core.ymf.entity.cod.CodNotifyInfoParam" >
+    delete from YMF_CODNOTIFYINFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yeepay.g3.core.ymf.entity.cod.CodNotifyInfo" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      VALUES NEXTVAL FOR YMF_CODNOTIFYINFO_SEQ
+    </selectKey>
+    insert into YMF_CODNOTIFYINFO (ID, EXTERNAL_ID, ORDER_NO, 
+      STATUS, COD_INTERFACE, EXTEND_INFO, 
+      NOTIFY_TYPE, EXP_DATE, SEND_NUM, 
+      CREATE_DATE, UPDATE_TIME, TRX_TYPE)
+    values (#{id,jdbcType=BIGINT}, #{externalId,jdbcType=VARCHAR}, #{orderNo,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{codInterface,jdbcType=VARCHAR}, #{extendInfo,jdbcType=VARCHAR}, 
+      #{notifyType,jdbcType=VARCHAR}, #{expDate,jdbcType=TIMESTAMP}, #{sendNum,jdbcType=INTEGER}, 
+      #{createDate,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{trxType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yeepay.g3.core.ymf.entity.cod.CodNotifyInfo" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      VALUES NEXTVAL FOR YMF_CODNOTIFYINFO_SEQ
+    </selectKey>
+    insert into YMF_CODNOTIFYINFO
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="externalId != null" >
+        EXTERNAL_ID,
+      </if>
+      <if test="orderNo != null" >
+        ORDER_NO,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="codInterface != null" >
+        COD_INTERFACE,
+      </if>
+      <if test="extendInfo != null" >
+        EXTEND_INFO,
+      </if>
+      <if test="notifyType != null" >
+        NOTIFY_TYPE,
+      </if>
+      <if test="expDate != null" >
+        EXP_DATE,
+      </if>
+      <if test="sendNum != null" >
+        SEND_NUM,
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="trxType != null" >
+        TRX_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="externalId != null" >
+        #{externalId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="codInterface != null" >
+        #{codInterface,jdbcType=VARCHAR},
+      </if>
+      <if test="extendInfo != null" >
+        #{extendInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyType != null" >
+        #{notifyType,jdbcType=VARCHAR},
+      </if>
+      <if test="expDate != null" >
+        #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendNum != null" >
+        #{sendNum,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="trxType != null" >
+        #{trxType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByFilter" parameterType="com.yeepay.g3.core.ymf.entity.cod.CodNotifyInfoParam" resultType="java.lang.Integer" >
+    select count(*) from YMF_CODNOTIFYINFO
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByFilterSelective" parameterType="map" >
+    update YMF_CODNOTIFYINFO
+    <set >
+      <if test="record.id != null" >
+        
+      </if>
+      <if test="record.externalId != null" >
+        EXTERNAL_ID = #{record.externalId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderNo != null" >
+        ORDER_NO = #{record.orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.codInterface != null" >
+        COD_INTERFACE = #{record.codInterface,jdbcType=VARCHAR},
+      </if>
+      <if test="record.extendInfo != null" >
+        EXTEND_INFO = #{record.extendInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.notifyType != null" >
+        NOTIFY_TYPE = #{record.notifyType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expDate != null" >
+        EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.sendNum != null" >
+        SEND_NUM = #{record.sendNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.createDate != null" >
+        CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.trxType != null" >
+        TRX_TYPE = #{record.trxType,jdbcType=VARCHAR},
+      </if>
+        VERSION = VERSION + 1},
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByFilter" parameterType="map" >
+    update YMF_CODNOTIFYINFO
+    set 
+      EXTERNAL_ID = #{record.externalId,jdbcType=VARCHAR},
+      ORDER_NO = #{record.orderNo,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      COD_INTERFACE = #{record.codInterface,jdbcType=VARCHAR},
+      EXTEND_INFO = #{record.extendInfo,jdbcType=VARCHAR},
+      NOTIFY_TYPE = #{record.notifyType,jdbcType=VARCHAR},
+      EXP_DATE = #{record.expDate,jdbcType=TIMESTAMP},
+      SEND_NUM = #{record.sendNum,jdbcType=INTEGER},
+      CREATE_DATE = #{record.createDate,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      TRX_TYPE = #{record.trxType,jdbcType=VARCHAR},
+      VERSION = VERSION + 1
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yeepay.g3.core.ymf.entity.cod.CodNotifyInfo" >
+    update YMF_CODNOTIFYINFO
+    <set >
+      <if test="externalId != null" >
+        EXTERNAL_ID = #{externalId,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNo != null" >
+        ORDER_NO = #{orderNo,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="codInterface != null" >
+        COD_INTERFACE = #{codInterface,jdbcType=VARCHAR},
+      </if>
+      <if test="extendInfo != null" >
+        EXTEND_INFO = #{extendInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="notifyType != null" >
+        NOTIFY_TYPE = #{notifyType,jdbcType=VARCHAR},
+      </if>
+      <if test="expDate != null" >
+        EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sendNum != null" >
+        SEND_NUM = #{sendNum,jdbcType=INTEGER},
+      </if>
+      <if test="createDate != null" >
+        CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="trxType != null" >
+        TRX_TYPE = #{trxType,jdbcType=VARCHAR},
+      </if>
+        VERSION = VERSION + 1,
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yeepay.g3.core.ymf.entity.cod.CodNotifyInfo" >
+    update YMF_CODNOTIFYINFO
+    set EXTERNAL_ID = #{externalId,jdbcType=VARCHAR},
+      ORDER_NO = #{orderNo,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      COD_INTERFACE = #{codInterface,jdbcType=VARCHAR},
+      EXTEND_INFO = #{extendInfo,jdbcType=VARCHAR},
+      NOTIFY_TYPE = #{notifyType,jdbcType=VARCHAR},
+      EXP_DATE = #{expDate,jdbcType=TIMESTAMP},
+      SEND_NUM = #{sendNum,jdbcType=INTEGER},
+      CREATE_DATE = #{createDate,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      TRX_TYPE = #{trxType,jdbcType=VARCHAR},
+      VERSION = VERSION + 1
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

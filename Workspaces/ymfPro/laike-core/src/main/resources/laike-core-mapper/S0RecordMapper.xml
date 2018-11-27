@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.laike.repository.S0RecordRepository">
+
+	<resultMap id="BaseResultMap" type="com.yeepay.g3.core.laike.entity.S0RecordEntity">
+		<id column="ID" jdbcType="VARCHAR" property="id"/>
+		<result column="MEMBER_NO" jdbcType="VARCHAR" property="memberNo"/>
+		<result column="AGENT_NO" jdbcType="VARCHAR" property="agentNo"/>
+		<result column="MERCHANT_NO" jdbcType="VARCHAR" property="merchantNo"/>
+		<result column="TYPE" jdbcType="VARCHAR" property="operateType"/>
+		<result column="STATUS" jdbcType="VARCHAR" property="productStatus"/>
+        <result column="SETTLE_BANK_CARD" typeHandler="SensitiveL2StringHandler" property="settleCardNo"/>
+		<result column="SETTLE_BANK_CODE" jdbcType="VARCHAR" property="settleBankCode"/>
+		<result column="SETTLE_BANK_NAME" jdbcType="VARCHAR" property="settleBankName"/>
+		<result column="SETTLE_BRANCH_CODE" jdbcType="VARCHAR" property="branchBankCode"/>
+        <result column="SETTLE_BRANCH_NAME" jdbcType="VARCHAR" property="branchBankName"/>
+		<result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+		<result column="OPERATOR" jdbcType="VARCHAR" property="operator"/>
+		<result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+		<result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime"/>
+	</resultMap>
+
+	<insert id="save" parameterType="com.yeepay.g3.core.laike.entity.S0RecordEntity">
+		insert into TBL_SO_APPLY_RECODE (ID, MEMBER_NO,AGENT_NO,MERCHANT_NO,TYPE,STATUS,
+        SETTLE_BANK_CARD,SETTLE_BANK_CODE,SETTLE_BANK_NAME,SETTLE_BRANCH_CODE,SETTLE_BRANCH_NAME,REMARK,
+		OPERATOR, CREATE_TIME, UPDATE_TIME)
+		values (#{id,jdbcType=VARCHAR}, #{memberNo,jdbcType=VARCHAR}, #{agentNo,jdbcType=VARCHAR},
+		#{merchantNo,jdbcType=VARCHAR}, #{operateType,jdbcType=VARCHAR},#{productStatus,jdbcType=VARCHAR},
+        #{settleCardNo,typeHandler=SensitiveL2StringHandler},#{settleBankCode,jdbcType=VARCHAR},
+        #{settleBankName,jdbcType=VARCHAR},#{branchBankCode,jdbcType=VARCHAR},#{branchBankName,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR}, #{operator,jdbcType=VARCHAR}, CURRENT_TIMESTAMP , CURRENT_TIMESTAMP)
+	</insert>
+
+	<sql id="Base_Column_List">
+		ID,MEMBER_NO,AGENT_NO,MERCHANT_NO,TYPE,STATUS,SETTLE_BANK_CARD,SETTLE_BANK_CODE,SETTLE_BANK_NAME,SETTLE_BRANCH_CODE,SETTLE_BRANCH_NAME,REMARK,OPERATOR,CREATE_TIME,UPDATE_TIME
+	</sql>
+
+	<select id="findById" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"/>
+		from TBL_SO_APPLY_RECODE
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+
+	<select id="findByType" parameterType="map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"/>
+			FROM TBL_SO_APPLY_RECODE a
+			WHERE a.MEMBER_NO = #{memberNo,jdbcType=VARCHAR}
+			AND a.TYPE = #{operateType,jdbcType=VARCHAR}
+		ORDER BY UPDATE_TIME DESC
+		FETCH FIRST 1 ROW ONLY
+	</select>
+
+	<select id="findByMemberNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+		SELECT
+		<include refid="Base_Column_List"/>
+			FROM TBL_SO_APPLY_RECODE a
+			WHERE a.MEMBER_NO = #{memberNo,jdbcType=VARCHAR}
+		ORDER BY UPDATE_TIME DESC
+		FETCH FIRST 1 ROW ONLY
+	</select>
+
+	<select id="nextSequence" resultType="long">
+		VALUES NEXTVAL FOR SEQ_YMF_S0_APPLY_ID
+	</select>
+
+	<update id="update" parameterType="com.yeepay.g3.core.laike.entity.S0RecordEntity">
+		update TBL_SO_APPLY_RECODE
+		<set>
+			<if test="operateType != null">
+				TYPE = #{operateType,jdbcType=VARCHAR},
+			</if>
+			<if test="productStatus != null">
+				STATUS = #{productStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="settleCardNo != null and settleCardNo.trim() != ''">
+                SETTLE_BANK_CARD = #{settleCardNo,typeHandler=SensitiveL2StringHandler},
+			</if>
+			<if test="settleBankCode != null and settleBankCode.trim() != ''">
+				SETTLE_BANK_CODE = #{settleBankCode,jdbcType=VARCHAR},
+			</if>
+			<if test="settleBankName != null and settleBankName.trim() != ''">
+				SETTLE_BANK_NAME = #{settleBankName,jdbcType=VARCHAR},
+			</if>
+			<if test="branchBankCode != null and branchBankCode.trim() != ''">
+				SETTLE_BRANCH_CODE = #{branchBankCode,jdbcType=VARCHAR},
+            </if>
+            <if test="branchBankName != null and branchBankName.trim() != ''">
+                SETTLE_BRANCH_NAME = #{branchBankName,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null and remark.trim() != ''">
+				REMARK = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="operator != null and operator.trim() != ''">
+				OPERATOR = #{operator,jdbcType=VARCHAR},
+			</if>
+			UPDATE_TIME = CURRENT_TIMESTAMP
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

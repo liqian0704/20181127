@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite" parallel="classes" thread-count="1">
+    <test verbose="2" preserve-order="true" name="TestDebug">
+        <parameter name="driverName" value="chrome" />
+        <classes>
+            <class name="Promoter_Testcase.Account02_totalBillProcessByBillNoRecord" />
+            <class name="Promoter_Testcase.Account03_promoterPayRecordCallFeeTask"/>
+            <class name="Promoter_Testcase.Account04_promoterBillProcessTask"/>
+            <!--<class name="Promoter_Testcase.Account04_totalBillToPayRecordTask"/>-->
+            <!--<class name="Promoter_Testcase.Account05_affirmByOperatorTask"/>-->
+            <!--<class name="Promoter_Testcase.Account06_setPaySuccessTask"/>-->
+            <!--<class name="Promoter_Testcase.Account07_totalBillUpdateStatusTask"/>-->
+
+        </classes>
+    </test> <!-- Test -->
+    <listeners>
+        <listener class-name="utility.ExtentTestNGIReporterListener" />
+    </listeners>
+</suite> <!-- Suite -->

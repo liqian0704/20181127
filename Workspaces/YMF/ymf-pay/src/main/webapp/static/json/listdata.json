@@ -1,0 +1,51 @@
+
+[
+  {
+    "imgurl": "../images/hardwareMall/xdl_s60.png",
+    "goodsid": "SP60",
+    "goodsname": "新大陆SP60",
+    "goodsdesp": "新大陆SP60是一款移动POS机功能强大,全方位满足商户需求",
+    "detaildesps": [
+      {
+        "label": "支付能力",
+        "despstrings": ["支持刷卡、挥卡、插卡、NFC移动支付、扫码支付，可外接扫码设备"]
+      },
+      {
+        "label": "时尚外观",
+        "despstrings": ["外形小巧携带方便", "高抗跌落性能、宽工作温度、防水防尘设计、外壳坚固耐刮、户外携带式作业更加耐久可靠"]
+      }
+    ]
+  },
+  {
+    "imgurl": "../images/hardwareMall/xgd_g2.png",
+    "goodsid": "G2",
+    "goodsname": "新国都G2",
+    "goodsdesp": "新国都G2是一款移动POS机功能强大,全方位满足商户需求",
+    "detaildesps": [
+      {
+        "label": "支付能力",
+        "despstrings": ["支持刷卡、挥卡、插卡、NFC移动支付、扫码支付，可外接扫码设备"]
+      },
+      {
+        "label": "大尺寸彩屏",
+        "despstrings": ["采用2.8寸彩色显示屏,显示清晰,色彩靓丽"]
+      }
+    ]
+  },
+  {
+    "imgurl": "../images/hardwareMall/hrz_8210.png",
+    "goodsid": "8210",
+    "goodsname": "华智融8210",
+    "goodsdesp": "华智融8210是一款移动POS机功能强大,全方位满足商户需求",
+    "detaildesps":[
+      {
+        "label": "支付能力",
+        "despstrings": ["支持刷卡、挥卡、插卡、NFC移动支付、扫码支付，可外接扫码设备"]
+      },
+      {
+        "label": "超大容量电池+完善的电源管理功能=超强续航",
+        "despstrings": ["2600MAH双节锂电池，5天以上的待机时间，支持600笔以上交易"]
+      }
+    ]
+  }
+]

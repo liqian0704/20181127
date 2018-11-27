@@ -1,0 +1,122 @@
+### 生产导入模板
+### 新增功能请在下边按照编号递增, 最后一个true表示生成二级菜单
+# -- 生产导入文本开始 -- #
+-99913000;ymf易码付
+-30000001;[ymf易码付]日志查询;http://ymfboss.yeepay.com/ymf-boss/log/query;[ymf易码付]日志查询;-99913000;;0;MIDDLE;true;true;;;true
+-30000014;[ymf易码付]二维码管理;http://ymfboss.yeepay.com/ymf-boss/qrCode/query;[ymf易码付]二维码管理;-99913000;;0;MIDDLE;true;true;;;true
+-30000015;[ymf易码付]业务方管理;http://ymfboss.yeepay.com/ymf-boss/business/query;[ymf易码付]业务方管理;-99913000;;0;MIDDLE;true;true;;;true
+-30000016;[ymf易码付]商户管理;http://ymfboss.yeepay.com/ymf-boss/customer/query;[ymf易码付]商户管理;-99913000;;0;MIDDLE;true;true;;;true
+-30000019;[ymf易码付]数据字典查询;http://ymfboss.yeepay.com/ymf-boss/dictionary/query;[ymf易码付]数据字典查询;-99913000;;0;MIDDLE;true;true;;;true
+-30000027;[ymf易码付]订单查询;http://ymfboss.yeepay.com/ymf-boss/order/query;[ymf易码付]订单查询;-99913000;;0;MIDDLE;true;true;;;true
+-30000029;[ymf易码付]退款订单查询;http://ymfboss.yeepay.com/ymf-boss/order/refundQuery;[ymf易码付]退款订单查询;-99913000;;0;MIDDLE;true;true;;;true
+-30000002;[ymf易码付]二维码生成;http://ymfboss.yeepay.com/ymf-boss/qrCode/createQrcode;[ymf易码付]二维码生成;-99913000;;0;MIDDLE;true;true;;;false
+-30000003;[ymf易码付]二维码核销;http://ymfboss.yeepay.com/ymf-boss/qrCode/cancelQrcode;[ymf易码付]二维码核销;-99913000;;0;MIDDLE;true;true;;;false
+-30000004;[ymf易码付]二维码详情;http://ymfboss.yeepay.com/ymf-boss/qrCode/toDetail;[ymf易码付]二维码详情;-99913000;;0;MIDDLE;true;true;;;false
+-30000005;[ymf易码付]业务方修改;http://ymfboss.yeepay.com/ymf-boss/business/modify;[ymf易码付]业务方修改;-99913000;;0;MIDDLE;true;true;;;false
+-30000006;[ymf易码付]业务方修改页面;http://ymfboss.yeepay.com/ymf-boss/business/toModify;[ymf易码付]业务方修改页面;-99913000;;0;MIDDLE;true;true;;;false
+-30000007;[ymf易码付]业务方新增;http://ymfboss.yeepay.com/ymf-boss/business/add;[ymf易码付] 业务方新增;-99913000;;0;MIDDLE;true;true;;;false
+-30000008;[ymf易码付]业务方新增页面;http://ymfboss.yeepay.com/ymf-boss/business/toAdd;[ymf易码付]业务方新增页面;-99913000;;0;MIDDLE;true;true;;;false
+-30000009;[ymf易码付]商户修改;http://ymfboss.yeepay.com/ymf-boss/customer/modify;[ymf易码付]商户修改;-99913000;;0;MIDDLE;true;true;;;false
+-30000010;[ymf易码付]商户修改页面;http://ymfboss.yeepay.com/ymf-boss/customer/toModify;[ymf易码付]商户修改页面;-99913000;;0;MIDDLE;true;true;;;false
+-30000011;[ymf易码付]商户详情;http://ymfboss.yeepay.com/ymf-boss/customer/detail;[ymf易码付]商户详情;-99913000;;0;MIDDLE;true;true;;;false
+-30000012;[ymf易码付]新增商户;http://ymfboss.yeepay.com/ymf-boss/customer/add;[ymf易码付]新增商户;-99913000;;0;MIDDLE;true;true;;;false
+-30000013;[ymf易码付]商户新增页面;http://ymfboss.yeepay.com/ymf-boss/customer/toAdd;[ymf易码付]商户新增页面;-99913000;;0;MIDDLE;true;true;;;false
+-30000017;[ymf易码付]业务方加载;http://ymfboss.yeepay.com/ymf-boss/business/loadBusinessCode;[ymf易码付]业务方加载;-99913000;;0;MIDDLE;true;true;;;false
+-30000018;[ymf易码付]数据字典获取;http://ymfboss.yeepay.com/ymf-boss/dictionary/getDictionariesByType;[ymf易码付]数据字典获取;-99913000;;0;MIDDLE;true;true;;;false
+-30000020;[ymf易码付]数据字典修改(路由);http://ymfboss.yeepay.com/ymf-boss/dictionary/toModify;[ymf易码付]数据字典修改(路由);-99913000;;0;MIDDLE;true;true;;;false
+-30000021;[ymf易码付]数据字典修改;http://ymfboss.yeepay.com/ymf-boss/dictionary/modify;[ymf易码付]数据字典修改;-99913000;;0;MIDDLE;true;true;;;false
+-30000022;[ymf易码付]数据字典新增;http://ymfboss.yeepay.com/ymf-boss/dictionary/add;[ymf易码付]数据字典新增;-99913000;;0;MIDDLE;true;true;;;false
+-30000023;[ymf易码付]数据字典新增(路由);http://ymfboss.yeepay.com/ymf-boss/dictionary/toAdd;[ymf易码付]数据字典批量新增(路由);-99913000;;0;MIDDLE;true;true;;;false
+-30000024;[ymf易码付]数据字典批量新增(路由);http://ymfboss.yeepay.com/ymf-boss/dictionary/toBatchAdd;[ymf易码付]数据字典批量新增(路由);-99913000;;0;MIDDLE;true;true;;;false
+-30000025;[ymf易码付]数据字典批量新增;http://ymfboss.yeepay.com/ymf-boss/dictionary/batchAdd;[ymf易码付]数据字典批量新增;-99913000;;0;MIDDLE;true;true;;;false
+-30000026;[ymf易码付]字典缓存刷新;http://ymfboss.yeepay.com/ymf-boss/dictionary/refresh;[ymf易码付]字典缓存刷新;-99913000;;0;MIDDLE;true;true;;;false
+-30000028;[ymf易码付]订单详情;http://ymfboss.yeepay.com/ymf-boss/order/detail;[ymf易码付]订单详情;-99913000;;0;MIDDLE;true;true;;;false
+-30000030;[ymf易码付]订单下载(路由);http://ymfboss.yeepay.com/ymf-boss/order/down;[ymf易码付]订单下载(路由);-99913000;;0;MIDDLE;true;true;;;false
+-30000031;[ymf易码付]订单下载;http://ymfboss.yeepay.com/ymf-boss/order/downfile;[ymf易码付]订单下载;-99913000;;0;MIDDLE;true;true;;;false
+-30000032;[ymf易码付]二维码重新生成;http://ymfboss.yeepay.com/ymf-boss/qrCode/modifyQrcode;[ymf易码付]二维码重新生成;-99913000;;0;MIDDLE;true;true;;;false
+-30000033;[ymf易码付]二代商户信息获取;http://ymfboss.yeepay.com/ymf-boss/customer/get2GCustomer;[ymf易码付]二代商户信息获取;-99913000;;0;MIDDLE;true;true;;;false
+-30000034;[ymf易码付]商户LOGO修改;http://ymfboss.yeepay.com/ymf-boss/customer/modifyCustomerLogo;[ymf易码付]商户LOGO修改;-99913000;;0;MIDDLE;true;true;;;false
+-30000035;[ymf易码付]商户LOGO新增;http://ymfboss.yeepay.com/ymf-boss/customer/addCustomerLogo;[ymf易码付]商户LOGO新增;-99913000;;0;MIDDLE;true;true;;;false
+-30000036;[ymf易码付]发起退款(测试);http://ymfboss.yeepay.com/ymf-boss/order/refund;[ymf易码付]发起退款(测试);-99913000;;0;MIDDLE;true;true;;;false
+-30000037;[ymf易码付]数据字典删除;http://ymfboss.yeepay.com/ymf-boss/dictionary/remove;[ymf易码付]数据字典删除;-99913000;;0;MIDDLE;true;true;;;false
+-30000038;[ymf易码付]手工补单;http://ymfboss.yeepay.com/ymf-boss/order/orderConfirm;[ymf易码付]手工补单;-99913000;;0;MIDDLE;true;true;;;false
+## 商户公众号关系 add by chen.liu 2016-10-13 14:03:28
+-30000039;[ymf易码付]公众号关系管理;http://ymfboss.yeepay.com/ymf-boss/wechatRel/query;[ymf易码付]公众号关系查询;-99913000;;0;MIDDLE;true;true;;;true
+-30000040;[ymf易码付]新增公众号关系(路由);http://ymfboss.yeepay.com/ymf-boss/wechatRel/toAdd;[ymf易码付]新增公众号关系(路由);-99913000;;0;MIDDLE;true;true;;;false
+-30000041;[ymf易码付]新增公众号关系;http://ymfboss.yeepay.com/ymf-boss/wechatRel/add;[ymf易码付]新增公众号关系;-99913000;;0;MIDDLE;true;true;;;false
+-30000042;[ymf易码付]修改公众号关系(路由);http://ymfboss.yeepay.com/ymf-boss/wechatRel/toModify;[ymf易码付]修改公众号关系(路由);-99913000;;0;MIDDLE;true;true;;;false
+-30000043;[ymf易码付]修改公众号关系;http://ymfboss.yeepay.com/ymf-boss/wechatRel/modify;[ymf易码付]修改公众号关系;-99913000;;0;MIDDLE;true;true;;;false
+-30000044;[ymf易码付]二维码图片下载;http://ymfboss.yeepay.com/ymf-boss/download/downloadPic;[ymf易码付]二维码图片下载;-99913000;;0;MIDDLE;true;true;;;false
+## 一户多码改造 add by dongxu.lu 2016-11-02 15:48:33
+-30000045;[ymf易码付]网点二维码管理;http://ymfboss.yeepay.com/ymf-boss/newQrCode/toQuery;[ymf易码付]网点二维码管理;-99913000;;0;MIDDLE;true;true;;;true
+-30000046;[ymf易码付]网点管理;http://ymfboss.yeepay.com/ymf-boss/newQrCode/toModify;[ymf易码付]网点管理;-99913000;;0;MIDDLE;true;true;;;false
+-30000047;[ymf易码付]批量创建二维码(路由);http://ymfboss.yeepay.com/ymf-boss/newQrCode/toCreate;[ymf易码付]批量创建二维码(路由);-99913000;;0;MIDDLE;true;true;;;false
+-30000048;[ymf易码付]批量创建二维码;http://ymfboss.yeepay.com/ymf-boss/newQrCode/create;[ymf易码付]批量创建二维码;-99913000;;0;MIDDLE;true;true;;;false
+-30000049;[ymf易码付]获取商户信息;http://ymfboss.yeepay.com/ymf-boss/newQrCode/getCustomerInfo;[ymf易码付]获取商户信息;-99913000;;0;MIDDLE;true;true;;;false
+-30000050;[ymf易码付]二维码信息变更;http://ymfboss.yeepay.com/ymf-boss/newQrCode/updateQrCode;[ymf易码付]二维码信息变更;-99913000;;0;MIDDLE;true;true;;;false
+-30000051;[ymf易码付]电子凭证下载;http://ymfboss.yeepay.com/ymf-boss/download/downloadProof;[ymf易码付]电子凭证下载;-99913000;;0;MIDDLE;true;true;;;false
+
+## APP版本管理 add by jiwei.lv
+-30000052;[ymf易码付]APP版本管理;http://ymfboss.yeepay.com/ymf-boss/app/query;[ymf易码付]来客APP版本管理;-99913000;;0;MIDDLE;true;true;;;true
+-30000053;[ymf易码付]新增版本信息跳转;http://ymfboss.yeepay.com/ymf-boss/app/toAdd;[ymf易码付]新增版本信息页面;-99913000;;0;MIDDLE;true;true;;;false
+-30000054;[ymf易码付]新增版本信息;http://ymfboss.yeepay.com/ymf-boss/app/add;[ymf易码付]APP版本新增;-99913000;;0;MIDDLE;true;true;;;false
+-30000055;[ymf易码付]修改版本信息调转;http://ymfboss.yeepay.com/ymf-boss/app/toModify;[ymf易码付]新增版本信息页面;-99913000;;0;MIDDLE;true;true;;;false
+-30000056;[ymf易码付]修改版本信息;http://ymfboss.yeepay.com/ymf-boss/app/modify;[ymf易码付]APP版本信息新增;-99913000;;0;MIDDLE;true;true;;;false
+-30000057;[ymf易码付]收款方式;http://ymfboss.yeepay.com/ymf-boss/dictionary/getDictionariesByCode;[ymf易码付]收款方式;-99913000;;0;MIDDLE;true;true;;;false
+-30000058;[ymf易码付]来客APP错误信息查询;http://10.151.30.155:8081/ymf-boss/appErrorMsg/query;[ymf易码付]来客APP错误信息查询;-99913000;;0;MIDDLE;true;true;;;true
+
+## APP错误信息查询 add by wei.li
+-30000058;[ymf易码付]来客APP错误信息查询;http://ymfboss.yeepay.com/ymf-boss/appErrorMsg/query;[ymf易码付]来客APP错误信息查询;-99913000;;0;MIDDLE;true;true;;;true
+-30000059;[ymf易码付]获取销售信息(路由);http://ymfboss.yeepay.com/ymf-boss/newQrCode/getSalesInfo;[ymf易码付]获取销售信息(路由);-99913000;;0;MIDDLE;true;true;;;false
+
+## 终端管理 add by chen.liu 2017-03-14 13:33:34
+-30000060;[ymf易码付]终端管理;http://ymfboss.yeepay.com/ymf-boss/material/query;[ymf易码付]终端管理;-99913000;;0;MIDDLE;true;true;;;true
+-30000061;[ymf易码付]绑定终端跳转;http://ymfboss.yeepay.com/ymf-boss/material/toBindTerm;[ymf易码付]绑定终端跳转;-99913000;;0;MIDDLE;true;true;;;false
+-30000062;[ymf易码付]绑定终端;http://ymfboss.yeepay.com/ymf-boss/material/bindTerm;[ymf易码付]绑定终端;-99913000;;0;MIDDLE;true;true;;;false
+-30000063;[ymf易码付]批量绑定终端跳转;http://ymfboss.yeepay.com/ymf-boss/material/toBatchBindTerm;[ymf易码付]批量绑定终端跳转;-99913000;;0;MIDDLE;true;true;;;false
+-30000064;[ymf易码付]批量绑定终端;http://ymfboss.yeepay.com/ymf-boss/material/batchBindTerm;[ymf易码付]批量绑定终端;-99913000;;0;MIDDLE;true;true;;;false
+-30000065;[ymf易码付]解绑终端;http://ymfboss.yeepay.com/ymf-boss/material/unbindTerm;[ymf易码付]解绑终端;-99913000;;0;MIDDLE;true;true;;;false
+-30000066;[ymf易码付]同步终端入库;http://ymfboss.yeepay.com/ymf-boss/material/batchSyncTerm;[ymf易码付]同步终端入库;-99913000;;0;MIDDLE;true;true;;;false
+-30000067;[ymf易码付]下载模板文件;http://ymfboss.yeepay.com/ymf-boss/download/template;[ymf易码付]下载模板文件;-99913000;;0;MIDDLE;true;true;;;false
+-30000068;[ymf易码付]下载批量绑定结果;http://ymfboss.yeepay.com/ymf-boss/material/downloadBatchTermResponse;[ymf易码付]下载批量绑定结果;-99913000;;0;MIDDLE;true;true;;;false
+-30000069;[ymf易码付]同步终端跳转;http://ymfboss.yeepay.com/ymf-boss/material/toBatchSyncTerm;[ymf易码付]同步终端跳转;-99913000;;0;MIDDLE;true;true;;;false
+-30000070;[ymf易码付]同步终端;http://ymfboss.yeepay.com/ymf-boss/material/batchSyncTerm;[ymf易码付]同步终端;-99913000;;0;MIDDLE;true;true;;;false
+
+## op入网 add by wei.li
+-30000071;[ymf易码付]APP用户注册;http://ymfboss.yeepay.com/ymf-boss/user/toAdd;[ymf易码付]APP用户注册;-99913000;;0;MIDDLE;true;true;;;true
+-30000072;[ymf易码付]提交来客excel信息;http://ymfboss.yeepay.com/ymf-boss/user/addUser;[ymf易码付]提交来客excel信息;-99913000;;0;MIDDLE;true;true;;;false
+-30000073;[ymf易码付]跳转详情页;http://ymfboss.yeepay.com/ymf-boss/user/toDetail;[ymf易码付]跳转详情页;-99913000;;0;MIDDLE;true;true;;;false
+-30000074;[ymf易码付]下载注册结果;http://ymfboss.yeepay.com/ymf-boss/user/downFile;[ymf易码付]下载注册结果;-99913000;;0;MIDDLE;true;true;;;false
+
+## add by jiwei.lv
+-30000075;[ymf易码付]单个通道切换;http://ymfboss.yeepay.com/ymf-boss/app/payModify;[ymf易码付]单个通道切换;-99913000;;0;MIDDLE;true;true;;;false
+
+-30000076;[ymf易码付]银联终端号管理;http://ymfboss.yeepay.com/ymf-boss/terminal/query;[ymf易码付]银联终端号管理;-99913000;;0;MIDDLE;true;true;;;true
+-30000077;[ymf易码付]银联终端号新增跳转;http://ymfboss.yeepay.com/ymf-boss/terminal/toAdd;[ymf易码付]银联终端号新增跳转;-99913000;;0;MIDDLE;true;true;;;false
+-30000078;[ymf易码付]银联终端号新增;http://ymfboss.yeepay.com/ymf-boss/terminal/add;[ymf易码付]银联终端号新增;-99913000;;0;MIDDLE;true;true;;;false
+-30000079;[ymf易码付]银联终端号修改;http://ymfboss.yeepay.com/ymf-boss/terminal/modify;[ymf易码付]银联终端号修改;-99913000;;0;MIDDLE;true;true;;;false
+
+## wei.li
+-30000080;[ymf易码付]推客汇入网审核;http://ymfboss.yeepay.com/ymf-boss/appAudit/query;[ymf易码付]推客汇入网审核;-99913000;;0;MIDDLE;true;true;;;true
+-30000081;[ymf易码付]跳转推客汇详情页;http://ymfboss.yeepay.com/ymf-boss/appAudit/toModify;[ymf易码付]跳转推客汇详情页;-99913000;;0;MIDDLE;true;true;;;false
+-30000082;[ymf易码付]推客汇入网单;http://ymfboss.yeepay.com/ymf-boss/appAudit/modify;[ymf易码付]推客汇入网单;-99913000;;0;MIDDLE;true;true;;;false
+
+
+## 代理人管理  xiaobin.liu
+-30000083;[ymf易码付]代理人查询;http://ymfboss.yeepay.com/ymf-boss/sales/query;[ymf易码付]代理人查询;-99913000;;0;MIDDLE;true;true;;;true
+-30000084;[ymf易码付]代理人资料查询;http://ymfboss.yeepay.com/ymf-boss/sales/viewSales/;[ymf易码付]代理人资料查询;-99913000;;0;MIDDLE;true;true;;;false
+-30000085;[ymf易码付]代理人资料修改;http://ymfboss.yeepay.com/ymf-boss/sales/updateBankInfo;[ymf易码付]代理人资料修改;-99913000;;0;MIDDLE;true;true;;;false
+-30000086;[ymf易码付]代理人删除;http://ymfboss.yeepay.com/ymf-boss/sales/deleteSales/;[ymf易码付]代理人删除;-99913000;;0;MIDDLE;true;true;;;false
+
+## 代理人交易统计
+-30000087;[ymf易码付]代理人交易统计;http://ymfboss.yeepay.com/ymf-boss/sales/report;[ymf易码付]代理人交易统计;-99913000;;0;MIDDLE;true;true;;;true
+-30000088;[ymf易码付]代理人统计下载;http://ymfboss.yeepay.com/ymf-boss/sales/download;[ymf易码付]代理人统计下载;-99913000;;0;MIDDLE;true;true;;;false
+
+## 一级商户管理
+
+-30000089;[ymf易码付]二级商户与一级商户绑定;http://ymfboss.yeepay.com/ymf-boss/group/bindCustomers;[ymf易码付]二级商户与一级商户绑定;-99913000;;0;MIDDLE;true;true;;;false
+-30000090;[ymf易码付]二级商户与一级商户解除绑定;http://ymfboss.yeepay.com/ymf-boss/group/unBind;[ymf易码付]二级商户与一级商户解除绑定;-99913000;;0;MIDDLE;true;true;;;false
+-30000091;[ymf易码付]一级商户管理;http://ymfboss.yeepay.com/ymf-boss/group/query;[ymf易码付]一级商户管理;-99913000;;0;MIDDLE;true;true;;;true
+
+
+# -- 生产导入文本结束 -- #

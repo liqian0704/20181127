@@ -1,0 +1,498 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yeepay.g3.core.ymf.dao.customer.CustomerMapper" >
+  <resultMap id="BaseResultMap" type="com.yeepay.g3.core.ymf.entity.customer.Customer" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="OPTIMISITC" property="optimisitc" jdbcType="BIGINT" />
+    <result column="CUSTOMER_NUMBER" property="customerNumber" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_NAME" property="customerName" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_LEVEL" property="customerLevel" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="INDUSTRY_TYPE" property="industryType" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_TYPE" property="customerType" jdbcType="VARCHAR" />
+    <result column="PAY_TYPE_INFO" property="payTypeInfo" jdbcType="VARCHAR" />
+    <result column="BUSINESS_ID" property="businessId" jdbcType="BIGINT" />
+    <result column="APP_TYPE" property="appType" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_LOGO" property="customerLogo" jdbcType="VARCHAR" />
+    <result column="VALIDITY_PERIOD" property="validityPeriod" jdbcType="INTEGER" />
+    <result column="DOCUMENT_NO" property="documentNo" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_FLAG" property="customerFlag" jdbcType="VARCHAR" />
+    <result column="TRADE_SYSTEM" property="tradeSystem" jdbcType="VARCHAR" />
+    <result column="BALANCE_PRODUCT" property="balanceProduct" jdbcType="VARCHAR" />
+    <result column="GROUP_ID" property="groupId" jdbcType="BIGINT" />
+    <result column="SHORT_NAME" property="shortName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, OPTIMISITC, CUSTOMER_NUMBER, CUSTOMER_NAME, CUSTOMER_LEVEL, CREATE_TIME, UPDATE_TIME, 
+    INDUSTRY_TYPE, CUSTOMER_TYPE, PAY_TYPE_INFO, BUSINESS_ID, APP_TYPE, STATUS, CUSTOMER_LOGO, 
+    VALIDITY_PERIOD, DOCUMENT_NO, CUSTOMER_FLAG, TRADE_SYSTEM, BALANCE_PRODUCT, GROUP_ID, 
+    SHORT_NAME
+  </sql>
+  <select id="selectByFilter" resultMap="BaseResultMap" parameterType="com.yeepay.g3.core.ymf.entity.customer.CustomerParam" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from YMF_CUSTOMER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from YMF_CUSTOMER
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from YMF_CUSTOMER
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByFilter" parameterType="com.yeepay.g3.core.ymf.entity.customer.CustomerParam" >
+    delete from YMF_CUSTOMER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yeepay.g3.core.ymf.entity.customer.Customer" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      VALUES NEXTVAL FOR SEQ_CUSTOMER_ID
+    </selectKey>
+    insert into YMF_CUSTOMER (ID, OPTIMISITC, CUSTOMER_NUMBER, 
+      CUSTOMER_NAME, CUSTOMER_LEVEL, CREATE_TIME, 
+      UPDATE_TIME, INDUSTRY_TYPE, CUSTOMER_TYPE, 
+      PAY_TYPE_INFO, BUSINESS_ID, APP_TYPE, 
+      STATUS, CUSTOMER_LOGO, VALIDITY_PERIOD, 
+      DOCUMENT_NO, CUSTOMER_FLAG, TRADE_SYSTEM, 
+      BALANCE_PRODUCT, GROUP_ID, SHORT_NAME
+      )
+    values (#{id,jdbcType=BIGINT}, #{optimisitc,jdbcType=BIGINT}, #{customerNumber,jdbcType=VARCHAR}, 
+      #{customerName,jdbcType=VARCHAR}, #{customerLevel,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{industryType,jdbcType=VARCHAR}, #{customerType,jdbcType=VARCHAR}, 
+      #{payTypeInfo,jdbcType=VARCHAR}, #{businessId,jdbcType=BIGINT}, #{appType,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{customerLogo,jdbcType=VARCHAR}, #{validityPeriod,jdbcType=INTEGER}, 
+      #{documentNo,jdbcType=VARCHAR}, #{customerFlag,jdbcType=VARCHAR}, #{tradeSystem,jdbcType=VARCHAR}, 
+      #{balanceProduct,jdbcType=VARCHAR}, #{groupId,jdbcType=BIGINT}, #{shortName,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yeepay.g3.core.ymf.entity.customer.Customer" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      VALUES NEXTVAL FOR SEQ_CUSTOMER_ID
+    </selectKey>
+    insert into YMF_CUSTOMER
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="optimisitc != null" >
+        OPTIMISITC,
+      </if>
+      <if test="customerNumber != null" >
+        CUSTOMER_NUMBER,
+      </if>
+      <if test="customerName != null" >
+        CUSTOMER_NAME,
+      </if>
+      <if test="customerLevel != null" >
+        CUSTOMER_LEVEL,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="industryType != null" >
+        INDUSTRY_TYPE,
+      </if>
+      <if test="customerType != null" >
+        CUSTOMER_TYPE,
+      </if>
+      <if test="payTypeInfo != null" >
+        PAY_TYPE_INFO,
+      </if>
+      <if test="businessId != null" >
+        BUSINESS_ID,
+      </if>
+      <if test="appType != null" >
+        APP_TYPE,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="customerLogo != null" >
+        CUSTOMER_LOGO,
+      </if>
+      <if test="validityPeriod != null" >
+        VALIDITY_PERIOD,
+      </if>
+      <if test="documentNo != null" >
+        DOCUMENT_NO,
+      </if>
+      <if test="customerFlag != null" >
+        CUSTOMER_FLAG,
+      </if>
+      <if test="tradeSystem != null" >
+        TRADE_SYSTEM,
+      </if>
+      <if test="balanceProduct != null" >
+        BALANCE_PRODUCT,
+      </if>
+      <if test="groupId != null" >
+        GROUP_ID,
+      </if>
+      <if test="shortName != null" >
+        SHORT_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="optimisitc != null" >
+        #{optimisitc,jdbcType=BIGINT},
+      </if>
+      <if test="customerNumber != null" >
+        #{customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null" >
+        #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerLevel != null" >
+        #{customerLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="industryType != null" >
+        #{industryType,jdbcType=VARCHAR},
+      </if>
+      <if test="customerType != null" >
+        #{customerType,jdbcType=VARCHAR},
+      </if>
+      <if test="payTypeInfo != null" >
+        #{payTypeInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="businessId != null" >
+        #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="appType != null" >
+        #{appType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="customerLogo != null" >
+        #{customerLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="validityPeriod != null" >
+        #{validityPeriod,jdbcType=INTEGER},
+      </if>
+      <if test="documentNo != null" >
+        #{documentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="customerFlag != null" >
+        #{customerFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeSystem != null" >
+        #{tradeSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="balanceProduct != null" >
+        #{balanceProduct,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null" >
+        #{groupId,jdbcType=BIGINT},
+      </if>
+      <if test="shortName != null" >
+        #{shortName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByFilter" parameterType="com.yeepay.g3.core.ymf.entity.customer.CustomerParam" resultType="java.lang.Integer" >
+    select count(*) from YMF_CUSTOMER
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByFilterSelective" parameterType="map" >
+    update YMF_CUSTOMER
+    <set >
+      <if test="record.id != null" >
+        
+      </if>
+      <if test="record.optimisitc != null" >
+        OPTIMISITC = #{record.optimisitc,jdbcType=BIGINT},
+      </if>
+      <if test="record.customerNumber != null" >
+        CUSTOMER_NUMBER = #{record.customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerName != null" >
+        CUSTOMER_NAME = #{record.customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerLevel != null" >
+        CUSTOMER_LEVEL = #{record.customerLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.industryType != null" >
+        INDUSTRY_TYPE = #{record.industryType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerType != null" >
+        CUSTOMER_TYPE = #{record.customerType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payTypeInfo != null" >
+        PAY_TYPE_INFO = #{record.payTypeInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessId != null" >
+        BUSINESS_ID = #{record.businessId,jdbcType=BIGINT},
+      </if>
+      <if test="record.appType != null" >
+        APP_TYPE = #{record.appType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerLogo != null" >
+        CUSTOMER_LOGO = #{record.customerLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.validityPeriod != null" >
+        VALIDITY_PERIOD = #{record.validityPeriod,jdbcType=INTEGER},
+      </if>
+      <if test="record.documentNo != null" >
+        DOCUMENT_NO = #{record.documentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerFlag != null" >
+        CUSTOMER_FLAG = #{record.customerFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tradeSystem != null" >
+        TRADE_SYSTEM = #{record.tradeSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="record.balanceProduct != null" >
+        BALANCE_PRODUCT = #{record.balanceProduct,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groupId != null" >
+        GROUP_ID = #{record.groupId,jdbcType=BIGINT},
+      </if>
+      <if test="record.shortName != null" >
+        SHORT_NAME = #{record.shortName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByFilter" parameterType="map" >
+    update YMF_CUSTOMER
+    set 
+      OPTIMISITC = #{record.optimisitc,jdbcType=BIGINT},
+      CUSTOMER_NUMBER = #{record.customerNumber,jdbcType=VARCHAR},
+      CUSTOMER_NAME = #{record.customerName,jdbcType=VARCHAR},
+      CUSTOMER_LEVEL = #{record.customerLevel,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      INDUSTRY_TYPE = #{record.industryType,jdbcType=VARCHAR},
+      CUSTOMER_TYPE = #{record.customerType,jdbcType=VARCHAR},
+      PAY_TYPE_INFO = #{record.payTypeInfo,jdbcType=VARCHAR},
+      BUSINESS_ID = #{record.businessId,jdbcType=BIGINT},
+      APP_TYPE = #{record.appType,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      CUSTOMER_LOGO = #{record.customerLogo,jdbcType=VARCHAR},
+      VALIDITY_PERIOD = #{record.validityPeriod,jdbcType=INTEGER},
+      DOCUMENT_NO = #{record.documentNo,jdbcType=VARCHAR},
+      CUSTOMER_FLAG = #{record.customerFlag,jdbcType=VARCHAR},
+      TRADE_SYSTEM = #{record.tradeSystem,jdbcType=VARCHAR},
+      BALANCE_PRODUCT = #{record.balanceProduct,jdbcType=VARCHAR},
+      GROUP_ID = #{record.groupId,jdbcType=BIGINT},
+      SHORT_NAME = #{record.shortName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yeepay.g3.core.ymf.entity.customer.Customer" >
+    update YMF_CUSTOMER
+    <set >
+      <if test="optimisitc != null" >
+        OPTIMISITC = #{optimisitc,jdbcType=BIGINT},
+      </if>
+      <if test="customerNumber != null" >
+        CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="customerName != null" >
+        CUSTOMER_NAME = #{customerName,jdbcType=VARCHAR},
+      </if>
+      <if test="customerLevel != null" >
+        CUSTOMER_LEVEL = #{customerLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="industryType != null" >
+        INDUSTRY_TYPE = #{industryType,jdbcType=VARCHAR},
+      </if>
+      <if test="customerType != null" >
+        CUSTOMER_TYPE = #{customerType,jdbcType=VARCHAR},
+      </if>
+      <if test="payTypeInfo != null" >
+        PAY_TYPE_INFO = #{payTypeInfo,jdbcType=VARCHAR},
+      </if>
+      <if test="businessId != null" >
+        BUSINESS_ID = #{businessId,jdbcType=BIGINT},
+      </if>
+      <if test="appType != null" >
+        APP_TYPE = #{appType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="customerLogo != null" >
+        CUSTOMER_LOGO = #{customerLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="validityPeriod != null" >
+        VALIDITY_PERIOD = #{validityPeriod,jdbcType=INTEGER},
+      </if>
+      <if test="documentNo != null" >
+        DOCUMENT_NO = #{documentNo,jdbcType=VARCHAR},
+      </if>
+      <if test="customerFlag != null" >
+        CUSTOMER_FLAG = #{customerFlag,jdbcType=VARCHAR},
+      </if>
+      <if test="tradeSystem != null" >
+        TRADE_SYSTEM = #{tradeSystem,jdbcType=VARCHAR},
+      </if>
+      <if test="balanceProduct != null" >
+        BALANCE_PRODUCT = #{balanceProduct,jdbcType=VARCHAR},
+      </if>
+      <if test="groupId != null" >
+        GROUP_ID = #{groupId,jdbcType=BIGINT},
+      </if>
+      <if test="shortName != null" >
+        SHORT_NAME = #{shortName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yeepay.g3.core.ymf.entity.customer.Customer" >
+    update YMF_CUSTOMER
+    set OPTIMISITC = #{optimisitc,jdbcType=BIGINT},
+      CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR},
+      CUSTOMER_NAME = #{customerName,jdbcType=VARCHAR},
+      CUSTOMER_LEVEL = #{customerLevel,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      INDUSTRY_TYPE = #{industryType,jdbcType=VARCHAR},
+      CUSTOMER_TYPE = #{customerType,jdbcType=VARCHAR},
+      PAY_TYPE_INFO = #{payTypeInfo,jdbcType=VARCHAR},
+      BUSINESS_ID = #{businessId,jdbcType=BIGINT},
+      APP_TYPE = #{appType,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CUSTOMER_LOGO = #{customerLogo,jdbcType=VARCHAR},
+      VALIDITY_PERIOD = #{validityPeriod,jdbcType=INTEGER},
+      DOCUMENT_NO = #{documentNo,jdbcType=VARCHAR},
+      CUSTOMER_FLAG = #{customerFlag,jdbcType=VARCHAR},
+      TRADE_SYSTEM = #{tradeSystem,jdbcType=VARCHAR},
+      BALANCE_PRODUCT = #{balanceProduct,jdbcType=VARCHAR},
+      GROUP_ID = #{groupId,jdbcType=BIGINT},
+      SHORT_NAME = #{shortName,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+
+  <!--======自定义=====-->
+  <select id="getCustomersByGroupId" resultMap="BaseResultMap">
+		select id,customer_name from YMF_CUSTOMER where 1=1
+		 and status ='ACTIVE'
+		 and group_id = #{groupId,jdbcType=BIGINT}
+		 order by id
+    </select>
+
+    <update id="unBindGroup" parameterType="java.lang.Long" >
+    update YMF_CUSTOMER
+    <set>
+    	group_id = null
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+
+  <update id="bindGroup" >
+    update YMF_CUSTOMER
+    set GROUP_ID = #{groupId,jdbcType=BIGINT},UPDATE_TIME=CURRENT_TIMESTAMP
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+
+   <select id="findCustomerByName" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select id,customer_name from YMF_CUSTOMER where 1=1
+		 and status ='ACTIVE'
+		 and CUSTOMER_NAME like '%'||#{customerName,jdbcType=VARCHAR}||'%'
+		 order by id
+    </select>
+
+</mapper>

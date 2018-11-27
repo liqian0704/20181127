@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.yeepay.g3.ypt:ypt-script-sdk:1.2-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/ypt/ypt-script-sdk/1.2-SNAPSHOT/ypt-script-sdk-1.2-20170526.151622-30.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/ypt/ypt-script-sdk/1.2-SNAPSHOT/ypt-script-sdk-1.2-20170526.151622-30-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/yeepay/g3/ypt/ypt-script-sdk/1.2-SNAPSHOT/ypt-script-sdk-1.2-20170526.151622-30-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

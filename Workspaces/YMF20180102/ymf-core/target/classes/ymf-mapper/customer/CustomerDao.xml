@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.ymf.dao.customer.CustomerDao">
+    <resultMap id="CustomerBaseResultMap" type="com.yeepay.g3.core.ymf.entity.customer.Customer">
+        <id column="ID" jdbcType="BIGINT" property="id" />
+        <result column="OPTIMISITC" jdbcType="BIGINT" property="optimisitc" />
+        <result column="CUSTOMER_NUMBER" jdbcType="VARCHAR" property="customerNumber" />
+        <result column="CUSTOMER_NAME" jdbcType="VARCHAR" property="customerName" />
+        <result column="CUSTOMER_LEVEL" jdbcType="VARCHAR" property="customerLevel" />
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime" />
+        <result column="INDUSTRY_TYPE" jdbcType="VARCHAR" property="industryType" />
+        <result column="CUSTOMER_TYPE" jdbcType="VARCHAR" property="customerType" />
+        <result column="PAY_TYPE_INFO" jdbcType="VARCHAR" property="payTypeInfo" />
+        <result column="BUSINESS_ID" jdbcType="BIGINT" property="businessId" />
+        <result column="APP_TYPE" jdbcType="VARCHAR" property="appType" />
+        <result column="STATUS" jdbcType="VARCHAR" property="status" />
+        <result column="CUSTOMER_LOGO" jdbcType="VARCHAR" property="customerLogo" />
+        <result column="VALIDITY_PERIOD" jdbcType="INTEGER" property="validityPeriod" />
+        <result column="DOCUMENT_NO" jdbcType="VARCHAR" property="documentNo" />
+        <result column="CUSTOMER_FLAG" jdbcType="VARCHAR" property="customerFlag" />
+        <result column="TRADE_SYSTEM" jdbcType="VARCHAR" property="tradeSystem" />
+        <result column="BALANCE_PRODUCT" jdbcType="VARCHAR" property="balanceProduct" />
+        <result column="GROUP_ID" jdbcType="BIGINT" property="groupId" />
+        <result column="SHORT_NAME" property="shortName" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <select id="findStatusAndBusiType" resultMap="CustomerBaseResultMap">
+        select
+        R.* from (SELECT RE.*,rownumber() over(order by id desc)as rn from YMF_CUSTOMER RE  )
+        R left join YMF_BUSINESS b on b.id=R.BUSINESS_ID
+       <where>
+        <if test="status != null">
+            AND  R.STATUS = #{status,jdbcType=VARCHAR}
+        </if>
+        <if test="bizCode != null">
+            AND  b.BIZ_CODE = #{bizCode,jdbcType=VARCHAR}
+        </if>
+       </where>
+        AND R.rn BETWEEN #{rowBegin,jdbcType=INTEGER} AND #{rowEnd,jdbcType=INTEGER}
+        order by r.id desc
+        with ur
+    </select>
+
+    <select id="findStatusAndBusiTypeCount" resultType="java.lang.Integer">
+        select
+        count(1) from YMF_CUSTOMER R
+        left join YMF_BUSINESS b on b.id=R.BUSINESS_ID
+       <where>
+        <if test="status != null">
+            AND  R.STATUS = #{status,jdbcType=VARCHAR}
+        </if>
+        <if test="bizCode != null">
+            AND  b.BIZ_CODE = #{bizCode,jdbcType=VARCHAR}
+        </if>
+       </where>
+    </select>
+
+    <select id="findNOShopCustomers" resultMap="CustomerBaseResultMap">
+        SELECT * FROM YMF_CUSTOMER c
+        WHERE NOT exists(
+          SELECT 1 FROM YMF_SHOP s
+          WHERE s.CUSTOMER_NUMBER = c.CUSTOMER_NUMBER
+
+        )
+        FETCH FIRST 1000 ROWS ONLY
+        WITH UR
+    </select>
+
+    <select id="findOldFtpPrefix" resultMap="CustomerBaseResultMap" parameterType="java.lang.String">
+        select
+        *
+        from ymf_customer Q
+        WHERE  Q.CUSTOMER_LOGO  like #{prefix,jdbcType=VARCHAR}
+        FETCH FIRST 1000 ROWS ONLY
+        with ur
+    </select>
+
+</mapper>

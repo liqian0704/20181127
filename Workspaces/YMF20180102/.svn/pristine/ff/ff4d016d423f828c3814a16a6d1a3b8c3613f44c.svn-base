@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,height=device-height,initial-scale=1.0,user-scalable=no"/>
+    <meta http-equiv = "pragma" content = "no-cache">
+    <title>硬件超市</title>
+    <link rel="stylesheet" href="../css/uikit/uikit.min.css"/>
+    <link rel="stylesheet" href="../css/uikit/iconfont.css"/>
+    <script src="../js/jquery-1.10.1.min.js"></script>
+    <script src="../js/uikit.min.js"></script>
+
+    <style>
+        html {
+            background-color: #f0f0f0;
+        }
+        header {
+            display: none;
+            background-color: #ED722F;
+            padding: 10px;
+        }
+
+        #i_back, span {
+            color: white;
+            font-size: 18px;
+        }
+
+        #i_back:active {
+            color: #dddddd;
+        }
+
+        .content-parent-box {
+            padding: 6px;
+        }
+
+        .uk-grid > li {
+            margin-bottom: 6px;
+        }
+
+        .lk-grid-item {
+            text-align: center;
+            background-color: #f5f5f5;
+            padding-bottom: 15px;
+            border-radius: 4px;
+            -webkit-box-shadow:0 0 6px #dddddd;
+            -moz-box-shadow:0 0 6px #dddddd;
+            box-shadow:0 0 6px #dddddd;
+        }
+
+        .lk-grid-item:active {
+            background-color: #dddddd;
+        }
+
+        .lk-grid-item > * {
+            display: block;
+        }
+
+        .lk-grid-item > div {
+            text-align: center;
+            background-color: white;
+            padding: 10px;
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+        }
+
+        .lk-grid-item > div > img {
+            width: 110px;
+            height: 120px;
+        }
+
+        .lk-grid-item > .lk-item-name {
+            margin-top: 15px;
+            font-size: 16px;
+            color: dimgray;
+        }
+
+        .lk-grid-item > .lk-item-price {
+            font-size: 18px;
+            color: #ff6b00;
+        }
+
+        .uk-grid-small {
+            margin-left: -6px;
+        }
+        .uk-grid-small > * {
+            padding-left: 6px;
+        }
+
+    </style>
+</head>
+<body>
+<!--<header>-->
+    <!--<div class="uk-width-1-1 uk-text-center">-->
+        <!--<i id="i_back" class="iconfont icon-icon-test2 uk-float-left" onclick=""></i>-->
+        <!--<span>硬件超市</span>-->
+    <!--</div>-->
+<!--</header>-->
+
+<div class="content-parent-box">
+    <ul class="uk-grid uk-grid-small uk-grid-width-1-2">
+    </ul>
+</div>
+
+<script type="text/javascript">
+
+    function pageinit() {
+        var listdata = [];
+        $.getJSON("../json/listdata.json", function(data) {
+            listdata = data;
+            var grid_item = "";
+            for(var index in listdata) {
+                grid_item += "<li><div class='lk-grid-item'>"
+                        + "<div><img src=" + listdata[index].imgurl + "></div>"
+                        + "<span class='lk-item-name'>" + listdata[index].goodsname + "</span>"
+//                        + "<span class='lk-item-price'>¥" + listdata[index].goodsprice + "</span>"
+                        + "</div></li>";
+            }
+            $('.uk-grid').html(grid_item);
+
+            $('.uk-grid').find('li').click(function () {
+                skipwithparams(JSON.stringify(listdata[$(this).index()]));
+            });
+        });
+    }
+
+    function skipwithparams(jsonstr) {
+        window.location.href = "hwgoods_detail.html?jsonStr=" + encodeURIComponent(jsonstr);
+    }
+
+    pageinit();
+</script>
+
+</body>
+</html>

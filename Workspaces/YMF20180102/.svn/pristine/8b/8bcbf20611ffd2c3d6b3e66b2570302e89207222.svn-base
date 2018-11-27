@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="
+	 http://www.springframework.org/schema/beans
+	 http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	
+	<bean id="ymfQuery2Service" class="com.yeepay.g3.utils.query.impl.QueryServiceImpl">
+        <property name="dataSource" ref="dataSource" />
+        <property name="querys">
+            <map>
+                <entry key="ymfGroupQuery"><ref bean="ymfGroupQuery"/></entry>
+                <entry key="ymfSalesQuery"><ref bean="ymfSalesQuery"/></entry>
+                <entry key="ymfSalesReportQuery"><ref bean="ymfSalesReportQuery"/></entry>
+                <entry key="ymfSalesReportSummaryQuery"><ref bean="ymfSalesReportSummaryQuery"/></entry>
+            </map>
+        </property>
+    </bean>
+	<bean id="ymfGroupQuery" class="com.yeepay.g3.utils.query.Query">
+		<property name="sql">
+			<value>
+				<![CDATA[
+						select row_number() over(order by t.id desc) as rowid,t.* from (
+						select b.id as groupid,b.group_name,b.create_time as create,
+						CASE WHEN a.group_id is null THEN 2 ELSE 1 END AS related,
+						 a.* 
+						from ymf_customer a right join ymf_group b on a.group_id = b.id ) t
+						where 1=1
+						/~customerNumber: and CUSTOMER_NUMBER = {customerNumber} ~/
+						/~customerName:   and CUSTOMER_NAME like '%'||{customerName}||'%'~/
+						/~groupId:  and groupid = {groupId}~/
+						/~related:  and related = {related}~/
+						/~from:      and create >= {from,mintimestamp}~/
+						/~to:        and create <= {to,maxtimestamp}~/
+						with ur
+					]]>
+			</value>
+		</property>  
+		<property name="queryWithoutParam" value="false"/>
+	</bean>
+	<bean id="ymfSalesQuery" class="com.yeepay.g3.utils.query.Query">
+		<property name="sql">
+			<value>
+				<![CDATA[
+						select row_number() over(order by a.id desc) as rowid,a.*,b.customer_name,c.group_name from 
+						 ymf_sales a,ymf_customer b,ymf_group c  
+						where a.customer_id=b.id and a.group_id = c.id and a.status!='DELETE' 
+						/~customerNumber: and b.CUSTOMER_NUMBER = {customerNumber}~/
+						/~customerName:   and b.CUSTOMER_NAME like '%'||{customerName}||'%'~/
+						/~groupId:  and a.GROUP_ID = {groupId}~/
+						/~qrId:  and a.QR_ID = {qrId}~/
+						/~userName:      and a.USER_NAME = {userName}~/
+						/~mobile:        and a.MOBILE = {mobile}~/
+						with ur
+					]]>
+			</value>
+		</property>  
+		<property name="queryWithoutParam" value="true"/>
+	</bean>
+	
+	<bean id="ymfSalesReportQuery" class="com.yeepay.g3.utils.query.Query">
+		<property name="sql">
+			<value>
+				<![CDATA[
+						select row_number() over(order by a.id desc) as rowid,
+						a.user_name,a.qr_id,a.mobile,a.bank_no,a.bank_name,a.customer_number,b.customer_name,c.group_name,
+						a.qr_id as san_code,sum(p.trx_amt) as amt,count(*) as cnt from 
+							ymf.ymf_sales a,ymf.ymf_customer b,ymf.ymf_group c,ymf.ymf_order o,ymf.ymf_payment p where 
+							a.customer_id=b.id and a.group_id = c.id and a.status!='DELETE' and a.qr_id = o.san_code and o.id=p.order_id and p.TRX_TYPE = 'PURCHASE' and p.PAY_STATUS='SUCCESS'
+												
+                  		/~customerNumber: and b.CUSTOMER_NUMBER = {customerNumber} ~/
+						/~customerName:   and b.CUSTOMER_NAME like '%'||{customerName}||'%'~/
+						/~groupId:  and a.GROUP_ID = {groupId}~/
+						/~qrId:  and a.QR_ID = {qrId}~/
+						/~userName:      and a.USER_NAME = {userName}~/
+						/~mobile:        and a.MOBILE = {mobile}~/
+						/~from:      and p.create_time >= {from,mintimestamp}~/
+						/~to:        and p.create_time <= {to,maxtimestamp}~/
+						group by a.id, a.user_name,a.qr_id,a.mobile,a.bank_no,a.bank_name,a.customer_number,a.qr_id,b.customer_name,c.group_name
+						with ur
+					]]>
+			</value>
+		</property>  
+		<property name="queryWithoutParam" value="false"/>
+	</bean>
+	<bean id="ymfSalesReportSummaryQuery" class="com.yeepay.g3.utils.query.Query">
+		<property name="sql">
+			<value>
+				<![CDATA[
+						select sum(p.trx_amt) as sum_amt,count(*) as sum_cnt from 
+							ymf.ymf_sales a,ymf.ymf_customer b,ymf.ymf_group c,ymf.ymf_order o,ymf.ymf_payment p where 
+							a.customer_id=b.id and a.group_id = c.id and a.status!='DELETE' and a.qr_id = o.san_code and o.id=p.order_id and p.TRX_TYPE = 'PURCHASE' and p.PAY_STATUS='SUCCESS'												
+                  		/~customerNumber: and b.CUSTOMER_NUMBER = {customerNumber} ~/
+						/~customerName:   and b.CUSTOMER_NAME like '%'||{customerName}||'%'~/
+						/~groupId:  and a.GROUP_ID = {groupId}~/
+						/~qrId:  and a.QR_ID = {qrId}~/
+						/~userName:      and a.USER_NAME = {userName}~/
+						/~mobile:        and a.MOBILE = {mobile}~/
+						/~from:      and p.create_time >= {from,mintimestamp}~/
+						/~to:        and p.create_time <= {to,maxtimestamp}~/
+					]]>
+			</value>
+		</property>  
+		<property name="queryWithoutParam" value="false"/>
+	</bean>
+</beans>
+

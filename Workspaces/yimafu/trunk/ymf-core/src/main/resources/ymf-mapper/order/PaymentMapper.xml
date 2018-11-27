@@ -1,0 +1,582 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yeepay.g3.core.ymf.dao.order.PaymentMapper" >
+  <resultMap id="BaseResultMap" type="com.yeepay.g3.core.ymf.entity.order.Payment" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="VERSION" property="version" jdbcType="BIGINT" />
+    <result column="ORDER_ID" property="orderId" jdbcType="BIGINT" />
+    <result column="CUSTOMER_NUMBER" property="customerNumber" jdbcType="VARCHAR" />
+    <result column="CUSTOMER_ORDER_ID" property="customerOrderId" jdbcType="VARCHAR" />
+    <result column="PAY_SOURCE" property="paySource" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="EXPIRE_TIME" property="expireTime" jdbcType="TIMESTAMP" />
+    <result column="PAY_URL" property="payUrl" jdbcType="VARCHAR" />
+    <result column="PAY_REQUEST_TIME" property="payRequestTime" jdbcType="TIMESTAMP" />
+    <result column="PAY_TIME" property="payTime" jdbcType="TIMESTAMP" />
+    <result column="CHANNEL_PAY_TIME" property="channelPayTime" jdbcType="TIMESTAMP" />
+    <result column="PAY_STATUS" property="payStatus" jdbcType="VARCHAR" />
+    <result column="SETTLE_STATUS" property="settleStatus" jdbcType="VARCHAR" />
+    <result column="SETTLE_TIME" property="settleTime" jdbcType="TIMESTAMP" />
+    <result column="BACK_URL" property="backUrl" jdbcType="VARCHAR" />
+    <result column="BANK_ORDER_ID" property="bankOrderId" jdbcType="VARCHAR" />
+    <result column="YEEPAY_ORDER_ID" property="yeepayOrderId" jdbcType="VARCHAR" />
+    <result column="OUT_ORDER_ID" property="outOrderId" jdbcType="VARCHAR" />
+    <result column="TRX_AMT" property="trxAmt" jdbcType="DECIMAL" />
+    <result column="REAL_AMT" property="realAmt" jdbcType="DECIMAL" />
+    <result column="REFUND_AMT" property="refundAmt" jdbcType="DECIMAL" />
+    <result column="FEE" property="fee" jdbcType="DECIMAL" />
+    <result column="TRX_TYPE" property="trxType" jdbcType="VARCHAR" />
+    <result column="OPEN_ID" property="openId" jdbcType="VARCHAR" />
+    <result column="BANK_TYPE" property="bankType" jdbcType="VARCHAR" />
+    <result column="BANK_NAME" property="bankName" jdbcType="VARCHAR" />
+    <result column="CARD_NO" property="cardNo" jdbcType="VARCHAR" />
+    <result column="CARD_TYPE" property="cardType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, VERSION, ORDER_ID, CUSTOMER_NUMBER, CUSTOMER_ORDER_ID, PAY_SOURCE, CREATE_TIME, 
+    EXPIRE_TIME, PAY_URL, PAY_REQUEST_TIME, PAY_TIME, CHANNEL_PAY_TIME, PAY_STATUS, SETTLE_STATUS, 
+    SETTLE_TIME, BACK_URL, BANK_ORDER_ID, YEEPAY_ORDER_ID, OUT_ORDER_ID, TRX_AMT, REAL_AMT, 
+    REFUND_AMT, FEE, TRX_TYPE, OPEN_ID, BANK_TYPE, BANK_NAME, CARD_NO, CARD_TYPE
+  </sql>
+  <select id="selectByFilter" resultMap="BaseResultMap" parameterType="com.yeepay.g3.core.ymf.entity.order.PaymentParam" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from YMF_PAYMENT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from YMF_PAYMENT
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from YMF_PAYMENT
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByFilter" parameterType="com.yeepay.g3.core.ymf.entity.order.PaymentParam" >
+    delete from YMF_PAYMENT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yeepay.g3.core.ymf.entity.order.Payment" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      VALUES NEXTVAL FOR YMF_PAYMENT_SEQ
+    </selectKey>
+    insert into YMF_PAYMENT (ID, ORDER_ID,
+      CUSTOMER_NUMBER, CUSTOMER_ORDER_ID, PAY_SOURCE, 
+      CREATE_TIME, EXPIRE_TIME, PAY_URL, 
+      PAY_REQUEST_TIME, PAY_TIME, CHANNEL_PAY_TIME, 
+      PAY_STATUS, SETTLE_STATUS, SETTLE_TIME, 
+      BACK_URL, BANK_ORDER_ID, YEEPAY_ORDER_ID, 
+      OUT_ORDER_ID, TRX_AMT, REAL_AMT, 
+      REFUND_AMT, FEE, TRX_TYPE, 
+      OPEN_ID, BANK_TYPE, BANK_NAME, 
+      CARD_NO, CARD_TYPE)
+    values (#{id,jdbcType=BIGINT}, #{orderId,jdbcType=BIGINT},
+      #{customerNumber,jdbcType=VARCHAR}, #{customerOrderId,jdbcType=VARCHAR}, #{paySource,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{expireTime,jdbcType=TIMESTAMP}, #{payUrl,jdbcType=VARCHAR}, 
+      #{payRequestTime,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP}, #{channelPayTime,jdbcType=TIMESTAMP}, 
+      #{payStatus,jdbcType=VARCHAR}, #{settleStatus,jdbcType=VARCHAR}, #{settleTime,jdbcType=TIMESTAMP}, 
+      #{backUrl,jdbcType=VARCHAR}, #{bankOrderId,jdbcType=VARCHAR}, #{yeepayOrderId,jdbcType=VARCHAR}, 
+      #{outOrderId,jdbcType=VARCHAR}, #{trxAmt,jdbcType=DECIMAL}, #{realAmt,jdbcType=DECIMAL}, 
+      #{refundAmt,jdbcType=DECIMAL}, #{fee,jdbcType=DECIMAL}, #{trxType,jdbcType=VARCHAR}, 
+      #{openId,jdbcType=VARCHAR}, #{bankType,jdbcType=VARCHAR}, #{bankName,jdbcType=VARCHAR}, 
+      #{cardNo,jdbcType=VARCHAR}, #{cardType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yeepay.g3.core.ymf.entity.order.Payment" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      VALUES NEXTVAL FOR YMF_PAYMENT_SEQ
+    </selectKey>
+    insert into YMF_PAYMENT
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="orderId != null" >
+        ORDER_ID,
+      </if>
+      <if test="customerNumber != null" >
+        CUSTOMER_NUMBER,
+      </if>
+      <if test="customerOrderId != null" >
+        CUSTOMER_ORDER_ID,
+      </if>
+      <if test="paySource != null" >
+        PAY_SOURCE,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="expireTime != null" >
+        EXPIRE_TIME,
+      </if>
+      <if test="payUrl != null" >
+        PAY_URL,
+      </if>
+      <if test="payRequestTime != null" >
+        PAY_REQUEST_TIME,
+      </if>
+      <if test="payTime != null" >
+        PAY_TIME,
+      </if>
+      <if test="channelPayTime != null" >
+        CHANNEL_PAY_TIME,
+      </if>
+      <if test="payStatus != null" >
+        PAY_STATUS,
+      </if>
+      <if test="settleStatus != null" >
+        SETTLE_STATUS,
+      </if>
+      <if test="settleTime != null" >
+        SETTLE_TIME,
+      </if>
+      <if test="backUrl != null" >
+        BACK_URL,
+      </if>
+      <if test="bankOrderId != null" >
+        BANK_ORDER_ID,
+      </if>
+      <if test="yeepayOrderId != null" >
+        YEEPAY_ORDER_ID,
+      </if>
+      <if test="outOrderId != null" >
+        OUT_ORDER_ID,
+      </if>
+      <if test="trxAmt != null" >
+        TRX_AMT,
+      </if>
+      <if test="realAmt != null" >
+        REAL_AMT,
+      </if>
+      <if test="refundAmt != null" >
+        REFUND_AMT,
+      </if>
+      <if test="fee != null" >
+        FEE,
+      </if>
+      <if test="trxType != null" >
+        TRX_TYPE,
+      </if>
+      <if test="openId != null" >
+        OPEN_ID,
+      </if>
+      <if test="bankType != null" >
+        BANK_TYPE,
+      </if>
+      <if test="bankName != null" >
+        BANK_NAME,
+      </if>
+      <if test="cardNo != null" >
+        CARD_NO,
+      </if>
+      <if test="cardType != null" >
+        CARD_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="orderId != null" >
+        #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="customerNumber != null" >
+        #{customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="customerOrderId != null" >
+        #{customerOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="paySource != null" >
+        #{paySource,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireTime != null" >
+        #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payUrl != null" >
+        #{payUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="payRequestTime != null" >
+        #{payRequestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null" >
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="channelPayTime != null" >
+        #{channelPayTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payStatus != null" >
+        #{payStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="settleStatus != null" >
+        #{settleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="settleTime != null" >
+        #{settleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="backUrl != null" >
+        #{backUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="bankOrderId != null" >
+        #{bankOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="yeepayOrderId != null" >
+        #{yeepayOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="outOrderId != null" >
+        #{outOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="trxAmt != null" >
+        #{trxAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="realAmt != null" >
+        #{realAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="refundAmt != null" >
+        #{refundAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="fee != null" >
+        #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="trxType != null" >
+        #{trxType,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="bankType != null" >
+        #{bankType,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null" >
+        #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        #{cardType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByFilter" parameterType="com.yeepay.g3.core.ymf.entity.order.PaymentParam" resultType="java.lang.Integer" >
+    select count(*) from YMF_PAYMENT
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByFilterSelective" parameterType="map" >
+    update YMF_PAYMENT
+    <set >
+      <if test="record.id != null" >
+        
+      </if>
+        VERSION = VERSION + 1,
+      <if test="record.orderId != null" >
+        ORDER_ID = #{record.orderId,jdbcType=BIGINT},
+      </if>
+      <if test="record.customerNumber != null" >
+        CUSTOMER_NUMBER = #{record.customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.customerOrderId != null" >
+        CUSTOMER_ORDER_ID = #{record.customerOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.paySource != null" >
+        PAY_SOURCE = #{record.paySource,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expireTime != null" >
+        EXPIRE_TIME = #{record.expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.payUrl != null" >
+        PAY_URL = #{record.payUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.payRequestTime != null" >
+        PAY_REQUEST_TIME = #{record.payRequestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.payTime != null" >
+        PAY_TIME = #{record.payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.channelPayTime != null" >
+        CHANNEL_PAY_TIME = #{record.channelPayTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.payStatus != null" >
+        PAY_STATUS = #{record.payStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.settleStatus != null" >
+        SETTLE_STATUS = #{record.settleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.settleTime != null" >
+        SETTLE_TIME = #{record.settleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.backUrl != null" >
+        BACK_URL = #{record.backUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankOrderId != null" >
+        BANK_ORDER_ID = #{record.bankOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.yeepayOrderId != null" >
+        YEEPAY_ORDER_ID = #{record.yeepayOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.outOrderId != null" >
+        OUT_ORDER_ID = #{record.outOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.trxAmt != null" >
+        TRX_AMT = #{record.trxAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.realAmt != null" >
+        REAL_AMT = #{record.realAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.refundAmt != null" >
+        REFUND_AMT = #{record.refundAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="record.fee != null" >
+        FEE = #{record.fee,jdbcType=DECIMAL},
+      </if>
+      <if test="record.trxType != null" >
+        TRX_TYPE = #{record.trxType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.openId != null" >
+        OPEN_ID = #{record.openId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankType != null" >
+        BANK_TYPE = #{record.bankType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bankName != null" >
+        BANK_NAME = #{record.bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardNo != null" >
+        CARD_NO = #{record.cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cardType != null" >
+        CARD_TYPE = #{record.cardType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByFilter" parameterType="map" >
+    update YMF_PAYMENT
+    set 
+      VERSION = VERSION + 1,
+      ORDER_ID = #{record.orderId,jdbcType=BIGINT},
+      CUSTOMER_NUMBER = #{record.customerNumber,jdbcType=VARCHAR},
+      CUSTOMER_ORDER_ID = #{record.customerOrderId,jdbcType=VARCHAR},
+      PAY_SOURCE = #{record.paySource,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      EXPIRE_TIME = #{record.expireTime,jdbcType=TIMESTAMP},
+      PAY_URL = #{record.payUrl,jdbcType=VARCHAR},
+      PAY_REQUEST_TIME = #{record.payRequestTime,jdbcType=TIMESTAMP},
+      PAY_TIME = #{record.payTime,jdbcType=TIMESTAMP},
+      CHANNEL_PAY_TIME = #{record.channelPayTime,jdbcType=TIMESTAMP},
+      PAY_STATUS = #{record.payStatus,jdbcType=VARCHAR},
+      SETTLE_STATUS = #{record.settleStatus,jdbcType=VARCHAR},
+      SETTLE_TIME = #{record.settleTime,jdbcType=TIMESTAMP},
+      BACK_URL = #{record.backUrl,jdbcType=VARCHAR},
+      BANK_ORDER_ID = #{record.bankOrderId,jdbcType=VARCHAR},
+      YEEPAY_ORDER_ID = #{record.yeepayOrderId,jdbcType=VARCHAR},
+      OUT_ORDER_ID = #{record.outOrderId,jdbcType=VARCHAR},
+      TRX_AMT = #{record.trxAmt,jdbcType=DECIMAL},
+      REAL_AMT = #{record.realAmt,jdbcType=DECIMAL},
+      REFUND_AMT = #{record.refundAmt,jdbcType=DECIMAL},
+      FEE = #{record.fee,jdbcType=DECIMAL},
+      TRX_TYPE = #{record.trxType,jdbcType=VARCHAR},
+      OPEN_ID = #{record.openId,jdbcType=VARCHAR},
+      BANK_TYPE = #{record.bankType,jdbcType=VARCHAR},
+      BANK_NAME = #{record.bankName,jdbcType=VARCHAR},
+      CARD_NO = #{record.cardNo,jdbcType=VARCHAR},
+      CARD_TYPE = #{record.cardType,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yeepay.g3.core.ymf.entity.order.Payment" >
+    update YMF_PAYMENT
+    <set >
+        VERSION = VERSION + 1,
+      <if test="orderId != null" >
+        ORDER_ID = #{orderId,jdbcType=BIGINT},
+      </if>
+      <if test="customerNumber != null" >
+        CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="customerOrderId != null" >
+        CUSTOMER_ORDER_ID = #{customerOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="paySource != null" >
+        PAY_SOURCE = #{paySource,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireTime != null" >
+        EXPIRE_TIME = #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payUrl != null" >
+        PAY_URL = #{payUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="payRequestTime != null" >
+        PAY_REQUEST_TIME = #{payRequestTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payTime != null" >
+        PAY_TIME = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="channelPayTime != null" >
+        CHANNEL_PAY_TIME = #{channelPayTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="payStatus != null" >
+        PAY_STATUS = #{payStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="settleStatus != null" >
+        SETTLE_STATUS = #{settleStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="settleTime != null" >
+        SETTLE_TIME = #{settleTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="backUrl != null" >
+        BACK_URL = #{backUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="bankOrderId != null" >
+        BANK_ORDER_ID = #{bankOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="yeepayOrderId != null" >
+        YEEPAY_ORDER_ID = #{yeepayOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="outOrderId != null" >
+        OUT_ORDER_ID = #{outOrderId,jdbcType=VARCHAR},
+      </if>
+      <if test="trxAmt != null" >
+        TRX_AMT = #{trxAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="realAmt != null" >
+        REAL_AMT = #{realAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="refundAmt != null" >
+        REFUND_AMT = #{refundAmt,jdbcType=DECIMAL},
+      </if>
+      <if test="fee != null" >
+        FEE = #{fee,jdbcType=DECIMAL},
+      </if>
+      <if test="trxType != null" >
+        TRX_TYPE = #{trxType,jdbcType=VARCHAR},
+      </if>
+      <if test="openId != null" >
+        OPEN_ID = #{openId,jdbcType=VARCHAR},
+      </if>
+      <if test="bankType != null" >
+        BANK_TYPE = #{bankType,jdbcType=VARCHAR},
+      </if>
+      <if test="bankName != null" >
+        BANK_NAME = #{bankName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardNo != null" >
+        CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      </if>
+      <if test="cardType != null" >
+        CARD_TYPE = #{cardType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yeepay.g3.core.ymf.entity.order.Payment" >
+    update YMF_PAYMENT
+    set VERSION = VERSION + 1,
+      ORDER_ID = #{orderId,jdbcType=BIGINT},
+      CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR},
+      CUSTOMER_ORDER_ID = #{customerOrderId,jdbcType=VARCHAR},
+      PAY_SOURCE = #{paySource,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      EXPIRE_TIME = #{expireTime,jdbcType=TIMESTAMP},
+      PAY_URL = #{payUrl,jdbcType=VARCHAR},
+      PAY_REQUEST_TIME = #{payRequestTime,jdbcType=TIMESTAMP},
+      PAY_TIME = #{payTime,jdbcType=TIMESTAMP},
+      CHANNEL_PAY_TIME = #{channelPayTime,jdbcType=TIMESTAMP},
+      PAY_STATUS = #{payStatus,jdbcType=VARCHAR},
+      SETTLE_STATUS = #{settleStatus,jdbcType=VARCHAR},
+      SETTLE_TIME = #{settleTime,jdbcType=TIMESTAMP},
+      BACK_URL = #{backUrl,jdbcType=VARCHAR},
+      BANK_ORDER_ID = #{bankOrderId,jdbcType=VARCHAR},
+      YEEPAY_ORDER_ID = #{yeepayOrderId,jdbcType=VARCHAR},
+      OUT_ORDER_ID = #{outOrderId,jdbcType=VARCHAR},
+      TRX_AMT = #{trxAmt,jdbcType=DECIMAL},
+      REAL_AMT = #{realAmt,jdbcType=DECIMAL},
+      REFUND_AMT = #{refundAmt,jdbcType=DECIMAL},
+      FEE = #{fee,jdbcType=DECIMAL},
+      TRX_TYPE = #{trxType,jdbcType=VARCHAR},
+      OPEN_ID = #{openId,jdbcType=VARCHAR},
+      BANK_TYPE = #{bankType,jdbcType=VARCHAR},
+      BANK_NAME = #{bankName,jdbcType=VARCHAR},
+      CARD_NO = #{cardNo,jdbcType=VARCHAR},
+      CARD_TYPE = #{cardType,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite" parallel="classes" thread-count="1">
+    <test verbose="2" preserve-order="true" name="TestDebug">
+        <parameter name="driverName" value="chrome" />
+        <classes>
+            <class name="Mitang_TestCase.Mitang01_ParentMerchantPeriodRuleDel"/>
+            <class name="Mitang_TestCase.Mitang02_ParentMerchantPeriodRuleCreate" />
+            <class name="Mitang_TestCase.Mitang03_MTFee"/>
+            <class name="Mitang_TestCase.Mitang04_TotalBillTask"/>
+            <class name="Mitang_TestCase.Mitang05_OrderInfoDaemonTask"/>
+            <class name="Mitang_TestCase.Mitang06_MtBillTask"/>
+
+        </classes>
+    </test> <!-- Test -->
+</suite> <!-- Suite -->

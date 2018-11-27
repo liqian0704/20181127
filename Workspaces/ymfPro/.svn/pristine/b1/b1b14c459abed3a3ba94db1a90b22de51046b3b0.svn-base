@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yeepay.g3.core.laike.repository.UserRepository">
+
+	<resultMap id="BaseResultMap" type="com.yeepay.g3.core.laike.entity.UserEntity">
+		<id column="ID" property="id" jdbcType="VARCHAR"/>
+		<result column="MEMBER_NO" property="memberNo" jdbcType="VARCHAR"/>
+		<result column="MERCHANT_NO" property="merchantNo" jdbcType="VARCHAR"/>
+		<result column="AGENT_NO" property="agentNo" jdbcType="VARCHAR"/>
+        <result column="PHONE_NO" property="phoneNo" typeHandler="SensitiveL2StringHandler"/>
+		<result column="USER_STATUS" property="userStatus" jdbcType="VARCHAR"/>
+		<result column="LOCATION" property="location" jdbcType="VARCHAR"/>
+		<result column="ROLE" property="role" jdbcType="VARCHAR"/>
+		<result column="IMEI" property="imei" jdbcType="VARCHAR"/>
+		<result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="LAST_VERSION_ID" property="lastVersionId" jdbcType="VARCHAR"/>
+		<result column="LAST_LOGIN_TIME" property="lastLoginTime" jdbcType="TIMESTAMP"/>
+		<result column="LAST_LOGOUT_TIME" property="lastLogoutTime" jdbcType="TIMESTAMP"/>
+		<result column="TOKEN" property="token" jdbcType="VARCHAR"/>
+		<result column="ACCOUNT_ID" property="accountId" jdbcType="VARCHAR"/>
+		<result column="S0_LEVEL" property="s0Level" jdbcType="VARCHAR"/>
+		<result column="APP_SOURCE" property="appSource" jdbcType="VARCHAR"/>
+		<result column="INVITE_CODE" property="inviteCode" jdbcType="VARCHAR"/>
+        <result column="ALLIANCE_INVITE_CODE" property="allianceInviteCode" jdbcType="VARCHAR"/>
+	</resultMap>
+
+	<select id="findByPhoneNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select *
+		from TBL_USER
+		where PHONE_NO = #{phoneNo,typeHandler=SensitiveL2StringHandler}
+  	</select>
+
+	<select id="findByPhoneAndSource" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select *
+		from TBL_USER
+		where PHONE_NO = #{phoneNo,typeHandler=SensitiveL2StringHandler}
+		<if test="appSource != null">
+			and APP_SOURCE = #{appSource,jdbcType=VARCHAR}
+		</if>
+	</select>
+
+	<select id="findByMerchantNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select *
+		from TBL_USER
+        where MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR}
+  	</select>
+
+	<select id="findByMemberNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select *
+		from TBL_USER
+		where MEMBER_NO = #{memberNo,jdbcType=VARCHAR}
+  	</select>
+
+	<select id="findBossByMerchantNo" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select *
+		from TBL_USER
+		where MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR} AND ROLE = 'BOSS'
+  	</select>
+
+	<select id="findById" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select *
+		from TBL_USER
+		where ID = #{id,jdbcType=VARCHAR}
+  	</select>
+
+	<insert id="insert" parameterType="com.yeepay.g3.core.laike.entity.UserEntity">
+		insert into YMF.TBL_USER (ID, MEMBER_NO,MERCHANT_NO,AGENT_NO,PHONE_NO,USER_STATUS, LOCATION,
+		ROLE, CREATE_TIME,LAST_VERSION_ID, LAST_LOGIN_TIME, LAST_LOGOUT_TIME,IMEI,
+        TOKEN,ACCOUNT_ID,S0_LEVEL,APP_SOURCE,INVITE_CODE, ALLIANCE_INVITE_CODE)
+		values (#{id,jdbcType=VARCHAR}, #{memberNo,jdbcType=VARCHAR},
+		#{merchantNo,jdbcType=VARCHAR}, #{agentNo,jdbcType=VARCHAR}, #{phoneNo,typeHandler=SensitiveL2StringHandler},
+		#{userStatus,jdbcType=SMALLINT}, #{location,jdbcType=VARCHAR},#{role,jdbcType=VARCHAR},
+		CURRENT_TIMESTAMP,#{lastVersionId,jdbcType=VARCHAR}, #{lastLoginTime},
+        #{lastLogoutTime},#{imei},#{token},#{accountId},#{s0Level},#{appSource,jdbcType=VARCHAR},#{inviteCode},
+        #{allianceInviteCode}
+		)
+  	</insert>
+
+	<select id="nextSequence" resultType="long">
+		VALUES NEXTVAL FOR SEQ_YMF_USER_ID
+	</select>
+
+	<update id="update" parameterType="com.yeepay.g3.core.laike.entity.UserEntity">
+		update TBL_USER
+		<set>
+			<if test="memberNo != null and memberNo.trim() != ''">
+				MEMBER_NO = #{memberNo,jdbcType=VARCHAR},
+			</if>
+			<if test="accountId != null and accountId.trim() != ''">
+				ACCOUNT_ID = #{accountId,jdbcType=VARCHAR},
+			</if>
+			<if test="token != null and token.trim() != ''">
+				TOKEN = #{token,jdbcType=VARCHAR},
+			</if>
+			<if test="merchantNo != null and merchantNo.trim() != ''">
+				MERCHANT_NO = #{merchantNo,jdbcType=VARCHAR},
+			</if>
+			<if test="agentNo != null and agentNo.trim() != ''">
+				AGENT_NO = #{agentNo,jdbcType=VARCHAR},
+			</if>
+			<if test="userStatus != null">
+				USER_STATUS = #{userStatus,jdbcType=VARCHAR},
+			</if>
+			<if test="location != null and location.trim() != ''">
+				LOCATION = #{location,jdbcType=VARCHAR},
+			</if>
+			<if test="role != null ">
+				ROLE = #{role,jdbcType=VARCHAR},
+			</if>
+			<if test="lastVersionId != null and lastVersionId.trim() != ''">
+				LAST_VERSION_ID = #{lastVersionId,jdbcType=VARCHAR},
+			</if>
+			<if test="imei != null and imei.trim() != ''">
+				IMEI = #{imei,jdbcType=VARCHAR},
+			</if>
+			<if test="s0Level != null ">
+				S0_LEVEL = #{s0Level,jdbcType=VARCHAR},
+			</if>
+			<if test="lastLoginTime != null">
+				LAST_LOGIN_TIME = #{lastLoginTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="lastLogoutTime != null">
+				LAST_LOGOUT_TIME = #{lastLogoutTime,jdbcType=TIMESTAMP},
+			</if>
+            <if test="allianceInviteCode != null and allianceInviteCode.trim() != ''">
+                ALLIANCE_INVITE_CODE = #{allianceInviteCode,jdbcType=VARCHAR},
+            </if>
+			<if test="inviteCode != null and inviteCode.trim() != ''">
+				INVITE_CODE = #{inviteCode,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

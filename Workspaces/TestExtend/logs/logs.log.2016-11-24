@@ -1,0 +1,7 @@
+2016-11-24 23:02:26,943-[SeleniumAutoFile] INFO [main] com.util.DatabaseService.connectDBDriver(52) - Database connection established
+2016-11-24 23:02:26,943-[SeleniumAutoFile] INFO [main] com.cases.TestBase.beforeClass(83) - Start to run test class com.cases.Kfgl_Testserach on driverType2
+2016-11-24 23:07:43,877-[SeleniumAutoFile] INFO [main] com.util.DatabaseService.connectDBDriver(52) - Database connection established
+2016-11-24 23:07:43,877-[SeleniumAutoFile] INFO [main] com.cases.TestBase.beforeClass(83) - Start to run test class com.cases.Kfgl_Testserach on driverType2
+2016-11-24 23:07:47,499-[SeleniumAutoFile] INFO [Forwarding newSession on session null to remote] org.apache.http.impl.client.DefaultRequestDirector.tryExecute(723) - I/O exception (java.net.SocketException) caught when processing request: Software caused connection abort: recv failed
+2016-11-24 23:07:47,499-[SeleniumAutoFile] INFO [Forwarding newSession on session null to remote] org.apache.http.impl.client.DefaultRequestDirector.tryExecute(730) - Retrying request
+2016-11-24 23:07:47,567-[SeleniumAutoFile] INFO [main] com.config.DriverManage.getDriver(33) - runDriver is ie......

@@ -1,0 +1,502 @@
+*{
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+input{
+    outline: none;
+}
+img{
+    width: 100%;
+    height: auto;
+}
+ul , li{
+    list-style: none;
+}
+html , body{
+    width: 100%;
+}
+html{
+    height: 100%;
+    font-size: 20px;
+}
+body{
+    position: relative;
+    max-width: 540px;
+    min-height: 100%;
+    margin: 0 auto;
+    font-family: "Microsoft YaHei", "微软雅黑" , arial;
+    font-size: 0.9rem;
+    color: #333;
+    background: #f5f5f5;
+}
+.box{
+    padding-bottom: 5rem;
+}
+.logo{
+    width: 5rem;
+    height: 5rem;
+    margin: 0 auto;
+    padding-top: 3rem;
+}
+.title{
+    padding-top: 1rem;
+    text-align: center;
+    font-size: 1rem;
+    font-weight: 700;
+}
+.plate{
+    position: relative;
+    height: 2.8rem;
+    border-top: 1px solid #d8d8d8;
+    border-bottom: 1px solid #d8d8d8;
+    background: #fff;
+}
+.form{
+    margin-top: 2.5rem;
+}
+.input-text{
+    width: 100%;
+    height: 2.8rem;
+    line-height: 2.8rem;
+    padding: 0.4rem 1rem 0.4rem 3rem;
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+.form span{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 3rem;
+    height: 3.5rem;
+    background: url("../images/icon.png") no-repeat 0 -0.4rem;
+    background-size: 8.8rem 7rem;
+}
+.btn-box{
+    padding: 0 1rem 2rem;
+    margin-top: 2rem;
+}
+.input-btn{
+    width: 100%;
+    height: 2.6rem;
+    font-size: 1rem;
+    color: #fff;
+    border-radius: 6px;
+    background: #23ac38;
+    appearance: none;
+    -webkit-appearance: none;
+}
+.not{
+    background: #ccc;
+}
+.content{
+    position: relative;
+    margin-top: 2rem;
+    padding: 0 1rem;
+    overflow: hidden;
+}
+.content .bg-lf , .content .bg-rg{
+    position: absolute;
+    top: 0;
+    display: block;
+    width: 0.35rem;
+    height: 0.7rem;
+    background: url("../images/bg-dir.png") no-repeat;
+    background-size: 0.7rem 0.7rem;
+}
+.content .bg-lf{
+    left: 0.65rem;
+    background-position: 0 0;
+}
+.content .bg-rg{
+    right: 0.65rem;
+    background-position: -0.35rem 0;
+}
+.infor{
+    padding: 1rem;
+    background: #fff url("../images/content-bg.png") repeat-x;
+    background-size: 1px 0.7rem;
+}
+.infor p{
+    margin-top: 1rem;
+}
+.total{
+    height: 3rem;
+    padding: 0 1rem 0.4rem;
+    line-height: 3rem;
+    text-align: right;
+    background: #fff url("../images/total-bg.png") repeat-x bottom;
+    background-size: 0.5rem 0.5rem;
+}
+.total p{
+    border-top: 1px solid #ccc;
+}
+.total span{
+    color: #e97504;
+}
+.total span b{
+    font-weight: normal;
+    font-size: 1rem;
+}
+header{
+    padding-top: 2rem;
+}
+header h3{
+    padding-left: 1rem;
+}
+header p{
+    margin-top: 1.5rem;
+    text-align: center;
+    font-size: 2rem;
+    color: #e97504;
+}
+.to{
+    margin-top: 1rem;
+    padding: 0 1rem;
+    line-height: 2.8rem;
+}
+.to span{
+    padding-right: 1rem;
+    color: #999;
+}
+.pm{
+    margin-top: 2rem;
+}
+.pm h3{
+    padding-left: 1rem;
+    margin-bottom: 0.8rem;
+    color: #999;
+}
+.bd-bt-none{
+    border-bottom: 0;
+}
+.pm-child{
+    padding-left: 4rem;
+    line-height: 2.8rem;
+}
+.pm-hover{
+    background: #fafafa;
+}
+.pm-child span{
+    position: absolute;
+    display: block;
+    background: url("../images/icon.png") no-repeat;
+    background-size: 8.8rem 7rem;
+}
+.pm-child .icon-w , .pm-child .icon-y , .pm-child .icon-z{
+    top: 0;
+    left: 0;
+    width: 3rem;
+    height: 3.5rem;
+}
+.pm-child .icon-w{
+    background-position: -3rem -0.3rem;
+}
+.pm-child .icon-y{
+    background-position: 0 -3.8rem;
+}
+.pm-child .icon-z{
+    background-position: -3rem -3.8rem;
+}
+.pm-child .icon-yes{
+    top: 0.7rem;
+    right: 1rem;
+    width: 1.4rem;
+    height: 1.4rem;
+    background-position: -6rem 0;
+}
+.pm-child .icon-yes.on{
+    background-position: -7.4rem 0;
+}
+.money{
+    position: relative;
+    height: 2.8rem;
+    margin-top: 1rem;
+    padding: 0.8rem 3rem 0.8rem 4rem;
+    box-sizing: border-box;
+    font-size: 0.9rem;
+    background: #fff;
+    border-top: 1px solid #d8d8d8;
+    border-bottom: 1px solid #d8d8d8;
+}
+.input-money{
+    width: 100%;
+    height: 1.2rem;
+    line-height: 1.2rem;
+    text-align: right;
+    font-size: 0.9rem;
+}
+.money label{
+    position: absolute;
+    left: 1rem;
+    top: 0;
+    line-height: 2.8rem;
+}
+.money span{
+    position: absolute;
+    right: 1rem;
+    top: 0;
+    line-height: 2.8rem;
+}
+.company-name , .num , .info-list{
+    background: #fff;
+}
+.company-name{
+    height: 4.75rem;
+    padding: 1rem 1.25rem;
+    line-height: 2.75rem;
+    box-sizing: border-box;
+    font-size: 0.8rem;
+    color: #000;
+}
+.company-name img{
+    float: left;
+    width: 3rem;
+    height: 3rem;
+    margin-right: 0.75rem;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.num{
+    padding: 1.5rem 0;
+    text-align: center;
+    border-top: 1px solid #d8d8d8;
+    border-bottom: 1px solid #d8d8d8;
+}
+.num h4{
+    font-size: 2rem;
+    font-weight: normal;
+    color: #f56800;
+}
+.num h4 span{
+    font-size: 1.5rem;
+}
+.num p{
+    margin-top: 0.3rem;
+    font-size: 0.7rem;
+    color: #999;
+}
+.info-list{
+    padding: 0 1rem 2.4rem;
+    background: #fff url("../images/info-list.png") repeat-x bottom;
+    background-size: 1.1rem 0.4rem;
+    overflow: hidden;
+}
+.info-list li{
+    height: 3.5rem;
+    margin-top: -1px;
+    line-height: 3.5rem;
+    color: #808080;
+    border-top: 1px solid #d8d8d8;
+}
+.info-list li > div{
+    float: left;
+}
+.space:before{
+    content: "三个字";
+    opacity: 0;
+}
+.letter{
+    letter-spacing: 0.3rem;
+}
+.info-list li p{
+    float: right;
+}
+
+/*---------------------------------------------------------------------------------------------
+------易码付申请注册样式------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------- */
+.registertitle{
+    text-align: center;
+    padding: 2rem;
+    font-size: 1rem;
+}
+.editform{
+    padding: 1rem;
+}
+.editform .form-group{
+    padding-bottom: .5rem;
+}
+.editform .form-group>label{
+    font-size: .7rem;
+    width: 5rem;
+    text-align: left;
+    display: inline-block;
+    float: left;
+    height: 1.5rem;
+    line-height: 1.5rem;
+}
+.editform .form-group>.form-inlineblock{
+     display: block;
+     float: left;
+     position: relative;
+     width: calc(100% - 5rem);
+}
+.editform .form-group:after{
+    content: "";
+    display: block;
+    clear: both;
+}
+.editform .form-group>.form-inlineblock .form-control,
+.editform .form-group>.form-inlineblock .form-control-select{
+    vertical-align: top;
+    border: 1px solid #333;
+    height: 1.5rem;
+    padding: .3rem;
+    box-sizing: border-box;
+    width: 100%;
+    border-radius: 0;
+    font-size: 0.7rem;
+}
+.editform>.form-group>.form-inlineblock .form-control-select{
+
+}
+.form-submit{
+    padding: 1rem 0 0 5rem;
+}
+.form-submit>.conquer{
+    width: 6rem;
+    height: 1.5rem;
+    line-height: 1.5rem;
+    border-radius: 3px;
+    background: #23ac38;
+    color: #fff;
+    font-size: .8rem;
+    margin-right: .5rem;
+
+}
+.codeshow .codeshow-p{
+    font-size: .8rem;
+    padding-left: 2rem;
+    padding-bottom: .5rem;
+
+}
+.codeshow .codeshow-img{
+    background: gray;
+    width: 3rem;
+    width: 10rem;
+    height: 10rem;
+    margin:0 0 2rem 5rem;
+}
+.downmenu{
+    position: absolute;
+    top: 1.5rem;
+    left: 0;
+    z-index: 10;
+    width: 11rem;
+    border: 1px solid #333;
+    border-top: none;
+    box-sizing: border-box;
+    
+}
+.downmenu li{
+    background: #fff;
+    color: #333;
+    padding: .1rem;
+    font-size: .7rem;
+}  
+.displayN{
+    display: none;
+}
+.select-icon{
+    position: absolute;
+    top: .4rem;
+    right: 5px;
+}
+.form-group.has-error p{
+    color:red;
+    font-size: .6rem;
+}
+.editform .form-group.has-error>.form-inlineblock .form-control,
+.editform .form-group.has-error>.form-inlineblock .form-control-select{
+    border:1px solid red;
+}
+
+/*---------------------------------------------------------------------------------------------
+------二维码展示------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------- */
+.twocodetitle{
+    text-align: center;
+    font-size: 1rem;
+    margin: .5rem;
+}
+.twocodetitlept{
+    padding-top: 2rem;
+}
+.codepay{
+        text-align: center;
+    margin: 1rem 0;
+}
+.codepay .item{
+    display: inline-block;
+    width: 4rem;
+
+}
+.codepay .item>.zhifu{
+    font-size:2rem;
+
+}
+.codepay .item>.saoma{
+    font-size:1rem;
+
+}
+.codepay .item>div{
+    font-size:.5rem;
+
+}
+
+
+@font-face {font-family: "iconfont";
+  src: url('../iconfont/iconfont.eot?t=1497606406385'); /* IE9*/
+  src: url('../iconfont/iconfont.eot?t=1497606406385#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('../iconfont/iconfont.woff?t=1497606406385') format('woff'), /* chrome, firefox */
+  url('../iconfont/iconfont.ttf?t=1497606406385') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('../iconfont/iconfont.svg?t=1497606406385#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-zhifu:before { content: "\e63c"; }
+
+.icon-qrcode:before { content: "\e631"; }
+
+.icon-weixinzhifu1:before { content: "\e61f"; }
+
+.icon-chaxun:before { content: "\e610"; }
+
+.icon-tubiaozhizuomobanlo:before { content: "\e624"; }
+
+.icon-qian:before { content: "\e6e1"; }
+
+
+
+footer{
+    position: absolute;
+    bottom: 1rem;
+    left: 0;
+    width: 100%;
+    padding-top: 2rem;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #999;
+    background: url("../images/footer-logo.png") no-repeat top center;
+    background-size: 5.3rem 1.5rem;
+}
+
+
+@media screen and (max-width: 400px) {
+    html{
+        font-size: 17.5px;
+    }
+}
+@media screen and (max-width: 360px) {
+    html{
+        font-size: 15px;
+    }
+}

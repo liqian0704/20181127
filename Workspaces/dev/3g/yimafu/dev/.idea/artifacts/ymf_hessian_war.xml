@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="ymf-hessian:war">
+    <output-path>$PROJECT_DIR$/ymf-hessian/target</output-path>
+    <root id="archive" name="ymf-hessian.war">
+      <element id="artifact" artifact-name="ymf-hessian:war exploded" />
+    </root>
+  </artifact>
+</component>

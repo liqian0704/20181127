@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<settings>
+		<setting name="cacheEnabled" value="false"/>
+		<setting name="useGeneratedKeys" value="true"/>
+		<setting name="defaultExecutorType" value="REUSE"/>
+		<!--<setting name="jdbcTypeForNull" value="NULL" />-->
+		<!-- 延迟加载 -->
+		<setting name="lazyLoadingEnabled" value="true"/>
+		<setting name="aggressiveLazyLoading" value="false"/>
+	</settings>
+
+	<typeAliases>
+
+		<typeAlias type="com.yeepay.g3.common.Amount"/>
+		<typeAlias type="com.yeepay.g3.core.laike.handler.SensitiveString"/>
+		<typeAlias type="com.yeepay.g3.utils.persistence.mybatis.AmountTypeHandler"/>
+		<typeAlias type="com.yeepay.g3.core.laike.handler.SensitiveL1StringHandler"/>
+		<typeAlias type="com.yeepay.g3.core.laike.handler.SensitiveL2StringHandler"/>
+
+	</typeAliases>
+
+	<typeHandlers>
+		<typeHandler handler="AmountTypeHandler" javaType="java.math.BigDecimal" jdbcType="DECIMAL"/>
+		<typeHandler handler="SensitiveL1StringHandler" javaType="com.yeepay.g3.core.laike.handler.SensitiveString"
+					 jdbcType="VARCHAR"/>
+		<typeHandler handler="SensitiveL2StringHandler" javaType="com.yeepay.g3.core.laike.handler.SensitiveString"
+					 jdbcType="VARCHAR"/>
+	</typeHandlers>
+
+	<plugins>
+		<plugin interceptor="com.yeepay.g3.utils.persistence.mybatis.interceptor.OptimisticLockingInterceptor">
+			<property name="sqlPattern" value=".*update.*"/>
+		</plugin>
+		<plugin interceptor="com.yeepay.g3.core.laike.cache.GetCacheInterceptor">
+			<property name="systemName" value="laike-hessian"/>
+		</plugin>
+		<plugin interceptor="com.yeepay.g3.core.laike.cache.SetCacheInterceptor">
+			<property name="systemName" value="laike-hessian"/>
+		</plugin>
+	</plugins>
+</configuration>

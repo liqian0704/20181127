@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+    xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+    xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+    http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.0.xsd
+    http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+    http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<bean id="tradeFacade"
+		  class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="http://10.151.30.161:8081/ymf-hessian/soa/http/com.yeepay.g3.facade.ymf.facade.laike.TradeFacade" />
+		<property name="serviceInterface" value="com.yeepay.g3.facade.ymf.facade.TradeFacade" />
+	</bean>
+	<bean id="customerSettleFacade"
+		  class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">
+		<property name="serviceUrl" value="http://10.151.30.161:8081/ymf-hessian/soa/http/com.yeepay.g3.facade.ymf.facade.CustomerSettleFacade" />
+		<property name="serviceInterface" value="com.yeepay.g3.facade.ymf.facade.CustomerSettleFacade" />
+	</bean>
+
+	<!--<bean class="org.springframework.remoting.httpinvoker.HttpInvokerProxyFactoryBean">-->
+		<!--<property name="serviceUrl" value="http://172.21.0.83:8003/nc-api-hessian/soa/http/com.yeepay.g3.facade.nctrade.facade.TradeCashierFacade;" />-->
+		<!--<property name="serviceInterface" value="com.yeepay.g3.facade.nctrade.facade.TradeCashierFacade" />-->
+	<!--</bean>-->
+
+	<bean class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+		<property name="serviceUrl" value="http://172.21.0.83:8003/nc-api-hessian/hessian/TradeCashierFacade" />
+		<property name="serviceInterface" value="com.yeepay.g3.facade.nctrade.facade.TradeCashierFacade" />
+	</bean>
+
+	<bean class="org.springframework.remoting.caucho.HessianProxyFactoryBean">
+		<property name="serviceUrl" value="http://172.21.0.83:8003/nc-api-hessian/hessian/TradeBaseFacade" />
+		<property name="serviceInterface" value="com.yeepay.g3.facade.nctrade.facade.TradeBaseFacade" />
+	</bean>
+
+</beans>

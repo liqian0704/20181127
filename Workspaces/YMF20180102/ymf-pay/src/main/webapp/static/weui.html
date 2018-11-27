@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)http://weixin.yoby123.cn/weui/c/form2.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title></title>
+ <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+  <link rel="stylesheet" href="./css/weui.min.css">
+  <link rel="stylesheet" href="./css/weui2.css">
+  <script src="./js/zepto.min.js"></script>
+</head>
+<body ontouchstart="" style="background-color: #f8f8f8;">
+	<div class="weui-cells__title">易码付代理人注册申请</div>
+	<div class="weui-cells weui-cells_form">
+       
+         <div class="weui-cell weui-cell_select weui-cell_select-after">
+             <div class="weui-cell__hd">
+                 <label for="" class="weui-label">公司名称</label>
+             </div>
+             <div class="weui-cell__bd">
+                 <select class="weui-select" name="groupId" id="groupId">
+                     <option value="">请选择</option>
+                        <c:forEach items="${groupList}" var="group">  
+                       	<option value="${group.id}">${group.groupName}</option>
+                       	</c:forEach>
+                 </select>
+             </div>
+        </div>
+         <div class="weui-cell weui-cell_select weui-cell_select-after">
+             <div class="weui-cell__hd">
+                 <label for="" class="weui-label">分支机构</label>
+             </div>
+             <div class="weui-cell__bd">
+                 <select class="weui-select" name="customerId" id="customerId">
+                     <option value="">请选择</option>
+                 </select>
+             </div>
+        </div>
+       <div class="weui-cell">
+       		<div class="weui-cell__hd">
+                 <label for="" class="weui-label">姓名</label>
+             </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" placeholder="请输入姓名"/>
+            </div>
+        </div>
+        <div class="weui-cell">
+       		<div class="weui-cell__hd">
+                 <label for="" class="weui-label">手机号</label>
+             </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" placeholder="请输入手机号"/>
+            </div>
+        </div>
+        <div class="weui-cell">
+       		<div class="weui-cell__hd">
+                 <label for="" class="weui-label">工号</label>
+             </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" placeholder="请输入工号"/>
+            </div>
+        </div>
+        <div class="weui-cell">
+       		<div class="weui-cell__hd">
+                 <label for="" class="weui-label">微信号</label>
+             </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" placeholder="请输入微信号"/>
+            </div>
+        </div>
+        <div class="weui-cell">
+       		<div class="weui-cell__hd">
+                 <label for="" class="weui-label">邮箱</label>
+             </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" placeholder="请输入邮箱"/>
+            </div>
+        </div>
+        <div class="weui-cell">
+       		<div class="weui-cell__hd">
+                 <label for="" class="weui-label">银行卡号</label>
+             </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" placeholder="请输入银行卡号"/>
+            </div>
+        </div>
+        <div class="weui-cell">
+       		<div class="weui-cell__hd">
+                 <label for="" class="weui-label">银行名称</label>
+             </div>
+            <div class="weui-cell__bd">
+                <input class="weui-input" type="text" placeholder="请输入银行名称"/>
+            </div>
+        </div>
+        <div class="weui-btn-area">
+            <a class="weui-btn weui-btn_primary" href="javascript:" id="showTooltips">确定</a>
+        </div>
+ 	</div>
+ 	
+ 	<div id="loadingToast" style="opacity: 0; display: none;">
+        <div class="weui-mask_transparent"></div>
+        <div class="weui-toast">
+            <i class="weui-loading weui-icon_toast"></i>
+            <p class="weui-toast__content">数据加载中</p>
+        </div>
+    </div>
+</body>
+</html>

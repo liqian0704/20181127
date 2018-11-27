@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yeepay.g3.core.ymf.dao.material.TermRelationMapper" >
+  <resultMap id="BaseResultMap" type="com.yeepay.g3.core.ymf.entity.material.TermRelation" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="CUSTOMER_NUMBER" property="customerNumber" jdbcType="VARCHAR" />
+    <result column="SHOP_ID" property="shopId" jdbcType="BIGINT" />
+    <result column="SN_SERIAL" property="snSerial" jdbcType="VARCHAR" />
+    <result column="TERM_ID" property="termId" jdbcType="BIGINT" />
+    <result column="BIND_TIME" property="bindTime" jdbcType="TIMESTAMP" />
+    <result column="BIND_OPERATOR" property="bindOperator" jdbcType="VARCHAR" />
+    <result column="UNBIND_TIME" property="unbindTime" jdbcType="TIMESTAMP" />
+    <result column="UNBIND_OPERATOR" property="unbindOperator" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="OP_CODE" property="opCode" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, CUSTOMER_NUMBER, SHOP_ID, SN_SERIAL, TERM_ID, BIND_TIME, BIND_OPERATOR, UNBIND_TIME, 
+    UNBIND_OPERATOR, STATUS, OP_CODE
+  </sql>
+  <select id="selectByFilter" resultMap="BaseResultMap" parameterType="com.yeepay.g3.core.ymf.entity.material.TermRelationParam" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from YMF_TERM_REL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from YMF_TERM_REL
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from YMF_TERM_REL
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByFilter" parameterType="com.yeepay.g3.core.ymf.entity.material.TermRelationParam" >
+    delete from YMF_TERM_REL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yeepay.g3.core.ymf.entity.material.TermRelation" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      VALUES NEXTVAL FOR YMF_TERM_REL_ID_SEQ
+    </selectKey>
+    insert into YMF_TERM_REL (ID, CUSTOMER_NUMBER, SHOP_ID, 
+      SN_SERIAL, TERM_ID, BIND_TIME, 
+      BIND_OPERATOR, UNBIND_TIME, UNBIND_OPERATOR, 
+      STATUS, OP_CODE)
+    values (#{id,jdbcType=BIGINT}, #{customerNumber,jdbcType=VARCHAR}, #{shopId,jdbcType=BIGINT}, 
+      #{snSerial,jdbcType=VARCHAR}, #{termId,jdbcType=BIGINT}, #{bindTime,jdbcType=TIMESTAMP}, 
+      #{bindOperator,jdbcType=VARCHAR}, #{unbindTime,jdbcType=TIMESTAMP}, #{unbindOperator,jdbcType=VARCHAR}, 
+      #{status,jdbcType=VARCHAR}, #{opCode,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yeepay.g3.core.ymf.entity.material.TermRelation" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      VALUES NEXTVAL FOR YMF_TERM_REL_ID_SEQ
+    </selectKey>
+    insert into YMF_TERM_REL
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="customerNumber != null" >
+        CUSTOMER_NUMBER,
+      </if>
+      <if test="shopId != null" >
+        SHOP_ID,
+      </if>
+      <if test="snSerial != null" >
+        SN_SERIAL,
+      </if>
+      <if test="termId != null" >
+        TERM_ID,
+      </if>
+      <if test="bindTime != null" >
+        BIND_TIME,
+      </if>
+      <if test="bindOperator != null" >
+        BIND_OPERATOR,
+      </if>
+      <if test="unbindTime != null" >
+        UNBIND_TIME,
+      </if>
+      <if test="unbindOperator != null" >
+        UNBIND_OPERATOR,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="opCode != null" >
+        OP_CODE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="customerNumber != null" >
+        #{customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null" >
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="snSerial != null" >
+        #{snSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="termId != null" >
+        #{termId,jdbcType=BIGINT},
+      </if>
+      <if test="bindTime != null" >
+        #{bindTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bindOperator != null" >
+        #{bindOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="unbindTime != null" >
+        #{unbindTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unbindOperator != null" >
+        #{unbindOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="opCode != null" >
+        #{opCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByFilter" parameterType="com.yeepay.g3.core.ymf.entity.material.TermRelationParam" resultType="java.lang.Integer" >
+    select count(*) from YMF_TERM_REL
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByFilterSelective" parameterType="map" >
+    update YMF_TERM_REL
+    <set >
+      <if test="record.id != null" >
+        
+      </if>
+      <if test="record.customerNumber != null" >
+        CUSTOMER_NUMBER = #{record.customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopId != null" >
+        SHOP_ID = #{record.shopId,jdbcType=BIGINT},
+      </if>
+      <if test="record.snSerial != null" >
+        SN_SERIAL = #{record.snSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="record.termId != null" >
+        TERM_ID = #{record.termId,jdbcType=BIGINT},
+      </if>
+      <if test="record.bindTime != null" >
+        BIND_TIME = #{record.bindTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.bindOperator != null" >
+        BIND_OPERATOR = #{record.bindOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unbindTime != null" >
+        UNBIND_TIME = #{record.unbindTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.unbindOperator != null" >
+        UNBIND_OPERATOR = #{record.unbindOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.opCode != null" >
+        OP_CODE = #{record.opCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByFilter" parameterType="map" >
+    update YMF_TERM_REL
+    set 
+      CUSTOMER_NUMBER = #{record.customerNumber,jdbcType=VARCHAR},
+      SHOP_ID = #{record.shopId,jdbcType=BIGINT},
+      SN_SERIAL = #{record.snSerial,jdbcType=VARCHAR},
+      TERM_ID = #{record.termId,jdbcType=BIGINT},
+      BIND_TIME = #{record.bindTime,jdbcType=TIMESTAMP},
+      BIND_OPERATOR = #{record.bindOperator,jdbcType=VARCHAR},
+      UNBIND_TIME = #{record.unbindTime,jdbcType=TIMESTAMP},
+      UNBIND_OPERATOR = #{record.unbindOperator,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      OP_CODE = #{record.opCode,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yeepay.g3.core.ymf.entity.material.TermRelation" >
+    update YMF_TERM_REL
+    <set >
+      <if test="customerNumber != null" >
+        CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null" >
+        SHOP_ID = #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="snSerial != null" >
+        SN_SERIAL = #{snSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="termId != null" >
+        TERM_ID = #{termId,jdbcType=BIGINT},
+      </if>
+      <if test="bindTime != null" >
+        BIND_TIME = #{bindTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="bindOperator != null" >
+        BIND_OPERATOR = #{bindOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="unbindTime != null" >
+        UNBIND_TIME = #{unbindTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="unbindOperator != null" >
+        UNBIND_OPERATOR = #{unbindOperator,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="opCode != null" >
+        OP_CODE = #{opCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yeepay.g3.core.ymf.entity.material.TermRelation" >
+    update YMF_TERM_REL
+    set CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR},
+      SHOP_ID = #{shopId,jdbcType=BIGINT},
+      SN_SERIAL = #{snSerial,jdbcType=VARCHAR},
+      TERM_ID = #{termId,jdbcType=BIGINT},
+      BIND_TIME = #{bindTime,jdbcType=TIMESTAMP},
+      BIND_OPERATOR = #{bindOperator,jdbcType=VARCHAR},
+      UNBIND_TIME = #{unbindTime,jdbcType=TIMESTAMP},
+      UNBIND_OPERATOR = #{unbindOperator,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      OP_CODE = #{opCode,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

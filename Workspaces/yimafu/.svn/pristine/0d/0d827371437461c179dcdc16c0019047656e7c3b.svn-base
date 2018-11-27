@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yeepay.g3.core.ymf.dao.qrcode.QRCodeMapper" >
+  <resultMap id="BaseResultMap" type="com.yeepay.g3.core.ymf.entity.qrcode.QRCode" >
+    <id column="ID" property="id" jdbcType="BIGINT" />
+    <result column="OPTIMISITC" property="optimisitc" jdbcType="BIGINT" />
+    <result column="CUSTOMER_NUMBER" property="customerNumber" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="UPDATE_TIME" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="QR_ID" property="qrId" jdbcType="VARCHAR" />
+    <result column="FTP_URL" property="ftpUrl" jdbcType="VARCHAR" />
+    <result column="STATUS" property="status" jdbcType="VARCHAR" />
+    <result column="CLOSE_TIME" property="closeTime" jdbcType="TIMESTAMP" />
+    <result column="SHOP_NAME" property="shopname" jdbcType="VARCHAR" />
+    <result column="BUSINESS_TYPE" property="businessType" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    ID, OPTIMISITC, CUSTOMER_NUMBER, CREATE_TIME, UPDATE_TIME, QR_ID, FTP_URL, STATUS, 
+    CLOSE_TIME,SHOP_NAME,BUSINESS_TYPE
+  </sql>
+  <select id="selectByFilter" resultMap="BaseResultMap" parameterType="com.yeepay.g3.core.ymf.entity.qrcode.QRCodeParam" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from YMF_QRCODE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from YMF_QRCODE
+    where ID = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from YMF_QRCODE
+    where ID = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByFilter" parameterType="com.yeepay.g3.core.ymf.entity.qrcode.QRCodeParam" >
+    delete from YMF_QRCODE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yeepay.g3.core.ymf.entity.qrcode.QRCode" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      VALUES NEXTVAL FOR SEQ_QRCODE_ID
+    </selectKey>
+    insert into YMF_QRCODE (ID, CUSTOMER_NUMBER,
+      CREATE_TIME, UPDATE_TIME, QR_ID, 
+      FTP_URL, STATUS, CLOSE_TIME,SHOP_NAME,BUSINESS_TYPE)
+    values (#{id,jdbcType=BIGINT},0, #{customerNumber,jdbcType=VARCHAR},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP},
+      #{qrId,jdbcType=VARCHAR},
+      #{ftpUrl,jdbcType=VARCHAR}, #{status,jdbcType=VARCHAR},
+      #{closeTime,jdbcType=TIMESTAMP},
+      #{shopname,jdbcType=VARCHAR},
+      #{businessType,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yeepay.g3.core.ymf.entity.qrcode.QRCode" >
+    <selectKey resultType="java.lang.Long" keyProperty="id" order="BEFORE" >
+      VALUES NEXTVAL FOR SEQ_QRCODE_ID
+    </selectKey>
+    insert into YMF_QRCODE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      ID,
+      <if test="optimisitc != null" >
+        OPTIMISITC,
+      </if>
+      <if test="customerNumber != null" >
+        CUSTOMER_NUMBER,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME,
+      </if>
+      <if test="qrId != null" >
+        QR_ID,
+      </if>
+      <if test="ftpUrl != null" >
+        FTP_URL,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="closeTime != null" >
+        CLOSE_TIME,
+      </if>
+      <if test="shopname != null" >
+        SHOP_NAME,
+      </if>
+      <if test="businessType != null" >
+        BUSINESS_TYPE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      #{id,jdbcType=BIGINT},
+      <if test="optimisitc != null" >
+        #{optimisitc,jdbcType=BIGINT},
+      </if>
+      <if test="customerNumber != null" >
+        #{customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qrId != null" >
+        #{qrId,jdbcType=VARCHAR},
+      </if>
+      <if test="ftpUrl != null" >
+        #{ftpUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="closeTime != null" >
+        #{closeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shopname != null" >
+        #{shopname,jdbcType=VARCHAR},
+      </if>
+      <if test="businessType != null" >
+        #{businessType,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByFilter" parameterType="com.yeepay.g3.core.ymf.entity.qrcode.QRCodeParam" resultType="java.lang.Integer" >
+    select count(*) from YMF_QRCODE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByFilterSelective" parameterType="map" >
+    update YMF_QRCODE
+    <set >
+      OPTIMISITC=OPTIMISITC+1
+      <if test="record.customerNumber != null" >
+        CUSTOMER_NUMBER = #{record.customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.qrId != null" >
+        QR_ID = #{record.qrId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ftpUrl != null" >
+        FTP_URL = #{record.ftpUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=VARCHAR},
+      </if>
+      <if test="record.closeTime != null" >
+        CLOSE_TIME = #{record.closeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.shopname != null" >
+        SHOP_NAME = #{record.shopname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessType != null" >
+        SHOP_NAME = #{record.businessType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByFilter" parameterType="map" >
+    update YMF_QRCODE
+    set 
+      OPTIMISITC = OPTIMISITC+1,
+      CUSTOMER_NUMBER = #{record.customerNumber,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{record.updateTime,jdbcType=TIMESTAMP},
+      QR_ID = #{record.qrId,jdbcType=VARCHAR},
+      FTP_URL = #{record.ftpUrl,jdbcType=VARCHAR},
+      STATUS = #{record.status,jdbcType=VARCHAR},
+      CLOSE_TIME = #{record.closeTime,jdbcType=TIMESTAMP},
+      SHOP_NAME = #{record.shopname,jdbcType=VARCHAR},
+      BUSINESS_TYPE = #{record.businessType,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yeepay.g3.core.ymf.entity.qrcode.QRCode" >
+    update YMF_QRCODE
+    <set >
+      OPTIMISITC=OPTIMISITC+1,
+      <if test="customerNumber != null" >
+        CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="qrId != null" >
+        QR_ID = #{qrId,jdbcType=VARCHAR},
+      </if>
+      <if test="ftpUrl != null" >
+        FTP_URL = #{ftpUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=VARCHAR},
+      </if>
+      <if test="closeTime != null" >
+        CLOSE_TIME = #{closeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="shopname != null" >
+        SHOP_NAME = #{shopname,jdbcType=VARCHAR},
+      </if>
+      <if test="businessType != null" >
+        BUSINESS_TYPE = #{businessType,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yeepay.g3.core.ymf.entity.qrcode.QRCode" >
+    update YMF_QRCODE
+    set OPTIMISITC = OPTIMISITC+1,
+      CUSTOMER_NUMBER = #{customerNumber,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
+      QR_ID = #{qrId,jdbcType=VARCHAR},
+      FTP_URL = #{ftpUrl,jdbcType=VARCHAR},
+      STATUS = #{status,jdbcType=VARCHAR},
+      CLOSE_TIME = #{closeTime,jdbcType=TIMESTAMP},
+      BUSINESS_TYPE = #{businessType,jdbcType=VARCHAR},
+      SHOP_NAME = #{shopname,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=BIGINT}
+  </update>
+  <!--批量创建-->
+  <insert id="batchCreateQrCode" parameterType="java.util.List">
+    insert into YMF_QRCODE ( ID, OPTIMISITC, CUSTOMER_NUMBER, CREATE_TIME, UPDATE_TIME, QR_ID, FTP_URL, STATUS,CLOSE_TIME,SHOP_NAME,BUSINESS_TYPE) values
+    <foreach collection="list" item="item" index="index"
+             separator=",">
+      (nextval for SEQ_QRCODE_ID, #{item.optimisitc,jdbcType=VARCHAR},#{item.customerNumber,jdbcType=VARCHAR},
+      #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP}, #{item.qrId,jdbcType=VARCHAR},
+      #{item.ftpUrl,jdbcType=VARCHAR}, #{item.status,jdbcType=VARCHAR}, #{item.closeTime,jdbcType=TIMESTAMP},#{item.shopname,jdbcType=VARCHAR},
+      #{item.businessType,jdbcType=VARCHAR}
+      )
+    </foreach>
+  </insert>
+
+
+</mapper>

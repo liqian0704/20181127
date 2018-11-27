@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fileFormat>
+    <format>
+        <field>customernumber</field>
+        <fieldName>商户编号</fieldName>
+    </format>
+    <format>
+        <field>customername</field>
+        <fieldName>商户名称</fieldName>
+    </format>
+    <format>
+        <field>cusorderid</field>
+        <fieldName>商户订单号</fieldName>
+    </format>
+    <format>
+        <field>externalid</field>
+        <fieldName>业务订单号</fieldName>
+    </format>
+    <format>
+        <field>amount</field>
+        <fieldType>amount</fieldType>
+        <fieldName>交易金额</fieldName>
+        <format>##.##</format>
+    </format>
+    <format>
+        <field>createtime</field>
+        <fieldType>date</fieldType>
+        <fieldName>请求时间</fieldName>
+        <format>yyyy-MM-dd HH:mm:ss</format>
+    </format>
+    <format>
+        <field>paytime</field>
+        <fieldType>date</fieldType>
+        <fieldName>支付时间</fieldName>
+        <format>yyyy-MM-dd HH:mm:ss</format>
+    </format>
+    <format>
+        <field>paystatus</field>
+        <fieldType>dict</fieldType>
+        <fieldName>支付状态</fieldName>
+        <format>PayStatus</format>
+    </format>
+    <format>
+        <field>payconfirm</field>
+        <fieldName>支付凭证码</fieldName>
+        <format></format>
+    </format>
+    <format>
+        <field>paymethod</field>
+        <fieldType>dict</fieldType>
+        <fieldName>支付方式</fieldName>
+        <format>PaySource</format>
+    </format>
+    <format>
+        <field>cardtype</field>
+        <fieldType>dict</fieldType>
+        <fieldName>银行卡类型</fieldName>
+        <format>BankCardType</format>
+    </format>
+</fileFormat>

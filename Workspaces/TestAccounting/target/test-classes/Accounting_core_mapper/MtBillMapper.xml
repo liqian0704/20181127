@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Accounting_core_mapper.MtBillMapper">
+
+    <resultMap id="MtBillEntity" type="Accounting_entity.MtBillEntity">
+        <id property="mtBillNo" column="MT_BILL_NO"/>
+        <result property="totalBillNo" column="TOTAL_BILL_NO" />
+        <result property="parentMerchantNo" column="PARENT_MERCHANT_NO"/>
+        <result property="totalTradeAmount" column="TOTAL_TRADE_AMOUNT"/>
+        <result property="tradeNum" column="TRADE_NUM"/>
+        <result property="role" column="ROLE"/>
+        <result property="costType" column="COST_TYPE"/>
+        <result property="deductStatus" column="DEDUCT_STATUS"/>
+        <result property="detailStartDate" column="DETAIL_START_DATE"/>
+        <result property="detailEndDate" column="DETAIL_END_DATE"/>
+        <result property="createDate" column="CREATE_DATE"/>
+        <result property="updateDate" column="UPDATE_DATE"/>
+        <result property="successDate" column="SUCCESS_DATE"/>
+    </resultMap>
+    <select id="selectMtBill" resultMap="MtBillEntity">
+        select * from tbl_mt_bill where mt_bill_no=#{mt_bill_no}
+    </select>
+</mapper>

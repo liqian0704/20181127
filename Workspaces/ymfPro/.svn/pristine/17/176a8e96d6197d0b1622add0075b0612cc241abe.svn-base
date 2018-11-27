@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.laike.repository.SecurityControlRepository">
+
+	<resultMap id="securityControlMap" type="com.yeepay.g3.core.laike.entity.SecurityControlEntity">
+		<id property="id" column="ID"/>
+		<result property="phoneNumber" column="PHONE_NUMBER" typeHandler="SensitiveL2StringHandler"/>
+		<result property="controlTypeEnum" column="CONTROL_TYPE"/>
+		<result property="mistakeTimes" column="MISTAKE_TIMES"/>
+		<result property="firstMistakeTime" column="FIRST_MISTAKE_TIME"/>
+		<result property="lastMistakeTime" column="LAST_MISTAKE_TIME"/>
+		<result property="freezed" column="FREEZED"/>
+	</resultMap>
+
+	<insert id="save" parameterType="com.yeepay.g3.core.laike.entity.SecurityControlEntity" keyProperty="id"
+			useGeneratedKeys="true">
+		INSERT INTO YMF.TBL_SECURITY
+		(PHONE_NUMBER,CONTROL_TYPE,MISTAKE_TIMES,FIRST_MISTAKE_TIME,LAST_MISTAKE_TIME,FREEZED)
+		VALUES
+		(#{phoneNumber,typeHandler=SensitiveL2StringHandler},#{controlTypeEnum,jdbcType=VARCHAR},#{mistakeTimes,jdbcType=INTEGER},
+		CURRENT_TIMESTAMP,CURRENT_TIMESTAMP,0)
+	</insert>
+
+	<select id="findOne" parameterType="long" resultMap="securityControlMap">
+		SELECT * FROM YMF.TBL_SECURITY WHERE ID = #{value}
+	</select>
+
+	<select id="findByPhoneNumber" parameterType="map" resultMap="securityControlMap">
+		SELECT * FROM YMF.TBL_SECURITY WHERE PHONE_NUMBER = #{phoneNumber, typeHandler=SensitiveL2StringHandler} AND
+		CONTROL_TYPE = #{controlType,jdbcType=VARCHAR}
+	</select>
+
+	<select id="nextSequence" resultType="long">
+		VALUES NEXTVAL FOR NEWBORN.SEQ_NEWBORN_SECURITY_ID
+	</select>
+
+	<update id="update" parameterType="com.yeepay.g3.core.laike.entity.SecurityControlEntity">
+		UPDATE YMF.TBL_SECURITY
+		<set>
+			<if test="controlTypeEnum != null">
+				CONTROL_TYPE = #{controlTypeEnum},
+			</if>
+			<if test="mistakeTimes != null and mistakeTimes >= 0">
+				MISTAKE_TIMES = #{mistakeTimes},
+			</if>
+			<if test="freezed != null ">
+				FREEZED = #{freezed},
+			</if>
+			FIRST_MISTAKE_TIME = #{firstMistakeTime},
+			LAST_MISTAKE_TIME = #{lastMistakeTime}
+		</set>
+		WHERE ID = #{id}
+	</update>
+</mapper>

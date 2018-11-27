@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Document</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta name="format-detection" content="telephone=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0">
+  <link rel="stylesheet" href="../../static/css/common.css">
+  <link rel="stylesheet" href="../../static/css/layer.css">
+  <script type="text/javascript" src="../../static/js/jquery-1.10.1.min.js"></script>
+  <script type="text/javascript" src="../../static/js/ymfpublic.js"></script> 
+  <script type="text/javascript" src="../../static/js/validateRules.js"></script>
+
+</head>
+<body>
+     <div class="registertitle">易码付注册申请</div>
+        <form class="editform" id='form'>
+  <!--               <div class="form-group">
+                    <label class="" for="">公司名称：</label>
+                    <div class="form-inlineblock" >
+                        <i class="iconfont select-icon">&#xe600;</i>
+                        <input type="text" id='select' class="form-control selectTile" >
+                        <ul id='select-ul' class="downmenu displayN">
+                        <li>1易宝支付1</li>
+                        <li>2易宝支付2</li>
+                        <li>3易宝支付3</li>
+                        <li>4易宝支付4</li>
+                        <li>5易宝支付5</li>
+                        </ul>
+                    </div>
+
+                </div> -->
+                <div id="insert"></div>
+                <div id="branch"></div>
+                <div class="form-group">
+                    <label class="" for="">姓名：</label>
+                    <div class="form-inlineblock">
+                        <input type="text" class="form-control" name="contactname"
+                            id="contactname" value="" placeholder=""
+                            data-rule="name">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="" for="">工号：</label>
+                    <div class="form-inlineblock">
+                        <input type="text" class="form-control" name="contactname"
+                            id="contactname" value="" placeholder=""
+                            >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="" for="">手机号：</label>
+                    <div class="form-inlineblock">
+                        <input type="text" class="form-control" name="contactname"
+                            id="contactname" value="" placeholder=""
+                            data-rule="tel">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="" for="">微信号：</label>
+                    <div class="form-inlineblock">
+                        <input type="text" class="form-control" name="contactname"
+                            id="contactname" value="" placeholder=""
+                            >
+                    </div>
+               </div>
+                <div class="form-group">
+                    <label class="" for="">邮箱：</label>
+                    <div class="form-inlineblock">
+                        <input type="text" class="form-control" name="contactname"
+                            id="contactname" value="" placeholder=""
+                            >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="" for="">银行卡号：</label>
+                    <div class="form-inlineblock">
+                        <input type="text" class="form-control" name="contactname"
+                            id="contactname" value="" placeholder=""
+                            data-rule="isNotNull">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="" for="">银行名称：</label>
+                    <div class="form-inlineblock">
+                        <input type="text" class="form-control" name="contactname"
+                            id="contactname" value="" placeholder=""
+                            data-rule="isNotNull">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="" for="">select:</label>
+                    <div class="form-inlineblock">
+                        <select class="form-control-select">
+                           <option>11111</option>
+                           <option>11111</option>
+                           <option>11111</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-submit">
+                      <button class="conquer" id='conquer'>确认</button>
+                 </div>
+        </form>
+  <script>
+    window.onload=function(){
+        var matchArr=[{"groupName":"中国人民财产保险股份有限公司","id":1},
+              {"groupName":"中华联合财产保险股份有限公司","id":2},
+              {"groupName":"紫金财产保险股份有限公司广东分公司","id":3},
+              {"groupName":"众诚汽车保险股份有限公司","id":4}];
+        var branchArr=[{"groupName":"中国人民财产保险股份有限公司","id":1},
+              {"groupName":"中华联合财产保险股份有限公司","id":2},
+              {"groupName":"紫金财产保险股份有限公司广东分公司","id":3},
+              {"groupName":"众诚汽车保险股份有限公司","id":4}];;
+        var param={insertId:"insert",
+                  inputId:"select",
+                  ulId:"select-ul",
+                  data:matchArr,
+                  label:'公司名称：',
+                  key1name:"groupName",
+                  key2name:"id"};
+        var paramBranch={insertId:"branch",
+                  inputId:"select-branch",
+                  ulId:"select-ul-branch",
+                  data:branchArr,
+                  label:'分支名称：',
+                  key1name:"groupName",
+                  key2name:"id"};
+        downMenu.init(param);
+        downMenu.init(paramBranch);
+
+        EventUtil.addHandler(document.getElementById('conquer'), "click",
+        function(event) {
+              var jieguo=validate('form', 'submit');
+              var selectcompany=false;
+              if($('#groupId option:selected').html()==''){
+                  $('#groupId').parent().parent().addClass('has-error');
+                  $('#groupId').parent().find('p').html('不能为空');
+              }else{
+                  $('#groupId').parent().parent().removeClass('has-error');
+                  $('#groupId').parent().find('p').html('');
+                  selectcompany=true;
+              }
+              if (!(jieguo&&selectcompany&&selectbranch)) {
+                event.preventDefault();
+                return;
+              }
+        })
+     
+    };
+
+</script>
+</body>
+</html>

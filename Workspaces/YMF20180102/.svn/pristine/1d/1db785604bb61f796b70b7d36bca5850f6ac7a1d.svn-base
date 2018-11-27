@@ -1,0 +1,88 @@
+
+@font-face {
+  font-family: "iconfont";
+  src: url('../../fonts/iconfont.ttf') format('truetype'); /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-shibai1:before { content: "\e613"; }
+
+.icon-eye1179235easyiconnet:before { content: "\e608"; }
+
+.icon-success:before { content: "\e63c"; }
+
+.icon-guanbi1:before { content: "\e6b6"; }
+
+.icon-xiaoxi:before { content: "\e61b"; }
+
+.icon-xiaoxitixing:before { content: "\e621"; }
+
+.icon-yanjing-yincang:before { content: "\e6a4"; }
+
+.icon-tubiaozhizuomoban:before { content: "\e601"; }
+
+.icon-tubiaozhizuomoban1:before { content: "\e602"; }
+
+.icon-icon-test:before { content: "\e604"; }
+
+.icon-icon-test1:before { content: "\e605"; }
+
+.icon-icon-test2:before { content: "\e606"; }
+
+.icon-tubiaozhizuomoban2:before { content: "\e609"; }
+
+.icon-tubiaozhizuomoban5:before { content: "\e60c"; }
+
+.icon-tubiaozhizuomoban3:before { content: "\e60d"; }
+
+.icon-tubiaozhizuomoban4:before { content: "\e60e"; }
+
+.icon-tubiaozhizuomoban6:before { content: "\e610"; }
+
+.icon-tubiaozhizuomoban7:before { content: "\e611"; }
+
+.icon-tubiaozhizuomoban8:before { content: "\e612"; }
+
+.icon-tubiaozhizuomoban9:before { content: "\e614"; }
+
+.icon-tubiaozhizuomoban10:before { content: "\e615"; }
+
+.icon-tubiaozhizuomoban11:before { content: "\e616"; }
+
+.icon-tubiaozhizuomoban12:before { content: "\e617"; }
+
+.icon-tubiaozhizuomoban13:before { content: "\e618"; }
+
+.icon-tubiaozhizuomoban14:before { content: "\e619"; }
+
+.icon-tubiaozhizuomoban15:before { content: "\e61a"; }
+
+.icon-tubiaozhizuomoban17:before { content: "\e61c"; }
+
+.icon-tubiaozhizuomoban16:before { content: "\e61d"; }
+
+.icon-tubiaozhizuomoban18:before { content: "\e61e"; }
+
+.icon-tubiaozhizuomoban19:before { content: "\e61f"; }
+
+.icon-tubiaozhizuomoban20:before { content: "\e620"; }
+
+.icon-tubiaozhizuomoban21:before { content: "\e622"; }
+
+.icon-tubiaozhizuomobanlo:before { content: "\e623"; }
+
+.icon-tubiaozhizuomobanlo1:before { content: "\e624"; }
+
+.icon-tubiaozhizuomobanlo3:before { content: "\e626"; }
+
+.icon-tubiaozhizuomobanlo4:before { content: "\e627"; }
+
+.icon-taiqianma:before { content: "\e628"; }
+

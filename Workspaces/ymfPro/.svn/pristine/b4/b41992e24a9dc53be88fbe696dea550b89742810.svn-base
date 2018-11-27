@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yeepay.g3.core.laike.repository.OperateRecodeRepository">
+
+    <resultMap id="BaseResultMap" type="com.yeepay.g3.core.laike.entity.OperateRecordEntity">
+        <id column="ID" property="id"/>
+        <result column="MEMBER_NO" jdbcType="VARCHAR" property="memberNo"/>
+        <result column="BIZ_TYPE" jdbcType="VARCHAR" property="bizType"/>
+        <result column="BIZ_PARAM" jdbcType="VARCHAR" property="bizParam"/>
+        <result column="COUNT" jdbcType="INTEGER" property="count"/>
+        <result column="LINK_NAME" jdbcType="VARCHAR" property="linkName"/>
+        <result column="LINK_PHONE" property="linkPhone" typeHandler="SensitiveL1StringHandler"/>
+        <result column="PROVINCE_NAME" jdbcType="VARCHAR" property="provinceName"/>
+        <result column="CITY_NAME" jdbcType="VARCHAR" property="cityName"/>
+        <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+        <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+
+    <insert id="save" parameterType="com.yeepay.g3.core.laike.entity.OperateRecordEntity">
+        insert into TBL_OPERATE_RECODE (MEMBER_NO,BIZ_TYPE,BIZ_PARAM,COUNT,LINK_NAME,
+        LINK_PHONE,PROVINCE_NAME,CITY_NAME,REMARK,CREATE_TIME,UPDATE_TIME)
+        values (#{memberNo,jdbcType=VARCHAR}, #{bizType,jdbcType=VARCHAR},
+        #{bizParam,jdbcType=VARCHAR}, #{count,jdbcType=INTEGER},#{linkName,jdbcType=VARCHAR},
+        #{linkPhone,typeHandler=SensitiveL1StringHandler},#{provinceName,jdbcType=VARCHAR},#{cityName,jdbcType=VARCHAR},#{remark,jdbcType=VARCHAR},CURRENT_TIMESTAMP,
+        CURRENT_TIMESTAMP)
+    </insert>
+
+    <sql id="baseParams">
+        ID,MEMBER_NO,BIZ_TYPE,BIZ_PARAM,COUNT,LINK_NAME,LINK_PHONE,PROVINCE_NAME,CITY_NAME,REMARK,CREATE_TIME,UPDATE_TIME
+    </sql>
+
+    <select id="findById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="baseParams"/>
+        from TBL_OPERATE_RECODE
+        where ID = #{id,jdbcType=BIGINT}
+    </select>
+
+    <select id="findByMemberNo" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT
+        <include refid="baseParams"/>
+        FROM TBL_OPERATE_RECODE
+        WHERE MEMBER_NO = #{memberNo,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findByMemberNoAndBiz" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="baseParams"/>
+        FROM TBL_OPERATE_RECODE
+        WHERE MEMBER_NO = #{memberNo,jdbcType=VARCHAR}
+        AND BIZ_TYPE = #{bizType,jdbcType=VARCHAR}
+    </select>
+
+    <select id="findByLinkPhoneAndDate" parameterType="map" resultMap="BaseResultMap">
+        SELECT
+        <include refid="baseParams"/>
+        FROM TBL_OPERATE_RECODE
+        WHERE LINK_PHONE = #{linkPhone,typeHandler=SensitiveL1StringHandler}
+        AND BIZ_PARAM = #{bizParam,jdbcType=VARCHAR}
+        AND CREATE_TIME <![CDATA[ >= ]]> #{startDate,jdbcType=TIMESTAMP}
+        AND CREATE_TIME <![CDATA[ <= ]]> #{endDate,jdbcType=TIMESTAMP}
+    </select>
+
+    <select id="findByDate" parameterType="list" resultMap="BaseResultMap">
+        SELECT
+        <include refid="baseParams"/>
+        FROM TBL_OPERATE_RECODE
+        WHERE 1=1
+        AND BIZ_TYPE = #{bizType,jdbcType=VARCHAR}
+        AND CREATE_TIME <![CDATA[ >= ]]> #{startDate,jdbcType=TIMESTAMP}
+        AND CREATE_TIME <![CDATA[ <= ]]> #{endDate,jdbcType=TIMESTAMP}
+    </select>
+
+    <select id="findLastRecode" parameterType="list" resultMap="BaseResultMap">
+        SELECT
+        <include refid="baseParams"/>
+        FROM TBL_OPERATE_RECODE
+        WHERE MEMBER_NO = #{memberNo,jdbcType=VARCHAR}
+        AND BIZ_TYPE = #{bizType,jdbcType=VARCHAR}
+        ORDER BY CREATE_TIME DESC
+        FETCH FIRST 1 ROW ONLY
+    </select>
+
+
+    <update id="update" parameterType="com.yeepay.g3.core.laike.entity.OperateRecordEntity">
+        update TBL_OPERATE_RECODE
+        <set>
+            <if test="count != null">
+                COUNT = #{count,jdbcType=INTEGER},
+            </if>
+            <if test="provinceName != null">
+                PROVINCE_NAME = #{provinceName,jdbcType=VARCHAR},
+            </if>
+            <if test="cityName != null">
+                CITY_NAME = #{cityName,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                REMARK = #{remark,jdbcType=VARCHAR},
+            </if>
+            UPDATE_TIME = CURRENT_TIMESTAMP
+        </set>
+        where ID = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

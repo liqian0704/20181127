@@ -1,0 +1,30 @@
+2018-01-02 17:30:33,621-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2018-01-02 17:30:33,627-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(45) - Start to run test class cases.loginTest on driverType1
+2018-01-02 17:45:31,971-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2018-01-02 17:45:31,976-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(45) - Start to run test class cases.loginTest on driverType1
+2018-01-02 17:47:24,710-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2018-01-02 17:47:24,715-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(45) - Start to run test class cases.loginTest on driverType1
+2018-01-02 18:51:17,189-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2018-01-02 18:51:17,198-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(45) - Start to run test class cases.loginTest on driverType1
+2018-01-02 18:54:46,949-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2018-01-02 18:54:46,955-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(45) - Start to run test class cases.loginTest on driverType1
+2018-01-02 18:56:25,477-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2018-01-02 18:56:25,482-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(45) - Start to run test class cases.loginTest on driverType1
+2018-01-02 18:56:37,015-[SeleniumAutoFile] INFO [main] config.DriverManage.getWebDriver(33) - this is FireFoxDriver
+2018-01-02 18:56:37,384-[SeleniumAutoFile] INFO [main] cases.loginTest.login(23) - loginis running
+2018-01-02 18:56:41,437-[SeleniumAutoFile] ERROR [main] util.DBservice.closeDBDriver(57) - java.lang.NullPointerException
+2018-01-02 18:57:25,400-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2018-01-02 18:57:25,407-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(45) - Start to run test class cases.loginTest on driverType1
+2018-01-02 18:57:37,740-[SeleniumAutoFile] INFO [main] config.DriverManage.getWebDriver(33) - this is FireFoxDriver
+2018-01-02 18:57:38,209-[SeleniumAutoFile] INFO [main] cases.loginTest.login(23) - loginis running
+2018-01-02 18:57:42,989-[SeleniumAutoFile] ERROR [main] util.DBservice.closeDBDriver(57) - java.lang.NullPointerException
+2018-01-02 18:58:52,911-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2018-01-02 18:58:52,916-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(45) - Start to run test class cases.loginTest on driverType1
+2018-01-02 18:59:03,167-[SeleniumAutoFile] INFO [main] config.DriverManage.getWebDriver(33) - this is FireFoxDriver
+2018-01-02 18:59:03,651-[SeleniumAutoFile] INFO [main] cases.loginTest.login(23) - loginis running
+2018-01-02 18:59:07,741-[SeleniumAutoFile] ERROR [main] util.DBservice.closeDBDriver(57) - java.lang.NullPointerException
+2018-01-02 18:59:43,285-[SeleniumAutoFile] INFO [main] util.DBservice.dbConnection(39) - can't connect to database server
+2018-01-02 18:59:43,290-[SeleniumAutoFile] INFO [main] cases.testBase.beforeMethod(45) - Start to run test class cases.loginTest on driverType1
+2018-01-02 18:59:52,785-[SeleniumAutoFile] INFO [main] config.DriverManage.getWebDriver(33) - this is FireFoxDriver
+2018-01-02 18:59:53,254-[SeleniumAutoFile] INFO [main] cases.loginTest.login(23) - loginis running
+2018-01-02 19:00:01,897-[SeleniumAutoFile] ERROR [main] util.DBservice.closeDBDriver(57) - java.lang.NullPointerException
